@@ -1,148 +1,119 @@
-# Salvio3 POS - Pharmacy Point of Sale System
 
-A comprehensive POS and inventory management system specifically designed for pharmacies, featuring BPOM integration, sales tracking, commission management, and profit sharing capabilities.
+# 💊 Pharmaceutical POS & Inventory Management System
 
-## Features
+A fullstack modular POS (Point of Sale) and inventory system tailored for pharmaceutical distributors. Built using raw PHP and MySQL with a custom MVC-like structure. Fully supports product management, investor profit distribution, commission setup, multi-role access, and integration with BPOM (Indonesia’s National Agency of Drug and Food Control).
 
-- User Authentication & Role Management (Admin/Sales)
-- Product Management with BPOM Integration
-- Sales & Transaction Processing
-- Commission Calculation & Tracking
-- Inventory Management
-- Customer Management
-- Profit Sharing for Investors
-- Reporting & Analytics
-- Email & WhatsApp Notifications
+---
 
-## System Requirements
+## 🚀 Features
 
-- PHP 7.4 or higher
-- MySQL 5.7 or higher
-- Apache Web Server
-- mod_rewrite enabled
-- PDO PHP Extension
-- JSON PHP Extension
-- cURL PHP Extension
+- Multi-role Access: Admin & Sales
+- Product Management (Stocked & By-Order)
+- Categorization via BPOM Reference (Web Scraping)
+- Customer & Transaction Management
+- Payment Types: Cash, Bank Transfer, Installments
+- Adjustable Pricing with Reason Logs
+- Validated Discount System
+- Commission Logic: Global, Category, Product
+- Investor Profit Sharing (Based on Capital Percentage)
+- Supplier Payment Management (Cash & Installment)
+- Sales & Inventory Reporting
+- Dashboard Monitoring
+- WhatsApp & Email Notifications
+- Fully Responsive Frontend (Desktop & Mobile)
+- Bahasa Indonesia with Currency Format Rp (IDR)
 
-## Installation
+---
 
-1. Clone the repository to your web server directory:
-   ```bash
-   git clone https://github.com/yourusername/Salvio3.git
-   ```
-
-2. Navigate to the project directory:
-   ```bash
-   cd Salvio3
-   ```
-
-3. Set appropriate permissions:
-   ```bash
-   chmod 755 -R .
-   chmod 777 -R uploads/
-   ```
-
-4. Access the installation script through your web browser:
-   ```
-   http://localhost/Salvio3/install.php
-   ```
-
-5. Follow the installation wizard to set up your database and initial configuration.
-
-6. After installation, you can log in with the default admin credentials:
-   - Username: admin
-   - Password: admin123
-
-   **Important**: Change these credentials immediately after first login!
-
-## Project Structure
+## 📁 Folder Structure
 
 ```
-/Salvio3
-├── config/             # Configuration files
-├── controllers/        # Controller classes
-├── core/              # Core framework classes
-├── models/            # Model classes
-├── views/             # View templates
-├── assets/            # Public assets (CSS, JS, images)
-├── uploads/           # File uploads
-├── database/          # Database migrations and seeds
-├── helpers/           # Helper functions
-└── logs/              # Application logs
+/app
+  /controllers
+  /models
+  /views
+  /helpers
+  /assets
+/config
+/database
+/logs
+/storage
+/index.php        # Entry point
+.htaccess         # Rewrite rule to support clean URLs
+.env              # Optional config file for secrets
 ```
 
-## Security Features
+📝 **Note**: Website is served from base URL (not /public).
 
-- CSRF Protection
-- SQL Injection Prevention
-- XSS Protection
-- Password Hashing
-- Session Security
-- Input Validation
-- Role-based Access Control
+---
 
-## Development Phases
+## 🔄 Development Plan (Phases)
 
-1. **Phase 1**: System Foundation & Core Architecture
-   - Base project structure
-   - Authentication system
-   - Role management
+**PHASE 1: Core System**
+- Database schema
+- User roles & authentication
 
-2. **Phase 2**: Master Data Management
-   - Product management
-   - Customer management
-   - Category management
+**PHASE 2A: Inventory & Sales**
+- Product, customer, transaction, commission logic
 
-3. **Phase 2B**: BPOM Integration
-   - BPOM data scraping
-   - Product auto-fill
-   - Data validation
+**PHASE 2B: BPOM Scraping Integration**
+- Scrape data from https://cekbpom.pom.go.id/
 
-4. **Phase 3**: Sales & Transactions
-   - Sales processing
-   - Payment handling
-   - Invoice generation
+**PHASE 3: Financial Module**
+- Investor capital input and profit distribution
 
-5. **Phase 4**: Commission Management
-   - Commission rules
-   - Calculation system
-   - Payment tracking
+**PHASE 4: Dashboard & Reporting**
+- Monitoring UI and exportable reports
 
-6. **Phase 5**: Profit Sharing
-   - Investor management
-   - Profit calculation
-   - Distribution tracking
+**PHASE 5: Notifications**
+- WhatsApp & email reminders, alerts
 
-7. **Phase 6**: Reporting
-   - Sales reports
-   - Inventory reports
-   - Commission reports
-   - Profit sharing reports
+---
 
-8. **Phase 7**: Notifications
-   - Email integration
-   - WhatsApp integration
-   - Alert system
+## ⚙️ Setup Instructions
 
-## Contributing
+1. Clone the project to your server
+2. Set base directory as web root (index.php must be at `/`)
+3. Import the SQL schema from `/database/`
+4. Configure database credentials in `/config/config.php`
+5. Enable mod_rewrite on Apache and use the provided `.htaccess`
+6. Make sure PHP extensions for cURL and DOM are enabled (for scraping)
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+---
 
-## License
+## 📌 Localization
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+- **Language:** Bahasa Indonesia  
+- **Currency:** Rp (IDR)
 
-## Support
+---
 
-For support, please email support@example.com or create an issue in the GitHub repository.
+## 📊 Sample Dashboard Widgets
 
-## Acknowledgments
+- Total Penjualan Harian/Bulanan
+- Jumlah Customer Aktif
+- Produk Terlaris
+- Status Cicilan Customer
+- Laba Dibagikan ke Investor
 
-- Bootstrap for the UI framework
-- Font Awesome for icons
-- PHPMailer for email functionality
-- TCPDF for PDF generation
+---
+
+## 📞 Notifications
+
+- Reminder pembayaran via WhatsApp & Email
+- Laporan laba otomatis dikirim ke investor
+- Pemberitahuan stok rendah
+
+---
+
+## ✅ Status
+
+Development in progress – see `log.md` for details.
+
+---
+
+## 👤 Developer
+
+This system is designed with clarity and modularity in mind, enabling future extensions (mobile apps, auto-sync to BPOM API, AI analytics, etc).
+
+For implementation, testing, or support: **contact developer or use this README as base doc for Blackbox.ai integration.**
