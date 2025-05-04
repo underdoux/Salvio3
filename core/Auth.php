@@ -1,210 +1,184 @@
 <?php
+/**
+ * Auth Class
+ * Handles user authentication and authorization
+ */
 class Auth {
-    private static $instance = null;
-    private $db;
-    private $user = null;
-    
-    private function __construct() {
-        $this->db = new Database();
-    }
-    
+    private static $user = null;
+
     /**
-     * Get Auth instance (Singleton)
+     * Initialize Auth
      */
-    public static function getInstance() {
-        if (self::$instance === null) {
-            self::$instance = new Auth();
+    public static function init() {
+        // Check for remember me cookie
+        if (!self::check() && isset($_COOKIE['remember_token'])) {
+            self::loginWithToken($_COOKIE['remember_token']);
         }
-        return self::$instance;
     }
-    
+
     /**
-     * Attempt to authenticate user
+     * Attempt login
+     * @param string $username Username
+     * @param string $password Password
+     * @return bool Success status
      */
-    public function attempt($username, $password) {
-        $this->db->query('SELECT * FROM users WHERE username = :username AND deleted_at IS NULL');
-        $this->db->bind(':username', $username);
-        
-        $user = $this->db->single();
-        
-        if ($user && password_verify($password, $user->password)) {
-            // Update last login
-            $this->db->query('UPDATE users SET last_login = NOW() WHERE id = :id');
-            $this->db->bind(':id', $user->id);
-            $this->db->execute();
-            
-            // Log activity
-            $this->logActivity($user->id, 'LOGIN', 'User logged in successfully');
-            
-            // Set session
-            Session::setUser($user);
-            $this->user = $user;
-            
+    public static function attempt($username, $password) {
+        $userModel = new User();
+        $user = $userModel->findByUsername($username);
+
+        if ($user && password_verify($password, $user['password'])) {
+            self::login($user);
             return true;
         }
-        
+
         return false;
     }
-    
+
     /**
-     * Log out current user
+     * Login with remember token
+     * @param string $token Remember token
+     * @return bool Success status
      */
-    public function logout() {
-        if ($this->check()) {
-            $this->logActivity($this->user->id, 'LOGOUT', 'User logged out');
+    public static function loginWithToken($token) {
+        $userModel = new User();
+        $user = $userModel->findByRememberToken($token);
+
+        if ($user) {
+            self::login($user);
+            return true;
         }
-        
-        Session::destroy();
-        $this->user = null;
+
+        return false;
     }
-    
+
+    /**
+     * Login user
+     * @param array $user User data
+     */
+    public static function login($user) {
+        // Remove sensitive data
+        unset($user['password']);
+        unset($user['remember_token']);
+        unset($user['reset_token']);
+        unset($user['reset_expires']);
+
+        // Store user data in session
+        Session::set('user', $user);
+        Session::regenerate();
+
+        self::$user = $user;
+    }
+
+    /**
+     * Logout user
+     */
+    public static function logout() {
+        Session::remove('user');
+        Session::regenerate();
+        self::$user = null;
+
+        // Remove remember me cookie
+        if (isset($_COOKIE['remember_token'])) {
+            setcookie('remember_token', '', time() - 3600, '/');
+        }
+    }
+
     /**
      * Check if user is logged in
+     * @return bool
      */
-    public function check() {
-        return Session::isLoggedIn();
+    public static function check() {
+        return Session::has('user');
     }
-    
+
     /**
-     * Get current authenticated user
+     * Get current user
+     * @return array|null User data
      */
-    public function user() {
-        if ($this->user === null && $this->check()) {
-            $userId = Session::get('user_id');
-            
-            $this->db->query('SELECT * FROM users WHERE id = :id AND deleted_at IS NULL');
-            $this->db->bind(':id', $userId);
-            
-            $this->user = $this->db->single();
+    public static function user() {
+        if (self::$user === null && self::check()) {
+            self::$user = Session::get('user');
         }
-        
-        return $this->user;
+        return self::$user;
     }
-    
+
     /**
-     * Check if current user has specific role
+     * Get user ID
+     * @return int|null User ID
      */
-    public function hasRole($role) {
-        return $this->check() && $this->user()->role === $role;
+    public static function id() {
+        $user = self::user();
+        return $user ? $user['id'] : null;
     }
-    
+
     /**
-     * Check if current user has any of the specified roles
+     * Get user name
+     * @return string|null User name
      */
-    public function hasAnyRole($roles) {
-        return $this->check() && in_array($this->user()->role, (array) $roles);
+    public static function name() {
+        $user = self::user();
+        return $user ? $user['name'] : null;
     }
-    
+
     /**
-     * Check if current user has permission for route
+     * Check if user has role
+     * @param string $role Role name
+     * @return bool
      */
-    public function hasPermission($controller, $action) {
-        if (!$this->check()) {
-            return false;
+    public static function hasRole($role) {
+        $user = self::user();
+        return $user && $user['role'] === $role;
+    }
+
+    /**
+     * Check if user is admin
+     * @return bool
+     */
+    public static function isAdmin() {
+        return self::hasRole('admin');
+    }
+
+    /**
+     * Hash password
+     * @param string $password Password to hash
+     * @return string Hashed password
+     */
+    public static function hashPassword($password) {
+        return password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
+    }
+
+    /**
+     * Generate random token
+     * @param int $length Token length
+     * @return string Random token
+     */
+    public static function generateToken($length = 32) {
+        return bin2hex(random_bytes($length));
+    }
+
+    /**
+     * Require authentication
+     * Redirects to login if not authenticated
+     */
+    public static function requireAuth() {
+        if (!self::check()) {
+            Session::setFlash('error', 'Please login to continue');
+            header('Location: ' . APP_URL . '/auth');
+            exit;
         }
-        
-        $routes = require 'config/routes.php';
-        
-        // Check public routes
-        if (isset($routes['public'][$controller]) && 
-            in_array($action, $routes['public'][$controller])) {
-            return true;
-        }
-        
-        // Check authenticated routes
-        if (isset($routes['authenticated'][$controller])) {
-            $route = $routes['authenticated'][$controller];
-            
-            // Check if action exists and user has required role
-            if (isset($route['actions'][$action])) {
-                return $this->hasAnyRole($route['actions'][$action]);
-            }
-            
-            // If action is in simple array and user has any required role
-            if (in_array($action, $route['actions'] ?? []) && 
-                $this->hasAnyRole($route['roles'] ?? [])) {
-                return true;
-            }
-        }
-        
-        return false;
     }
-    
+
     /**
-     * Generate password reset token
+     * Require admin role
+     * Redirects to dashboard if not admin
      */
-    public function generateResetToken($email) {
-        $this->db->query('SELECT id FROM users WHERE email = :email AND deleted_at IS NULL');
-        $this->db->bind(':email', $email);
+    public static function requireAdmin() {
+        self::requireAuth();
         
-        $user = $this->db->single();
-        
-        if ($user) {
-            $token = bin2hex(random_bytes(32));
-            $expires = date('Y-m-d H:i:s', strtotime('+1 hour'));
-            
-            $this->db->query('INSERT INTO password_resets (user_id, token, expires_at) 
-                             VALUES (:user_id, :token, :expires_at)');
-            $this->db->bind(':user_id', $user->id);
-            $this->db->bind(':token', $token);
-            $this->db->bind(':expires_at', $expires);
-            
-            if ($this->db->execute()) {
-                return $token;
-            }
+        if (!self::isAdmin()) {
+            Session::setFlash('error', 'Access denied');
+            header('Location: ' . APP_URL . '/dashboard');
+            exit;
         }
-        
-        return false;
-    }
-    
-    /**
-     * Verify password reset token
-     */
-    public function verifyResetToken($token) {
-        $this->db->query('SELECT user_id FROM password_resets 
-                         WHERE token = :token AND expires_at > NOW() 
-                         ORDER BY created_at DESC LIMIT 1');
-        $this->db->bind(':token', $token);
-        
-        $result = $this->db->single();
-        
-        return $result ? $result->user_id : false;
-    }
-    
-    /**
-     * Reset user password
-     */
-    public function resetPassword($userId, $password) {
-        $this->db->query('UPDATE users SET password = :password WHERE id = :id');
-        $this->db->bind(':id', $userId);
-        $this->db->bind(':password', password_hash($password, PASSWORD_DEFAULT));
-        
-        if ($this->db->execute()) {
-            // Delete used tokens
-            $this->db->query('DELETE FROM password_resets WHERE user_id = :user_id');
-            $this->db->bind(':user_id', $userId);
-            $this->db->execute();
-            
-            $this->logActivity($userId, 'PASSWORD_RESET', 'Password was reset');
-            return true;
-        }
-        
-        return false;
-    }
-    
-    /**
-     * Log user activity
-     */
-    private function logActivity($userId, $action, $description = '') {
-        $this->db->query('INSERT INTO activity_logs (user_id, action, description, ip_address, user_agent) 
-                         VALUES (:user_id, :action, :description, :ip, :agent)');
-        
-        $this->db->bind(':user_id', $userId);
-        $this->db->bind(':action', $action);
-        $this->db->bind(':description', $description);
-        $this->db->bind(':ip', $_SERVER['REMOTE_ADDR'] ?? null);
-        $this->db->bind(':agent', $_SERVER['HTTP_USER_AGENT'] ?? null);
-        
-        return $this->db->execute();
     }
 }

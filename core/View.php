@@ -1,197 +1,259 @@
 <?php
+/**
+ * View Class
+ * Handles view rendering and template management
+ */
 class View {
+    private $layout = 'main';
     private $data = [];
-    private $layout = 'default';
-    private static $blocks = [];
-    private static $blockName = null;
-    
+    private $sections = [];
+    private $currentSection = null;
+
     /**
-     * Render a view file
+     * Set layout
+     * @param string|null $layout Layout name or null for no layout
+     */
+    public function setLayout($layout) {
+        $this->layout = $layout;
+    }
+
+    /**
+     * Get current layout
+     * @return string|null
+     */
+    public function getLayout() {
+        return $this->layout;
+    }
+
+    /**
+     * Set view data
+     * @param array $data Data to pass to view
+     */
+    public function setData($data) {
+        $this->data = array_merge($this->data, $data);
+    }
+
+    /**
+     * Get view data
+     * @return array
+     */
+    public function getData() {
+        return $this->data;
+    }
+
+    /**
+     * Render view
+     * @param string $view View name
+     * @param array $data Data to pass to view
      */
     public function render($view, $data = []) {
         // Merge data
-        $this->data = array_merge($this->data, $data);
-        
-        // Extract data to make it available in view
-        extract($this->data);
+        $this->setData($data);
         
         // Start output buffering
         ob_start();
         
-        // Include the view file
-        $viewFile = 'views/' . $view . '.php';
-        if (file_exists($viewFile)) {
-            require $viewFile;
-        } else {
-            throw new Exception("View file '{$view}' not found");
+        // Extract data to make it available in view
+        extract($this->data);
+        
+        // Include view file
+        $viewFile = VIEW_PATH . '/' . $view . '.php';
+        if (!file_exists($viewFile)) {
+            throw new Exception("View {$view} not found");
         }
         
-        // Get contents and clean buffer
+        include $viewFile;
+        
+        // Get view content
         $content = ob_get_clean();
         
-        // Render with layout if not disabled
-        if ($this->layout !== false) {
-            $layoutFile = 'views/layout/' . $this->layout . '.php';
-            if (file_exists($layoutFile)) {
-                require $layoutFile;
-            } else {
-                echo $content;
+        // Render with layout if set
+        if ($this->layout !== null) {
+            $layoutFile = VIEW_PATH . '/layout/' . $this->layout . '.php';
+            if (!file_exists($layoutFile)) {
+                throw new Exception("Layout {$this->layout} not found");
             }
+            
+            include $layoutFile;
         } else {
             echo $content;
         }
     }
-    
+
     /**
-     * Set or disable layout
+     * Start a section
+     * @param string $name Section name
      */
-    public function setLayout($layout) {
-        $this->layout = $layout;
-        return $this;
-    }
-    
-    /**
-     * Add data to view
-     */
-    public function with($key, $value = null) {
-        if (is_array($key)) {
-            $this->data = array_merge($this->data, $key);
-        } else {
-            $this->data[$key] = $value;
+    public function section($name) {
+        if ($this->currentSection) {
+            throw new Exception('Cannot nest sections');
         }
-        return $this;
-    }
-    
-    /**
-     * Start a content block
-     */
-    public static function start($name) {
-        if (self::$blockName !== null) {
-            throw new Exception('Cannot nest blocks');
-        }
-        self::$blockName = $name;
+        
+        $this->currentSection = $name;
         ob_start();
     }
-    
+
     /**
-     * End a content block
+     * End current section
      */
-    public static function end() {
-        if (self::$blockName === null) {
-            throw new Exception('No block started');
+    public function endSection() {
+        if (!$this->currentSection) {
+            throw new Exception('No section started');
         }
-        self::$blocks[self::$blockName] = ob_get_clean();
-        self::$blockName = null;
+        
+        $this->sections[$this->currentSection] = ob_get_clean();
+        $this->currentSection = null;
     }
-    
+
     /**
-     * Get content of a block
+     * Get section content
+     * @param string $name Section name
+     * @param string $default Default content if section not found
+     * @return string
      */
-    public static function block($name) {
-        return self::$blocks[$name] ?? '';
+    public function getSection($name, $default = '') {
+        return $this->sections[$name] ?? $default;
     }
-    
+
     /**
-     * Include a partial view
+     * Include partial view
+     * @param string $partial Partial view name
+     * @param array $data Data to pass to partial
      */
-    public function partial($view, $data = []) {
+    public function partial($partial, $data = []) {
         extract(array_merge($this->data, $data));
         
-        $partialFile = 'views/partials/' . $view . '.php';
-        if (file_exists($partialFile)) {
-            require $partialFile;
-        } else {
-            throw new Exception("Partial view '{$view}' not found");
+        $partialFile = VIEW_PATH . '/partials/' . $partial . '.php';
+        if (!file_exists($partialFile)) {
+            throw new Exception("Partial {$partial} not found");
         }
+        
+        include $partialFile;
     }
-    
-    /**
-     * Escape HTML
-     */
-    public static function escape($value) {
-        return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-    }
-    
-    /**
-     * Format date
-     */
-    public static function formatDate($date, $format = 'd M Y') {
-        return date($format, strtotime($date));
-    }
-    
-    /**
-     * Format currency
-     */
-    public static function formatCurrency($amount, $currency = 'IDR') {
-        return number_format($amount, 0, ',', '.') . ' ' . $currency;
-    }
-    
+
     /**
      * Generate CSRF token field
+     * @return string HTML input field
      */
-    public static function csrf() {
-        return '<input type="hidden" name="csrf_token" value="' . Session::getCsrfToken() . '">';
+    public function csrf() {
+        $token = Session::generateCsrfToken();
+        return '<input type="hidden" name="csrf_token" value="' . $token . '">';
     }
-    
+
     /**
-     * Check if current route is active
+     * Format date
+     * @param string $date Date string
+     * @param string $format Date format
+     * @return string Formatted date
      */
-    public static function isActive($route) {
-        $currentRoute = $_GET['url'] ?? '';
-        return strpos($currentRoute, $route) === 0 ? 'active' : '';
+    public function formatDate($date, $format = 'Y-m-d H:i:s') {
+        return date($format, strtotime($date));
     }
-    
+
+    /**
+     * Format currency
+     * @param float $amount Amount
+     * @param string $currency Currency code
+     * @return string Formatted currency
+     */
+    public function formatCurrency($amount, $currency = null) {
+        $currency = $currency ?? APP_CURRENCY;
+        
+        switch ($currency) {
+            case 'IDR':
+                return 'Rp ' . number_format($amount, 0, ',', '.');
+            case 'USD':
+                return '$' . number_format($amount, 2);
+            default:
+                return number_format($amount, 2);
+        }
+    }
+
+    /**
+     * Get active menu class
+     * @param string $menu Menu name
+     * @param string $activeClass Active class name
+     * @return string Class name if active
+     */
+    public function getActiveMenu($menu, $activeClass = 'active') {
+        $url = $_GET['url'] ?? '';
+        $currentMenu = explode('/', $url)[0];
+        
+        return $currentMenu === $menu ? $activeClass : '';
+    }
+
+    /**
+     * Escape HTML
+     * @param string $string String to escape
+     * @return string Escaped string
+     */
+    public function escape($string) {
+        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    }
+
     /**
      * Generate pagination links
+     * @param array $pagination Pagination data
+     * @return string HTML pagination links
      */
-    public static function pagination($total, $perPage, $currentPage, $url) {
-        $pages = ceil($total / $perPage);
-        
-        if ($pages <= 1) return '';
-        
-        $html = '<nav class="pagination">';
-        $html .= '<ul>';
+    public function pagination($pagination) {
+        if ($pagination['last_page'] <= 1) {
+            return '';
+        }
+
+        $html = '<nav aria-label="Page navigation"><ul class="pagination">';
         
         // Previous link
-        if ($currentPage > 1) {
-            $html .= '<li><a href="' . $url . '?page=' . ($currentPage - 1) . '">&laquo; Previous</a></li>';
+        if ($pagination['current_page'] > 1) {
+            $html .= '<li class="page-item">
+                        <a class="page-link" href="?page=' . ($pagination['current_page'] - 1) . '">Previous</a>
+                     </li>';
         }
         
-        // Page numbers
-        for ($i = 1; $i <= $pages; $i++) {
-            if ($i == $currentPage) {
-                $html .= '<li class="active"><span>' . $i . '</span></li>';
+        // Page links
+        for ($i = 1; $i <= $pagination['last_page']; $i++) {
+            if ($i == $pagination['current_page']) {
+                $html .= '<li class="page-item active">
+                            <span class="page-link">' . $i . '</span>
+                         </li>';
             } else {
-                $html .= '<li><a href="' . $url . '?page=' . $i . '">' . $i . '</a></li>';
+                $html .= '<li class="page-item">
+                            <a class="page-link" href="?page=' . $i . '">' . $i . '</a>
+                         </li>';
             }
         }
         
         // Next link
-        if ($currentPage < $pages) {
-            $html .= '<li><a href="' . $url . '?page=' . ($currentPage + 1) . '">Next &raquo;</a></li>';
+        if ($pagination['current_page'] < $pagination['last_page']) {
+            $html .= '<li class="page-item">
+                        <a class="page-link" href="?page=' . ($pagination['current_page'] + 1) . '">Next</a>
+                     </li>';
         }
         
-        $html .= '</ul>';
-        $html .= '</nav>';
+        $html .= '</ul></nav>';
         
         return $html;
     }
-    
+
     /**
-     * Flash messages
+     * Get flash messages HTML
+     * @return string HTML flash messages
      */
-    public static function flash() {
-        $messages = Session::getFlash();
-        if (!empty($messages)) {
-            $html = '<div class="flash-messages">';
-            foreach ($messages as $message) {
-                $html .= '<div class="alert alert-' . $message['type'] . '">';
-                $html .= self::escape($message['message']);
-                $html .= '</div>';
+    public function getFlashMessages() {
+        $html = '';
+        $types = ['success', 'error', 'info', 'warning'];
+        
+        foreach ($types as $type) {
+            $message = Session::getFlash($type);
+            if ($message) {
+                $class = $type === 'error' ? 'danger' : $type;
+                $html .= '<div class="alert alert-' . $class . ' alert-dismissible fade show" role="alert">
+                            ' . $message . '
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                         </div>';
             }
-            $html .= '</div>';
-            return $html;
         }
-        return '';
+        
+        return $html;
     }
 }

@@ -1,270 +1,245 @@
 <?php
-abstract class Model {
+/**
+ * Base Model Class
+ * All models extend this class
+ */
+class Model {
     protected $db;
     protected $table;
-    protected $primaryKey = 'id';
     protected $fillable = [];
-    protected $timestamps = true;
-    protected $softDelete = true;
-    protected $errors = [];
-    
+    protected $hidden = [];
+
     public function __construct() {
-        $this->db = new Database();
+        $this->db = Database::getInstance();
     }
-    
+
     /**
      * Find record by ID
+     * @param int $id
+     * @return array|null
      */
     public function find($id) {
-        $sql = "SELECT * FROM {$this->table} WHERE {$this->primaryKey} = :id";
-        if ($this->softDelete) {
-            $sql .= " AND deleted_at IS NULL";
-        }
-        
-        $this->db->query($sql);
-        $this->db->bind(':id', $id);
-        
-        return $this->db->single();
+        return $this->db->query("SELECT * FROM {$this->table} WHERE id = ?")
+                       ->bind(1, $id)
+                       ->single();
     }
-    
+
     /**
-     * Get all records
-     */
-    public function all($orderBy = null) {
-        $sql = "SELECT * FROM {$this->table}";
-        if ($this->softDelete) {
-            $sql .= " WHERE deleted_at IS NULL";
-        }
-        if ($orderBy) {
-            $sql .= " ORDER BY {$orderBy}";
-        }
-        
-        $this->db->query($sql);
-        return $this->db->resultSet();
-    }
-    
-    /**
-     * Create new record
-     */
-    public function create($data) {
-        $data = $this->filterFillable($data);
-        
-        if ($this->timestamps) {
-            $data['created_at'] = date('Y-m-d H:i:s');
-            $data['updated_at'] = date('Y-m-d H:i:s');
-        }
-        
-        $fields = array_keys($data);
-        $placeholders = array_map(function($field) {
-            return ":{$field}";
-        }, $fields);
-        
-        $sql = "INSERT INTO {$this->table} (" . implode(', ', $fields) . ") 
-                VALUES (" . implode(', ', $placeholders) . ")";
-        
-        $this->db->query($sql);
-        
-        foreach ($data as $key => $value) {
-            $this->db->bind(":{$key}", $value);
-        }
-        
-        if ($this->db->execute()) {
-            return $this->db->lastInsertId();
-        }
-        
-        return false;
-    }
-    
-    /**
-     * Update record
-     */
-    public function update($id, $data) {
-        $data = $this->filterFillable($data);
-        
-        if ($this->timestamps) {
-            $data['updated_at'] = date('Y-m-d H:i:s');
-        }
-        
-        $fields = array_map(function($field) {
-            return "{$field} = :{$field}";
-        }, array_keys($data));
-        
-        $sql = "UPDATE {$this->table} SET " . implode(', ', $fields) . 
-               " WHERE {$this->primaryKey} = :id";
-        
-        if ($this->softDelete) {
-            $sql .= " AND deleted_at IS NULL";
-        }
-        
-        $this->db->query($sql);
-        $this->db->bind(':id', $id);
-        
-        foreach ($data as $key => $value) {
-            $this->db->bind(":{$key}", $value);
-        }
-        
-        return $this->db->execute();
-    }
-    
-    /**
-     * Delete record (soft delete if enabled)
-     */
-    public function delete($id) {
-        if ($this->softDelete) {
-            return $this->update($id, ['deleted_at' => date('Y-m-d H:i:s')]);
-        }
-        
-        $sql = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = :id";
-        $this->db->query($sql);
-        $this->db->bind(':id', $id);
-        
-        return $this->db->execute();
-    }
-    
-    /**
-     * Find records by field value
-     */
-    public function findBy($field, $value) {
-        $sql = "SELECT * FROM {$this->table} WHERE {$field} = :value";
-        if ($this->softDelete) {
-            $sql .= " AND deleted_at IS NULL";
-        }
-        
-        $this->db->query($sql);
-        $this->db->bind(':value', $value);
-        
-        return $this->db->resultSet();
-    }
-    
-    /**
-     * Find one record by field value
+     * Find record by field value
+     * @param string $field
+     * @param mixed $value
+     * @return array|null
      */
     public function findOneBy($field, $value) {
-        $sql = "SELECT * FROM {$this->table} WHERE {$field} = :value";
-        if ($this->softDelete) {
-            $sql .= " AND deleted_at IS NULL";
-        }
-        $sql .= " LIMIT 1";
-        
-        $this->db->query($sql);
-        $this->db->bind(':value', $value);
-        
-        return $this->db->single();
+        return $this->db->query("SELECT * FROM {$this->table} WHERE {$field} = ?")
+                       ->bind(1, $value)
+                       ->single();
     }
-    
+
     /**
-     * Count total records
+     * Find records by field value
+     * @param string $field
+     * @param mixed $value
+     * @return array
      */
-    public function count($conditions = '') {
-        $sql = "SELECT COUNT(*) as total FROM {$this->table}";
-        if ($this->softDelete) {
-            $sql .= " WHERE deleted_at IS NULL";
-            if ($conditions) {
-                $sql .= " AND {$conditions}";
-            }
-        } elseif ($conditions) {
-            $sql .= " WHERE {$conditions}";
+    public function findBy($field, $value) {
+        return $this->db->query("SELECT * FROM {$this->table} WHERE {$field} = ?")
+                       ->bind(1, $value)
+                       ->resultSet();
+    }
+
+    /**
+     * Get all records
+     * @return array
+     */
+    public function all() {
+        return $this->db->query("SELECT * FROM {$this->table}")
+                       ->resultSet();
+    }
+
+    /**
+     * Create new record
+     * @param array $data
+     * @return int|bool Last insert ID or false on failure
+     */
+    public function create($data) {
+        // Filter only fillable fields
+        $data = array_intersect_key($data, array_flip($this->fillable));
+        
+        if (empty($data)) {
+            return false;
+        }
+
+        $fields = implode(', ', array_keys($data));
+        $placeholders = str_repeat('?, ', count($data) - 1) . '?';
+        
+        $query = $this->db->query(
+            "INSERT INTO {$this->table} ({$fields}) VALUES ({$placeholders})"
+        );
+
+        $i = 1;
+        foreach ($data as $value) {
+            $query->bind($i++, $value);
+        }
+
+        return $query->execute() ? $this->db->lastInsertId() : false;
+    }
+
+    /**
+     * Update record
+     * @param int $id
+     * @param array $data
+     * @return bool
+     */
+    public function update($id, $data) {
+        // Filter only fillable fields
+        $data = array_intersect_key($data, array_flip($this->fillable));
+        
+        if (empty($data)) {
+            return false;
+        }
+
+        $fields = [];
+        foreach (array_keys($data) as $field) {
+            $fields[] = "{$field} = ?";
         }
         
-        $this->db->query($sql);
-        $result = $this->db->single();
-        
-        return $result->total;
+        $query = $this->db->query(
+            "UPDATE {$this->table} SET " . implode(', ', $fields) . " WHERE id = ?"
+        );
+
+        $i = 1;
+        foreach ($data as $value) {
+            $query->bind($i++, $value);
+        }
+        $query->bind($i, $id);
+
+        return $query->execute();
     }
-    
+
     /**
-     * Get paginated results
+     * Delete record
+     * @param int $id
+     * @return bool
      */
-    public function paginate($page = 1, $perPage = 10, $conditions = '', $orderBy = null) {
+    public function delete($id) {
+        return $this->db->query("DELETE FROM {$this->table} WHERE id = ?")
+                       ->bind(1, $id)
+                       ->execute();
+    }
+
+    /**
+     * Count records
+     * @param string|null $where Optional WHERE clause
+     * @return int
+     */
+    public function count($where = null) {
+        $sql = "SELECT COUNT(*) as count FROM {$this->table}";
+        if ($where) {
+            $sql .= " WHERE {$where}";
+        }
+        
+        $result = $this->db->query($sql)->single();
+        return (int)$result['count'];
+    }
+
+    /**
+     * Search records
+     * @param array $fields Fields to search in
+     * @param string $keyword Search keyword
+     * @param string|null $orderBy Order by field
+     * @param string $order Order direction (ASC/DESC)
+     * @return array
+     */
+    public function search($fields, $keyword, $orderBy = null, $order = 'ASC') {
+        $conditions = [];
+        $params = [];
+        
+        foreach ($fields as $field) {
+            $conditions[] = "{$field} LIKE ?";
+            $params[] = "%{$keyword}%";
+        }
+        
+        $sql = "SELECT * FROM {$this->table} WHERE " . implode(' OR ', $conditions);
+        
+        if ($orderBy) {
+            $sql .= " ORDER BY {$orderBy} {$order}";
+        }
+        
+        $query = $this->db->query($sql);
+        
+        $i = 1;
+        foreach ($params as $param) {
+            $query->bind($i++, $param);
+        }
+        
+        return $query->resultSet();
+    }
+
+    /**
+     * Paginate records
+     * @param int $page Page number
+     * @param int $perPage Records per page
+     * @param string|null $where Optional WHERE clause
+     * @param string|null $orderBy Optional ORDER BY clause
+     * @return array
+     */
+    public function paginate($page = 1, $perPage = 10, $where = null, $orderBy = null) {
         $offset = ($page - 1) * $perPage;
         
-        $sql = "SELECT * FROM {$this->table}";
-        if ($this->softDelete) {
-            $sql .= " WHERE deleted_at IS NULL";
-            if ($conditions) {
-                $sql .= " AND {$conditions}";
-            }
-        } elseif ($conditions) {
-            $sql .= " WHERE {$conditions}";
+        // Count total records
+        $sql = "SELECT COUNT(*) as count FROM {$this->table}";
+        if ($where) {
+            $sql .= " WHERE {$where}";
         }
+        $total = (int)$this->db->query($sql)->single()['count'];
         
+        // Get records for current page
+        $sql = "SELECT * FROM {$this->table}";
+        if ($where) {
+            $sql .= " WHERE {$where}";
+        }
         if ($orderBy) {
             $sql .= " ORDER BY {$orderBy}";
         }
-        
         $sql .= " LIMIT {$perPage} OFFSET {$offset}";
         
-        $this->db->query($sql);
-        $results = $this->db->resultSet();
-        
-        $total = $this->count($conditions);
+        $records = $this->db->query($sql)->resultSet();
         
         return [
-            'data' => $results,
+            'data' => $records,
             'total' => $total,
             'per_page' => $perPage,
             'current_page' => $page,
             'last_page' => ceil($total / $perPage)
         ];
     }
-    
+
     /**
-     * Begin database transaction
+     * Begin transaction
      */
     public function beginTransaction() {
         return $this->db->beginTransaction();
     }
-    
+
     /**
-     * Commit database transaction
+     * Commit transaction
      */
     public function commit() {
         return $this->db->commit();
     }
-    
+
     /**
-     * Rollback database transaction
+     * Rollback transaction
      */
-    public function rollBack() {
-        return $this->db->rollBack();
+    public function rollback() {
+        return $this->db->rollback();
     }
-    
+
     /**
-     * Filter data to only include fillable fields
+     * Get database instance
      */
-    protected function filterFillable($data) {
-        if (empty($this->fillable)) {
-            return $data;
-        }
-        
-        return array_intersect_key($data, array_flip($this->fillable));
-    }
-    
-    /**
-     * Get validation errors
-     */
-    public function getErrors() {
-        return $this->errors;
-    }
-    
-    /**
-     * Check if model has validation errors
-     */
-    public function hasErrors() {
-        return !empty($this->errors);
-    }
-    
-    /**
-     * Add validation error
-     */
-    protected function addError($field, $message) {
-        $this->errors[$field] = $message;
-    }
-    
-    /**
-     * Clear validation errors
-     */
-    protected function clearErrors() {
-        $this->errors = [];
+    public function getDb() {
+        return $this->db;
     }
 }

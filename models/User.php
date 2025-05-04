@@ -1,118 +1,220 @@
 <?php
-class User {
-    private $db;
-    
-    public function __construct() {
-        $this->db = new Database;
-    }
-    
-    // Find user by username
+/**
+ * User Model
+ * Handles user-related database operations
+ */
+class User extends Model {
+    protected $table = 'users';
+    protected $fillable = [
+        'username',
+        'password',
+        'email',
+        'name',
+        'role',
+        'status',
+        'remember_token',
+        'reset_token',
+        'reset_expires',
+        'last_login'
+    ];
+
+    /**
+     * Find user by username
+     * @param string $username
+     * @return array|null
+     */
     public function findByUsername($username) {
-        $this->db->query('SELECT * FROM users WHERE username = :username AND deleted_at IS NULL');
-        $this->db->bind(':username', $username);
-        
-        return $this->db->single();
+        return $this->db->query("SELECT * FROM {$this->table} WHERE username = ? AND status = 'active'")
+                       ->bind(1, $username)
+                       ->single();
     }
-    
-    // Find user by email
+
+    /**
+     * Find user by email
+     * @param string $email
+     * @return array|null
+     */
     public function findByEmail($email) {
-        $this->db->query('SELECT * FROM users WHERE email = :email AND deleted_at IS NULL');
-        $this->db->bind(':email', $email);
-        
-        return $this->db->single();
+        return $this->db->query("SELECT * FROM {$this->table} WHERE email = ? AND status = 'active'")
+                       ->bind(1, $email)
+                       ->single();
     }
-    
-    // Find user by ID
-    public function findById($id) {
-        $this->db->query('SELECT * FROM users WHERE id = :id AND deleted_at IS NULL');
-        $this->db->bind(':id', $id);
-        
-        return $this->db->single();
+
+    /**
+     * Find user by remember token
+     * @param string $token
+     * @return array|null
+     */
+    public function findByRememberToken($token) {
+        return $this->db->query("SELECT * FROM {$this->table} WHERE remember_token = ? AND status = 'active'")
+                       ->bind(1, $token)
+                       ->single();
     }
-    
-    // Create new user
-    public function create($data) {
-        $this->db->query('INSERT INTO users (name, username, email, password, role, created_at) 
-                         VALUES (:name, :username, :email, :password, :role, NOW())');
-        
-        // Bind values
-        $this->db->bind(':name', $data['name']);
-        $this->db->bind(':username', $data['username']);
-        $this->db->bind(':email', $data['email']);
-        $this->db->bind(':password', password_hash($data['password'], PASSWORD_DEFAULT));
-        $this->db->bind(':role', $data['role']);
-        
-        // Execute
-        return $this->db->execute();
+
+    /**
+     * Find user by reset token
+     * @param string $token
+     * @return array|null
+     */
+    public function findByResetToken($token) {
+        return $this->db->query("
+            SELECT * FROM {$this->table} 
+            WHERE reset_token = ? 
+            AND reset_expires > NOW() 
+            AND status = 'active'
+        ")
+        ->bind(1, $token)
+        ->single();
     }
-    
-    // Update user
-    public function update($data) {
-        $sql = 'UPDATE users SET 
-                name = :name, 
-                email = :email,
-                updated_at = NOW()';
-        
-        // Only update password if provided
-        if(!empty($data['password'])) {
-            $sql .= ', password = :password';
+
+    /**
+     * Store remember token
+     * @param int $userId
+     * @param string $token
+     * @return bool
+     */
+    public function storeRememberToken($userId, $token) {
+        return $this->db->query("UPDATE {$this->table} SET remember_token = ? WHERE id = ?")
+                       ->bind(1, $token)
+                       ->bind(2, $userId)
+                       ->execute();
+    }
+
+    /**
+     * Clear remember token
+     * @param int $userId
+     * @return bool
+     */
+    public function clearRememberToken($userId) {
+        return $this->db->query("UPDATE {$this->table} SET remember_token = NULL WHERE id = ?")
+                       ->bind(1, $userId)
+                       ->execute();
+    }
+
+    /**
+     * Store reset token
+     * @param int $userId
+     * @param string $token
+     * @return bool
+     */
+    public function storeResetToken($userId, $token) {
+        return $this->db->query("
+            UPDATE {$this->table} 
+            SET reset_token = ?, 
+                reset_expires = DATE_ADD(NOW(), INTERVAL 1 HOUR) 
+            WHERE id = ?
+        ")
+        ->bind(1, $token)
+        ->bind(2, $userId)
+        ->execute();
+    }
+
+    /**
+     * Clear reset token
+     * @param int $userId
+     * @return bool
+     */
+    public function clearResetToken($userId) {
+        return $this->db->query("
+            UPDATE {$this->table} 
+            SET reset_token = NULL, 
+                reset_expires = NULL 
+            WHERE id = ?
+        ")
+        ->bind(1, $userId)
+        ->execute();
+    }
+
+    /**
+     * Update password
+     * @param int $userId
+     * @param string $password
+     * @return bool
+     */
+    public function updatePassword($userId, $password) {
+        return $this->db->query("UPDATE {$this->table} SET password = ? WHERE id = ?")
+                       ->bind(1, $password)
+                       ->bind(2, $userId)
+                       ->execute();
+    }
+
+    /**
+     * Update last login
+     * @param int $userId
+     * @return bool
+     */
+    public function updateLastLogin($userId) {
+        return $this->db->query("UPDATE {$this->table} SET last_login = NOW() WHERE id = ?")
+                       ->bind(1, $userId)
+                       ->execute();
+    }
+
+    /**
+     * Get active users count
+     * @return int
+     */
+    public function getActiveCount() {
+        $result = $this->db->query("SELECT COUNT(*) as count FROM {$this->table} WHERE status = 'active'")
+                          ->single();
+        return (int)$result['count'];
+    }
+
+    /**
+     * Get users by role
+     * @param string $role
+     * @return array
+     */
+    public function getByRole($role) {
+        return $this->db->query("SELECT * FROM {$this->table} WHERE role = ? AND status = 'active'")
+                       ->bind(1, $role)
+                       ->resultSet();
+    }
+
+    /**
+     * Check if username exists
+     * @param string $username
+     * @param int|null $excludeId Exclude user ID when checking (for updates)
+     * @return bool
+     */
+    public function usernameExists($username, $excludeId = null) {
+        $sql = "SELECT COUNT(*) as count FROM {$this->table} WHERE username = ?";
+        $params = [$username];
+
+        if ($excludeId) {
+            $sql .= " AND id != ?";
+            $params[] = $excludeId;
         }
-        
-        $sql .= ' WHERE id = :id';
-        
-        $this->db->query($sql);
-        
-        // Bind values
-        $this->db->bind(':name', $data['name']);
-        $this->db->bind(':email', $data['email']);
-        $this->db->bind(':id', $data['id']);
-        
-        if(!empty($data['password'])) {
-            $this->db->bind(':password', password_hash($data['password'], PASSWORD_DEFAULT));
+
+        $query = $this->db->query($sql);
+        for ($i = 0; $i < count($params); $i++) {
+            $query->bind($i + 1, $params[$i]);
         }
-        
-        // Execute
-        return $this->db->execute();
+
+        $result = $query->single();
+        return (int)$result['count'] > 0;
     }
-    
-    // Soft delete user
-    public function delete($id) {
-        $this->db->query('UPDATE users SET deleted_at = NOW() WHERE id = :id');
-        $this->db->bind(':id', $id);
-        
-        return $this->db->execute();
-    }
-    
-    // Get all active users
-    public function getAll() {
-        $this->db->query('SELECT id, name, username, email, role, created_at, updated_at 
-                         FROM users 
-                         WHERE deleted_at IS NULL 
-                         ORDER BY name ASC');
-        
-        return $this->db->resultSet();
-    }
-    
-    // Change password
-    public function changePassword($userId, $newPassword) {
-        $this->db->query('UPDATE users SET 
-                         password = :password,
-                         updated_at = NOW() 
-                         WHERE id = :id');
-        
-        $this->db->bind(':password', password_hash($newPassword, PASSWORD_DEFAULT));
-        $this->db->bind(':id', $userId);
-        
-        return $this->db->execute();
-    }
-    
-    // Verify current password
-    public function verifyPassword($userId, $password) {
-        $this->db->query('SELECT password FROM users WHERE id = :id');
-        $this->db->bind(':id', $userId);
-        
-        $user = $this->db->single();
-        
-        return $user && password_verify($password, $user->password);
+
+    /**
+     * Check if email exists
+     * @param string $email
+     * @param int|null $excludeId Exclude user ID when checking (for updates)
+     * @return bool
+     */
+    public function emailExists($email, $excludeId = null) {
+        $sql = "SELECT COUNT(*) as count FROM {$this->table} WHERE email = ?";
+        $params = [$email];
+
+        if ($excludeId) {
+            $sql .= " AND id != ?";
+            $params[] = $excludeId;
+        }
+
+        $query = $this->db->query($sql);
+        for ($i = 0; $i < count($params); $i++) {
+            $query->bind($i + 1, $params[$i]);
+        }
+
+        $result = $query->single();
+        return (int)$result['count'] > 0;
     }
 }
