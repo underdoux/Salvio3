@@ -10,10 +10,22 @@ class Auth {
      * Initialize Auth
      */
     public static function init() {
+        // Ensure session is started
+        Session::start();
+
+        // Initialize static user cache if session exists
+        if (Session::has('user')) {
+            self::$user = Session::get('user');
+        }
+
         // Check for remember me cookie
         if (!self::check() && isset($_COOKIE['remember_token'])) {
             self::loginWithToken($_COOKIE['remember_token']);
         }
+
+        // Debug log
+        error_log("[Auth] Initialized - Session ID: " . session_id());
+        error_log("[Auth] User in session: " . (self::$user ? 'yes' : 'no'));
     }
 
     /**

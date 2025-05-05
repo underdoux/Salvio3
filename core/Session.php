@@ -20,10 +20,7 @@ class Session {
         }
 
         // Get application path for cookie
-        $appPath = parse_url(APP_URL, PHP_URL_PATH);
-        if (empty($appPath)) {
-            $appPath = '/';
-        }
+        $appPath = '/';  // Use root path to ensure cookie is available across all paths
 
         // Set session save handler if needed
         ini_set('session.save_handler', 'files');
@@ -32,13 +29,20 @@ class Session {
         ini_set('session.gc_maxlifetime', SESSION_LIFETIME);
         
         // Set session cookie parameters
-        session_set_cookie_params(
-            SESSION_LIFETIME,    // lifetime
-            $appPath,           // path
-            '',                 // domain (empty for host name)
-            false,             // secure
-            true              // httponly
-        );
+        session_set_cookie_params([
+            'lifetime' => SESSION_LIFETIME,
+            'path' => $appPath,
+            'domain' => '',     // empty for host name
+            'secure' => false,  // set to true in production
+            'httponly' => true,
+            'samesite' => 'Lax'
+        ]);
+
+        // Set session handler configurations
+        ini_set('session.use_strict_mode', 1);
+        ini_set('session.use_cookies', 1);
+        ini_set('session.use_only_cookies', 1);
+        ini_set('session.cache_limiter', 'nocache');
 
         // Debug log
         error_log("[Session] Starting session with parameters:");
@@ -49,17 +53,30 @@ class Session {
         // Set session name
         session_name(SESSION_NAME);
 
-        // Start session
-        if (session_start()) {
+        // Start or resume session
+        if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
+            session_start();
             self::$initialized = true;
 
             // Initialize session if needed
             if (!isset($_SESSION['__initialized'])) {
-                if (!headers_sent()) {
-                    session_regenerate_id(true);
-                }
+                session_regenerate_id(true);
+                $_SESSION['__initialized'] = true;
+                $_SESSION['__last_activity'] = time();
+            }
+
+            // Check session expiry
+            if (isset($_SESSION['__last_activity']) && (time() - $_SESSION['__last_activity'] > SESSION_LIFETIME)) {
+                self::clear();
+                session_start();
+                self::$initialized = true;
                 $_SESSION['__initialized'] = true;
             }
+
+            // Update last activity time
+            $_SESSION['__last_activity'] = time();
+        } else {
+            error_log("[Session] Failed to start session - Headers already sent or session_start failed");
         }
     }
 
@@ -200,6 +217,18 @@ class Session {
         $valid = hash_equals(self::get('csrf_token', ''), $token);
         error_log("[Session] Verify CSRF token: " . ($valid ? 'valid' : 'invalid'));
         return $valid;
+    }
+
+    /**
+     * Check if flash message exists
+     * @param string $type Message type
+     * @return bool
+     */
+    public static function hasFlash($type) {
+        self::ensureStarted();
+        $exists = isset($_SESSION['flash_' . $type]);
+        error_log("[Session] Check flash message exists - Type: {$type}, Exists: " . ($exists ? 'true' : 'false'));
+        return $exists;
     }
 
     /**

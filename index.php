@@ -22,11 +22,16 @@ require_once 'core/Controller.php';
 require_once 'core/Session.php';
 require_once 'core/Auth.php';
 
-// Start session before any output
+// Start session and initialize authentication
 Session::start();
-
-// Initialize authentication
 Auth::init();
+
+// Debug log
+error_log("[App] Request URI: " . $_SERVER['REQUEST_URI']);
+error_log("[App] Session status: " . session_status());
+error_log("[App] Session ID: " . session_id());
+error_log("[App] Session data: " . print_r($_SESSION, true));
+error_log("[App] Auth Status: " . (Auth::check() ? 'Authenticated' : 'Not Authenticated'));
 
 // Parse the URL
 $url = isset($_GET['url']) ? $_GET['url'] : '';

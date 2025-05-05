@@ -37,28 +37,29 @@ class Category extends Model {
         $total = $countQuery->single()['total'];
 
         // Get paginated data
-        $sql = sprintf(
-            "SELECT c.*, p.name as parent_name, 
+        $sql = "SELECT c.*, p.name as parent_name, 
             (SELECT COUNT(*) FROM products WHERE category_id = c.id AND status = 'active') as product_count 
-            FROM %s c 
-            LEFT JOIN %s p ON c.parent_id = p.id 
-            %s 
-            ORDER BY c.name ASC 
-            LIMIT ? OFFSET ?",
-            $this->table,
-            $this->table,
-            $where
-        );
-
-        $query = $this->db->query($sql);
-        $paramIndex = 1;
+            FROM {$this->table} c 
+            LEFT JOIN {$this->table} p ON c.parent_id = p.id";
         
         if (!empty($search)) {
-            $query->bind($paramIndex++, $searchTerm);
+            $sql .= " WHERE c.status = 'active' AND c.name LIKE ?";
+        } else {
+            $sql .= " WHERE c.status = 'active'";
         }
         
-        $query->bind($paramIndex++, $limit);
-        $query->bind($paramIndex, $offset);
+        $sql .= " ORDER BY c.name ASC LIMIT ? OFFSET ?";
+
+        $query = $this->db->query($sql);
+        
+        if (!empty($search)) {
+            $query->bind(1, $searchTerm);
+            $query->bind(2, $limit);
+            $query->bind(3, $offset);
+        } else {
+            $query->bind(1, $limit);
+            $query->bind(2, $offset);
+        }
 
         return [
             'data' => $query->resultSet(),
