@@ -28,15 +28,25 @@ class Session {
         ini_set('session.gc_divisor', 100);
         ini_set('session.gc_maxlifetime', SESSION_LIFETIME);
         
+        // Get the application base path from APP_URL
+        $basePath = parse_url(APP_URL, PHP_URL_PATH);
+        if (!$basePath) $basePath = '';
+
         // Set session cookie parameters
         session_set_cookie_params([
             'lifetime' => SESSION_LIFETIME,
-            'path' => $appPath,
-            'domain' => '',     // empty for host name
-            'secure' => false,  // set to true in production
+            'path' => $basePath,
+            'domain' => $_SERVER['HTTP_HOST'],
+            'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
             'httponly' => true,
             'samesite' => 'Lax'
         ]);
+
+        // Debug log cookie settings
+        error_log("[Session] Cookie settings:");
+        error_log("[Session] Path: " . ($basePath ? '/' . $basePath : '/'));
+        error_log("[Session] Domain: " . $_SERVER['HTTP_HOST']);
+        error_log("[Session] Secure: " . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'true' : 'false'));
 
         // Set session handler configurations
         ini_set('session.use_strict_mode', 1);

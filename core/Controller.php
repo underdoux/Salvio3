@@ -132,21 +132,14 @@ class Controller {
      * @param string $description Activity description
      */
     protected function logActivity($type, $description) {
-        $userId = Auth::id();
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
-        $userAgent = $_SERVER['HTTP_USER_AGENT'];
-
-        $db = Database::getInstance();
-        $db->query(
-            "INSERT INTO activity_logs (user_id, type, description, ip_address, user_agent) 
-             VALUES (?, ?, ?, ?, ?)"
-        )
-        ->bind(1, $userId)
-        ->bind(2, $type)
-        ->bind(3, $description)
-        ->bind(4, $ipAddress)
-        ->bind(5, $userAgent)
-        ->execute();
+        $activityLog = $this->model('ActivityLog');
+        $activityLog->log(
+            $type,
+            $description,
+            Auth::id(),
+            $_SERVER['REMOTE_ADDR'],
+            $_SERVER['HTTP_USER_AGENT']
+        );
     }
 
     /**

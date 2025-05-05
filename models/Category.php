@@ -21,15 +21,15 @@ class Category extends Model {
      */
     public function getAll($page = 1, $limit = 10, $search = '') {
         $offset = ($page - 1) * $limit;
-        $where = "WHERE status = 'active'";
+        $where = "WHERE c.status = 'active'";
         
         if (!empty($search)) {
-            $where .= " AND name LIKE ?";
+            $where .= " AND c.name LIKE ?";
             $searchTerm = "%{$search}%";
         }
 
         // Get total count
-        $countSql = "SELECT COUNT(*) as total FROM {$this->table} {$where}";
+        $countSql = "SELECT COUNT(*) as total FROM {$this->table} c {$where}";
         $countQuery = $this->db->query($countSql);
         if (!empty($search)) {
             $countQuery->bind(1, $searchTerm);
@@ -38,7 +38,7 @@ class Category extends Model {
 
         // Get paginated data
         $sql = "SELECT c.*, p.name as parent_name, 
-            (SELECT COUNT(*) FROM products WHERE category_id = c.id AND status = 'active') as product_count 
+            (SELECT COUNT(*) FROM products p WHERE p.category_id = c.id AND p.status = 'active') as product_count 
             FROM {$this->table} c 
             LEFT JOIN {$this->table} p ON c.parent_id = p.id";
         
@@ -76,8 +76,8 @@ class Category extends Model {
      */
     public function getById($id) {
         return $this->db->query("
-            SELECT * FROM {$this->table}
-            WHERE id = ? AND status = 'active'
+            SELECT c.* FROM {$this->table} c
+            WHERE c.id = ? AND c.status = 'active'
         ")
         ->bind(1, $id)
         ->single();
@@ -89,9 +89,9 @@ class Category extends Model {
      */
     public function getActive() {
         return $this->db->query("
-            SELECT * FROM {$this->table}
-            WHERE status = 'active'
-            ORDER BY name ASC
+            SELECT c.* FROM {$this->table} c
+            WHERE c.status = 'active'
+            ORDER BY c.name ASC
         ")->resultSet();
     }
 
@@ -105,14 +105,14 @@ class Category extends Model {
             WITH RECURSIVE category_tree AS (
                 -- Base case: parent categories
                 SELECT 
-                    id,
-                    name,
-                    parent_id,
+                    c.id,
+                    c.name,
+                    c.parent_id,
                     0 as level,
-                    CAST(name AS CHAR(1000)) as path
-                FROM {$this->table}
-                WHERE parent_id " . ($parentId === null ? "IS NULL" : "= ?") . "
-                AND status = 'active'
+                    CAST(c.name AS CHAR(1000)) as path
+                FROM {$this->table} c
+                WHERE c.parent_id " . ($parentId === null ? "IS NULL" : "= ?") . "
+                AND c.status = 'active'
                 
                 UNION ALL
                 
@@ -127,7 +127,7 @@ class Category extends Model {
                 INNER JOIN category_tree ct ON c.parent_id = ct.id
                 WHERE c.status = 'active'
             )
-            SELECT * FROM category_tree
+            SELECT ct.* FROM category_tree ct
             ORDER BY path
         ";
 
@@ -165,8 +165,8 @@ class Category extends Model {
     public function getWithProducts($id, $limit = 10, $offset = 0) {
         // Get category details
         $category = $this->db->query("
-            SELECT * FROM {$this->table}
-            WHERE id = ? AND status = 'active'
+            SELECT c.* FROM {$this->table} c
+            WHERE c.id = ? AND c.status = 'active'
         ")
         ->bind(1, $id)
         ->single();
@@ -192,9 +192,9 @@ class Category extends Model {
         // Get total product count
         $total = $this->db->query("
             SELECT COUNT(*) as total
-            FROM products
-            WHERE category_id = ?
-            AND status = 'active'
+            FROM products p
+            WHERE p.category_id = ?
+            AND p.status = 'active'
         ")
         ->bind(1, $id)
         ->single();
@@ -214,9 +214,9 @@ class Category extends Model {
     public function hasChildren($id) {
         $result = $this->db->query("
             SELECT COUNT(*) as count
-            FROM {$this->table}
-            WHERE parent_id = ?
-            AND status = 'active'
+            FROM {$this->table} c
+            WHERE c.parent_id = ?
+            AND c.status = 'active'
         ")
         ->bind(1, $id)
         ->single();
@@ -232,9 +232,9 @@ class Category extends Model {
     public function hasProducts($id) {
         $result = $this->db->query("
             SELECT COUNT(*) as count
-            FROM products
-            WHERE category_id = ?
-            AND status = 'active'
+            FROM products p
+            WHERE p.category_id = ?
+            AND p.status = 'active'
         ")
         ->bind(1, $id)
         ->single();
@@ -252,13 +252,13 @@ class Category extends Model {
             WITH RECURSIVE category_path AS (
                 -- Base case: start with the target category
                 SELECT 
-                    id,
-                    name,
-                    parent_id,
+                    c.id,
+                    c.name,
+                    c.parent_id,
                     1 as level
-                FROM {$this->table}
-                WHERE id = ?
-                AND status = 'active'
+                FROM {$this->table} c
+                WHERE c.id = ?
+                AND c.status = 'active'
                 
                 UNION ALL
                 
@@ -272,7 +272,7 @@ class Category extends Model {
                 INNER JOIN category_path cp ON c.id = cp.parent_id
                 WHERE c.status = 'active'
             )
-            SELECT * FROM category_path
+            SELECT cp.* FROM category_path cp
             ORDER BY level DESC
         ")
         ->bind(1, $id)
@@ -319,7 +319,7 @@ class Category extends Model {
         }
 
         $params[] = $id;
-        $sql = "UPDATE {$this->table} SET " . implode(', ', $updates) . " WHERE id = ?";
+        $sql = "UPDATE {$this->table} c SET " . implode(', ', $updates) . " WHERE c.id = ?";
         
         $query = $this->db->query($sql);
         for ($i = 0; $i < count($params); $i++) {
@@ -335,7 +335,7 @@ class Category extends Model {
      * @return bool Success status
      */
     public function delete($id) {
-        return $this->db->query("UPDATE {$this->table} SET status = 'inactive' WHERE id = ?")
+        return $this->db->query("UPDATE {$this->table} c SET c.status = 'inactive' WHERE c.id = ? AND c.status = 'active'")
             ->bind(1, $id)
             ->execute();
     }
@@ -351,12 +351,12 @@ class Category extends Model {
         $offset = ($page - 1) * $limit;
 
         // Get total count
-        $countSql = "SELECT COUNT(*) as total FROM products WHERE category_id = ? AND status = 'active'";
+        $countSql = "SELECT COUNT(*) as total FROM products p WHERE p.category_id = ? AND p.status = 'active'";
         $countQuery = $this->db->query($countSql)->bind(1, $id);
         $total = $countQuery->single()['total'];
 
         // Get paginated data
-        $sql = "SELECT * FROM products WHERE category_id = ? AND status = 'active' ORDER BY name ASC LIMIT ? OFFSET ?";
+        $sql = "SELECT p.* FROM products p WHERE p.category_id = ? AND p.status = 'active' ORDER BY p.name ASC LIMIT ? OFFSET ?";
         $query = $this->db->query($sql)
             ->bind(1, $id)
             ->bind(2, $limit)
@@ -380,15 +380,15 @@ class Category extends Model {
             WITH RECURSIVE category_tree AS (
                 -- Base case: root categories
                 SELECT 
-                    id,
-                    name,
-                    parent_id,
+                    c.id,
+                    c.name,
+                    c.parent_id,
                     0 as level,
-                    CAST(name AS CHAR(1000)) as path
-                FROM {$this->table}
-                WHERE parent_id IS NULL
-                AND status = 'active'
-                " . ($excludeId ? "AND id != ?" : "") . "
+                    CAST(c.name AS CHAR(1000)) as path
+                FROM {$this->table} c
+                WHERE c.parent_id IS NULL
+                AND c.status = 'active'
+                " . ($excludeId ? "AND c.id != ?" : "") . "
                 
                 UNION ALL
                 
@@ -405,10 +405,10 @@ class Category extends Model {
                 " . ($excludeId ? "AND c.id != ?" : "") . "
             )
             SELECT 
-                id,
-                path as name,
-                level
-            FROM category_tree
+                ct.id,
+                ct.path as name,
+                ct.level
+            FROM category_tree ct
             ORDER BY path
         ";
 

@@ -1,6 +1,10 @@
 <?php
+// Load configuration
+require_once 'config/config.php';
+require_once 'core/Session.php';
+
 // Start session with debug info
-session_start();
+Session::start();
 error_log("[Session Debug] Starting session debug test");
 error_log("[Session Debug] Session ID: " . session_id());
 
@@ -11,7 +15,19 @@ echo "<pre>";
 echo "Session ID: " . session_id() . "\n";
 echo "Session Status: " . session_status() . "\n";
 echo "Session Save Path: " . session_save_path() . "\n";
-echo "Session Cookie Parameters:\n";
+
+echo "\nApplication Info:\n";
+echo "APP_URL: " . APP_URL . "\n";
+echo "SESSION_NAME: " . SESSION_NAME . "\n";
+echo "SESSION_LIFETIME: " . SESSION_LIFETIME . "\n";
+
+echo "\nRequest Info:\n";
+echo "Request URI: " . $_SERVER['REQUEST_URI'] . "\n";
+echo "Script Name: " . $_SERVER['SCRIPT_NAME'] . "\n";
+echo "PHP_SELF: " . $_SERVER['PHP_SELF'] . "\n";
+echo "HTTP_HOST: " . $_SERVER['HTTP_HOST'] . "\n";
+
+echo "\nSession Cookie Parameters:\n";
 print_r(session_get_cookie_params());
 
 echo "\nSession Data:\n";
@@ -19,6 +35,14 @@ print_r($_SESSION);
 
 echo "\nCookies:\n";
 print_r($_COOKIE);
+
+echo "\nSession Name: " . session_name() . "\n";
+echo "Session ID: " . session_id() . "\n";
+
+echo "\nAll Headers:\n";
+foreach (getallheaders() as $name => $value) {
+    echo "$name: $value\n";
+}
 
 echo "\nPHP Session Settings:\n";
 $sessionSettings = [

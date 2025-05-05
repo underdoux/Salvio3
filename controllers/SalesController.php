@@ -62,7 +62,7 @@ class SalesController extends Controller {
             {$whereClause}
         ";
 
-        $countQuery = $this->saleModel->db->query($countSql);
+        $countQuery = $this->saleModel->getDb()->query($countSql);
         foreach ($params as $i => $param) {
             $countQuery->bind($i + 1, $param);
         }
@@ -85,7 +85,7 @@ class SalesController extends Controller {
             LIMIT ? OFFSET ?
         ";
 
-        $query = $this->saleModel->db->query($sql);
+        $query = $this->saleModel->getDb()->query($sql);
         foreach ($params as $i => $param) {
             $query->bind($i + 1, $param);
         }
@@ -210,7 +210,7 @@ class SalesController extends Controller {
         }
 
         // Get sale with items
-        $sale = $this->db->query("
+        $sale = $this->saleModel->getDb()->query("
             SELECT 
                 s.*,
                 c.name as customer_name,
@@ -233,7 +233,7 @@ class SalesController extends Controller {
         }
 
         // Get sale items
-        $items = $this->db->query("
+        $items = $this->saleModel->getDb()->query("
             SELECT 
                 si.*,
                 p.name as product_name,
@@ -327,7 +327,7 @@ class SalesController extends Controller {
         }
 
         // Get sale data
-        $sale = $this->db->query("
+        $sale = $this->saleModel->getDb()->query("
             SELECT 
                 s.*,
                 c.name as customer_name,
@@ -350,7 +350,7 @@ class SalesController extends Controller {
         }
 
         // Get sale items
-        $items = $this->db->query("
+        $items = $this->saleModel->getDb()->query("
             SELECT 
                 si.*,
                 p.name as product_name,
