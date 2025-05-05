@@ -100,19 +100,32 @@ class NotificationHandler {
      * Store notification in database
      */
     private function storeNotification($notification) {
+        // First create a template
         $this->db->query("
-            INSERT INTO notifications (
-                type, title, message, data, priority, icon, color, created_at
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO notification_templates (
+                name, type, subject, content, variables, status, created_by
+            ) VALUES (?, 'email', ?, ?, ?, 'active', ?)
         ")
-        ->bind(1, $notification['type'])
+        ->bind(1, 'system_' . $notification['type'])
         ->bind(2, $notification['title'])
         ->bind(3, $notification['message'])
-        ->bind(4, $notification['data'])
-        ->bind(5, $notification['priority'])
-        ->bind(6, $notification['icon'])
-        ->bind(7, $notification['color'])
-        ->bind(8, $notification['created_at'])
+        ->bind(4, json_encode(['icon' => $notification['icon'], 'color' => $notification['color']]))
+        ->bind(5, $notification['user_id'] ?? 1) // Use provided user_id or default to 1 (admin)
+        ->execute();
+
+        $templateId = $this->db->lastInsertId();
+
+        // Then queue the notification
+        $this->db->query("
+            INSERT INTO notification_queue (
+                template_id, type, subject, content, variables, status, priority
+            ) VALUES (?, 'email', ?, ?, ?, 'pending', ?)
+        ")
+        ->bind(1, $templateId)
+        ->bind(2, $notification['title'])
+        ->bind(3, $notification['message'])
+        ->bind(4, json_encode(['icon' => $notification['icon'], 'color' => $notification['color']]))
+        ->bind(5, isset($notification['priority']) ? 1 : 0)
         ->execute();
 
         return $this->db->lastInsertId();
@@ -122,27 +135,14 @@ class NotificationHandler {
      * Dispatch notification to recipient
      */
     private function dispatchNotification($notificationId, $recipient, $notification) {
-        // Store recipient notification
-        $this->db->query("
-            INSERT INTO notification_recipients (
-                notification_id, user_id, email, status, created_at
-            ) VALUES (?, ?, ?, 'pending', NOW())
-        ")
-        ->bind(1, $notificationId)
-        ->bind(2, $recipient['id'] ?? null)
-        ->bind(3, $recipient['email'] ?? null)
-        ->execute();
-
-        $recipientId = $this->db->lastInsertId();
-
         // Queue email notification
         if (!empty($recipient['email']) && ($notification['email'] ?? true)) {
-            $this->queueEmail($recipientId, $recipient, $notification);
+            $this->queueEmail($notificationId, $recipient, $notification);
         }
 
         // Queue browser notification
         if (!empty($recipient['id']) && ($notification['browser'] ?? true)) {
-            $this->queueBrowser($recipientId, $recipient, $notification);
+            $this->queueBrowser($notificationId, $recipient, $notification);
         }
     }
 
@@ -215,16 +215,14 @@ class NotificationHandler {
      */
     private function storeBrowserNotification($notification) {
         $this->db->query("
-            INSERT INTO browser_notifications (
-                user_id, title, message, icon, color, url, created_at
-            ) VALUES (?, ?, ?, ?, ?, ?, NOW())
+            INSERT INTO notification_history (
+                queue_id, type, recipient, subject, content, status, sent_at
+            ) VALUES (?, 'whatsapp', ?, ?, ?, 'sent', NOW())
         ")
-        ->bind(1, $notification['user_id'])
-        ->bind(2, $notification['notification']['title'])
-        ->bind(3, $notification['notification']['message'])
-        ->bind(4, $notification['notification']['icon'])
-        ->bind(5, $notification['notification']['color'])
-        ->bind(6, $notification['notification']['url'])
+        ->bind(1, $notification['recipient_id'])
+        ->bind(2, $notification['user_id'])
+        ->bind(3, $notification['notification']['title'])
+        ->bind(4, $notification['notification']['message'])
         ->execute();
 
         $this->updateRecipientStatus($notification['recipient_id'], 'sent');
@@ -276,10 +274,10 @@ class NotificationHandler {
      */
     public function getUnread($userId, $limit = 10) {
         return $this->db->query("
-            SELECT n.*, bn.read_at
-            FROM notifications n
-            INNER JOIN browser_notifications bn ON bn.notification_id = n.id
-            WHERE bn.user_id = ? AND bn.read_at IS NULL
+            SELECT n.*, h.sent_at
+            FROM notification_queue n
+            INNER JOIN notification_history h ON h.queue_id = n.id
+            WHERE h.recipient = ? AND h.status = 'sent'
             ORDER BY n.created_at DESC
             LIMIT ?
         ")
@@ -293,9 +291,9 @@ class NotificationHandler {
      */
     public function markAsRead($notificationId, $userId) {
         return $this->db->query("
-            UPDATE browser_notifications
-            SET read_at = NOW()
-            WHERE notification_id = ? AND user_id = ?
+            UPDATE notification_history
+            SET status = 'read'
+            WHERE queue_id = ? AND recipient = ?
         ")
         ->bind(1, $notificationId)
         ->bind(2, $userId)
@@ -307,9 +305,9 @@ class NotificationHandler {
      */
     public function markAllAsRead($userId) {
         return $this->db->query("
-            UPDATE browser_notifications
-            SET read_at = NOW()
-            WHERE user_id = ? AND read_at IS NULL
+            UPDATE notification_history
+            SET status = 'read'
+            WHERE recipient = ? AND status = 'sent'
         ")
         ->bind(1, $userId)
         ->execute();

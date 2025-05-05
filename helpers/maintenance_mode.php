@@ -117,7 +117,7 @@ class MaintenanceMode {
         }
 
         // Check if user's IP is allowed
-        $ip = $_SERVER['REMOTE_ADDR'];
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
         if (in_array($ip, $this->config['allowed_ips'])) {
             return true;
         }

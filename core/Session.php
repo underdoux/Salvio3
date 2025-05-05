@@ -7,10 +7,16 @@ class Session {
     private static $instance = null;
     private $flash = [];
 
-    private function __construct() {
+    /**
+     * Start session
+     */
+    public static function start() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+    }
+
+    private function __construct() {
         
         // Initialize flash data
         if (!isset($_SESSION['flash'])) {

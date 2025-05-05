@@ -3,6 +3,16 @@
  * Application Configuration
  */
 
+// Application constants
+define('APP_NAME', 'Salvio POS');
+define('APP_VERSION', '1.0.0');
+
+// Path constants
+define('BASE_PATH', dirname(__DIR__));
+define('CONFIG_PATH', __DIR__);
+define('LOG_PATH', BASE_PATH . '/logs');
+define('UPLOAD_PATH', BASE_PATH . '/uploads');
+
 // Debug mode (set to false in production)
 define('DEBUG', true);
 
@@ -44,9 +54,15 @@ define('SESSION_LIFETIME', 2 * 60 * 60); // 2 hours
 define('REMEMBER_ME_LIFETIME', 30 * 24 * 60 * 60); // 30 days
 
 // Email configuration
-define('MAIL_FROM_ADDRESS', 'no-reply@example.com');
+define('MAIL_FROM', 'no-reply@example.com');
 define('MAIL_FROM_NAME', 'Salvio POS');
 define('MAIL_REPLY_TO', 'support@example.com');
+
+// Server variables for testing
+$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+$_SERVER['HTTP_HOST'] = 'localhost';
+$_SERVER['REQUEST_URI'] = '/';
+$_SERVER['SCRIPT_NAME'] = '/index.php';
 
 // WhatsApp configuration
 define('WHATSAPP_ENABLED', false);
@@ -87,7 +103,9 @@ define('CACHE_LIFETIME', 60 * 60); // 1 hour
 define('CACHE_PREFIX', 'salvio_');
 
 // Log settings
-define('LOG_PATH', __DIR__ . '/../logs');
+if (!defined('LOG_PATH')) {
+    define('LOG_PATH', __DIR__ . '/../logs');
+}
 define('LOG_LEVEL', DEBUG ? 'debug' : 'error');
 define('LOG_MAX_FILES', 30);
 
@@ -96,26 +114,8 @@ define('BACKUP_PATH', __DIR__ . '/../backups');
 define('BACKUP_MAX_FILES', 30);
 define('BACKUP_COMPRESS', true);
 
-// Custom functions
-function format_currency($amount) {
-    return number_format($amount, CURRENCY_DECIMALS, DECIMAL_SEPARATOR, THOUSAND_SEPARATOR);
-}
-
-function format_date($date, $format = 'Y-m-d H:i:s') {
-    return date($format, strtotime($date));
-}
-
-function is_production() {
-    return !DEBUG;
-}
-
-function get_upload_path($type = '') {
-    return rtrim(UPLOAD_PATH . '/' . $type, '/');
-}
-
-function get_upload_url($path) {
-    return BASE_URL . '/uploads/' . ltrim($path, '/');
-}
+// Helper functions
+require_once __DIR__ . '/../helpers/functions.php';
 
 // Load environment-specific configuration if exists
 $envConfig = __DIR__ . '/config.' . (DEBUG ? 'development' : 'production') . '.php';
