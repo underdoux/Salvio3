@@ -19,7 +19,7 @@ class View {
      */
     private function loadHelpers($helpers) {
         foreach ($helpers as $helper) {
-            $helperFile = __DIR__ . "/../helpers/{$helper}_helper.php";
+            $helperFile = dirname(__DIR__) . "/helpers/{$helper}_helper.php";
             if (file_exists($helperFile)) {
                 require_once $helperFile;
             } else {
