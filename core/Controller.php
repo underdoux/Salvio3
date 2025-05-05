@@ -26,15 +26,6 @@ class Controller {
     }
 
     /**
-     * Load view
-     * @param string $view View name
-     * @param array $data Data to pass to view
-     */
-    protected function view($view, $data = []) {
-        $this->view->render($view, $data);
-    }
-
-    /**
      * Redirect to URL
      * @param string $url URL to redirect to
      */

@@ -51,7 +51,7 @@ class DashboardController extends Controller {
         $lowStockProducts = $this->productModel->getLowStockProducts(5);
 
         // Pass data to view
-        $this->view('dashboard/index', [
+        $this->view->render('dashboard/index', [
             'title' => 'Dashboard - ' . APP_NAME,
             'todaySales' => $todaySales,
             'todayOrders' => $todayOrders,

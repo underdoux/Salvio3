@@ -66,7 +66,13 @@ class Auth {
         Session::set('user', $user);
         Session::regenerate();
 
+        // Update static cache
         self::$user = $user;
+
+        // Debug log
+        error_log("[Auth] Login successful for user: " . $user['username']);
+        error_log("[Auth] Session ID: " . session_id());
+        error_log("[Auth] Session data: " . print_r($_SESSION, true));
     }
 
     /**

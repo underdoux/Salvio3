@@ -24,7 +24,7 @@ class AuthController extends Controller {
         $this->view->setLayout(null);
 
         // Show login form
-        $this->view('auth/login', [
+        $this->view->render('auth/login', [
             'title' => 'Login - ' . APP_NAME
         ]);
     }
@@ -136,7 +136,7 @@ class AuthController extends Controller {
             $this->redirect('auth/forgot');
         }
 
-        $this->view('auth/forgot', [
+        $this->view->render('auth/forgot', [
             'title' => 'Forgot Password - ' . APP_NAME
         ]);
     }
@@ -185,7 +185,7 @@ class AuthController extends Controller {
             $this->redirect('auth');
         }
 
-        $this->view('auth/reset', [
+        $this->view->render('auth/reset', [
             'title' => 'Reset Password - ' . APP_NAME,
             'token' => $token
         ]);

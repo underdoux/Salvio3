@@ -217,4 +217,120 @@ class User extends Model {
         $result = $query->single();
         return (int)$result['count'] > 0;
     }
+
+    /**
+     * Create a new user
+     * @param array $data User data
+     * @return int|false The new user ID or false on failure
+     */
+    public function create($data) {
+        $sql = "INSERT INTO {$this->table} (username, password, email, name, role, status) VALUES (?, ?, ?, ?, ?, ?)";
+        
+        return $this->db->query($sql)
+            ->bind(1, $data['username'])
+            ->bind(2, $data['password'])
+            ->bind(3, $data['email'])
+            ->bind(4, $data['name'])
+            ->bind(5, $data['role'])
+            ->bind(6, $data['status'] ?? 'active')
+            ->lastInsertId();
+    }
+
+    /**
+     * Update a user
+     * @param int $id User ID
+     * @param array $data User data
+     * @return bool Success status
+     */
+    public function update($id, $data) {
+        $updates = [];
+        $params = [];
+        
+        foreach ($this->fillable as $field) {
+            if (isset($data[$field])) {
+                $updates[] = "{$field} = ?";
+                $params[] = $data[$field];
+            }
+        }
+        
+        if (empty($updates)) {
+            return false;
+        }
+
+        $params[] = $id;
+        $sql = "UPDATE {$this->table} SET " . implode(', ', $updates) . " WHERE id = ?";
+        
+        $query = $this->db->query($sql);
+        for ($i = 0; $i < count($params); $i++) {
+            $query->bind($i + 1, $params[$i]);
+        }
+        
+        return $query->execute();
+    }
+
+    /**
+     * Delete a user (soft delete)
+     * @param int $id User ID
+     * @return bool Success status
+     */
+    public function delete($id) {
+        return $this->db->query("UPDATE {$this->table} SET status = 'inactive' WHERE id = ?")
+            ->bind(1, $id)
+            ->execute();
+    }
+
+    /**
+     * Get all users with pagination
+     * @param int $page Page number
+     * @param int $limit Items per page
+     * @param string $search Search term
+     * @return array Users list and total count
+     */
+    public function getAll($page = 1, $limit = 10, $search = '') {
+        $offset = ($page - 1) * $limit;
+        $where = '';
+        $params = [];
+
+        if ($search) {
+            $where = "WHERE (username LIKE ? OR email LIKE ? OR name LIKE ?)";
+            $search = "%{$search}%";
+            $params = [$search, $search, $search];
+        }
+
+        // Get total count
+        $countSql = "SELECT COUNT(*) as total FROM {$this->table} " . $where;
+        $countQuery = $this->db->query($countSql);
+        foreach ($params as $i => $param) {
+            $countQuery->bind($i + 1, $param);
+        }
+        $total = (int)$countQuery->single()['total'];
+
+        // Get paginated results
+        $sql = "SELECT * FROM {$this->table} {$where} ORDER BY created_at DESC LIMIT ? OFFSET ?";
+        $query = $this->db->query($sql);
+        
+        foreach ($params as $i => $param) {
+            $query->bind($i + 1, $param);
+        }
+        $query->bind(count($params) + 1, $limit);
+        $query->bind(count($params) + 2, $offset);
+
+        return [
+            'data' => $query->resultSet(),
+            'total' => $total,
+            'page' => $page,
+            'last_page' => ceil($total / $limit)
+        ];
+    }
+
+    /**
+     * Get user by ID
+     * @param int $id User ID
+     * @return array|null User data
+     */
+    public function getById($id) {
+        return $this->db->query("SELECT * FROM {$this->table} WHERE id = ?")
+            ->bind(1, $id)
+            ->single();
+    }
 }

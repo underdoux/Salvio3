@@ -187,7 +187,7 @@ class Database {
     /**
      * Prevent unserializing of singleton
      */
-    public function __wakeup() {
+    public function __wakeup(): void {
         throw new Exception("Cannot unserialize singleton");
     }
 }

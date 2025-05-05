@@ -1,1 +1,1 @@
-<?php return true;
+<?php define("APP_INSTALLED", true);

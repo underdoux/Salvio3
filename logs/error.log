@@ -72,3 +72,1723 @@ Stack trace:
 [05-May-2025 05:17:14 Asia/Jakarta] Login successful for username: admin
 [05-May-2025 05:25:15 Asia/Jakarta] Login attempt for username: admin
 [05-May-2025 05:25:15 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 05:30:37 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 05:30:37 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 05:36:33 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 05:36:33 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 05:43:04 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 05:43:04 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 05:43:18 Asia/Jakarta] PHP Fatal error:  Declaration of CategoriesController::view($id = null) must be compatible with Controller::view($view, $data = []) in C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php on line 205
+[05-May-2025 05:44:16 Asia/Jakarta] PHP Fatal error:  Declaration of CategoriesController::view($id = null) must be compatible with Controller::view($view, $data = []) in C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php on line 205
+[05-May-2025 05:46:26 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 05:46:26 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 05:46:26 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Product::getByCategory() in C:\xampp\htdocs\Salvio3\models\Product.php on line 252
+[05-May-2025 05:48:28 Asia/Jakarta] PHP Fatal error:  Declaration of CategoriesController::view($id = null) must be compatible with Controller::view($view, $data = []) in C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php on line 205
+[05-May-2025 05:50:08 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 05:50:08 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 05:51:28 Asia/Jakarta] PHP Fatal error:  Declaration of CategoriesController::view($id = null) must be compatible with Controller::view($view, $data = []) in C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php on line 205
+[05-May-2025 05:54:30 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 05:54:30 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 05:58:04 Asia/Jakarta] PHP Fatal error:  Declaration of CategoriesController::view($id = null) must be compatible with Controller::view($view, $data = []) in C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php on line 210
+[05-May-2025 05:59:17 Asia/Jakarta] PHP Fatal error:  Declaration of CategoriesController::view($id = null) must be compatible with Controller::view($view, $data = []) in C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php on line 210
+[05-May-2025 06:02:39 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 06:02:39 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 06:02:52 Asia/Jakarta] PHP Fatal error:  Declaration of CategoriesController::view($id = null) must be compatible with Controller::view($view, $data = []) in C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php on line 210
+[05-May-2025 06:04:04 Asia/Jakarta] PHP Fatal error:  Declaration of CategoriesController::view($id = null) must be compatible with Controller::view($view, $data = []) in C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php on line 205
+[05-May-2025 06:06:13 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 06:06:13 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 06:08:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method AuthController::view() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:27
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php(50): AuthController->index()
+#1 {main}
+  thrown in C:\xampp\htdocs\Salvio3\controllers\AuthController.php on line 27
+[05-May-2025 06:10:38 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 06:10:38 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 06:10:38 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method DashboardController::view() in C:\xampp\htdocs\Salvio3\controllers\DashboardController.php:54
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php(50): DashboardController->index()
+#1 {main}
+  thrown in C:\xampp\htdocs\Salvio3\controllers\DashboardController.php on line 54
+[05-May-2025 06:12:15 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 06:12:15 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 06:13:10 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 06:13:10 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Starting session...
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Cookie path: /Salvio3
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Session started. Session ID: dvthctv8pmfl0j54v1ogsa4mdn
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Session data: Array
+(
+)
+
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:18:47 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 06:18:47 Asia/Jakarta] [Router] Session ID: dvthctv8pmfl0j54v1ogsa4mdn
+[05-May-2025 06:18:47 Asia/Jakarta] [Router] Session Data: Array
+(
+)
+
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Check flash_error exists: false
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Check flash_success exists: false
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Set csrf_token: f4e5cc6b788f18b8dc7c04da9cda1a92e2df173d1e16bb5d8536d42e968f06e1
+[05-May-2025 06:18:47 Asia/Jakarta] [Session] Generated CSRF token: f4e5cc6b788f18b8dc7c04da9cda1a92e2df173d1e16bb5d8536d42e968f06e1
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Starting session...
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Application path: /Salvio3
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Setting cookie parameters: Array
+(
+    [lifetime] => 7200
+    [path] => /Salvio3
+    [domain] => 
+    [secure] => 
+    [httponly] => 1
+    [samesite] => Lax
+)
+
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Session started successfully
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Session ID: ero4e68inbf0m9gv5r5gget1vl
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] New session initialized
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:20:37 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 06:20:37 Asia/Jakarta] [Router] Session ID: 4fh1t8n497if7eplvbc85sspfn
+[05-May-2025 06:20:37 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Set csrf_token: 97586579a0d10d7a06f1e56c0eae582fdd22437cd9ef6d3293123111b555ebb3
+[05-May-2025 06:20:37 Asia/Jakarta] [Session] Generated CSRF token: 97586579a0d10d7a06f1e56c0eae582fdd22437cd9ef6d3293123111b555ebb3
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Starting session...
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Application path: /Salvio3
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Setting cookie parameters: Array
+(
+    [lifetime] => 7200
+    [path] => /Salvio3
+    [domain] => 
+    [secure] => 
+    [httponly] => 1
+    [samesite] => Lax
+)
+
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Session started successfully
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Session ID: 4fh1t8n497if7eplvbc85sspfn
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:21:21 Asia/Jakarta] [Router] Controller: auth, Action: login
+[05-May-2025 06:21:21 Asia/Jakarta] [Router] Session ID: 4fh1t8n497if7eplvbc85sspfn
+[05-May-2025 06:21:21 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 97586579a0d10d7a06f1e56c0eae582fdd22437cd9ef6d3293123111b555ebb3
+)
+
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:21:21 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Set user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Regenerated session ID. Old: 4fh1t8n497if7eplvbc85sspfn, New: etadhmrhlv82487gkt5didipgu
+[05-May-2025 06:21:21 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Starting session...
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Application path: /Salvio3
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Setting cookie parameters: Array
+(
+    [lifetime] => 7200
+    [path] => /Salvio3
+    [domain] => 
+    [secure] => 
+    [httponly] => 1
+    [samesite] => Lax
+)
+
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Session started successfully
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Session ID: etadhmrhlv82487gkt5didipgu
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 06:21:21 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 06:21:21 Asia/Jakarta] [Router] Session ID: etadhmrhlv82487gkt5didipgu
+[05-May-2025 06:21:21 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 97586579a0d10d7a06f1e56c0eae582fdd22437cd9ef6d3293123111b555ebb3
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 06:21:21 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 06:23:34 Asia/Jakarta] [Session Debug] Starting session debug...
+[05-May-2025 06:23:34 Asia/Jakarta] [Session Debug] Application Path: /Salvio3
+[05-May-2025 06:23:34 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Starting session with path: /Salvio3
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Session started successfully. ID: ks0l7lm067hak2atbj07213u67
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] New session initialized with ID: ps54ukclq6avo7852phevg4r5f
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:53:04 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 06:53:04 Asia/Jakarta] [Router] Session ID: ps54ukclq6avo7852phevg4r5f
+[05-May-2025 06:53:04 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Set csrf_token: a9467d51b8116ce0e899ffb70b3a2d3727f55982da30a1cc810e4f8b380fd2cd
+[05-May-2025 06:53:04 Asia/Jakarta] [Session] Generated CSRF token: a9467d51b8116ce0e899ffb70b3a2d3727f55982da30a1cc810e4f8b380fd2cd
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Starting session with path: /Salvio3
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Session started successfully. ID: pd29ir159t1hama49gg95rk2su
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] New session initialized with ID: p08q9ikukljk57l8rmnl8elabc
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:55:15 Asia/Jakarta] [Router] Controller: auth, Action: login
+[05-May-2025 06:55:15 Asia/Jakarta] [Router] Session ID: p08q9ikukljk57l8rmnl8elabc
+[05-May-2025 06:55:15 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Starting session with path: /Salvio3
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Session started successfully. ID: p08q9ikukljk57l8rmnl8elabc
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:55:15 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 06:55:15 Asia/Jakarta] [Router] Session ID: p08q9ikukljk57l8rmnl8elabc
+[05-May-2025 06:55:15 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Set csrf_token: a404a10557bc2b3f891909d009df1d372c4346dd0e139841b4caa09b0bd4e954
+[05-May-2025 06:55:15 Asia/Jakarta] [Session] Generated CSRF token: a404a10557bc2b3f891909d009df1d372c4346dd0e139841b4caa09b0bd4e954
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Starting session with path: /Salvio3
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Session started successfully. ID: p08q9ikukljk57l8rmnl8elabc
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:56:08 Asia/Jakarta] [Router] Controller: auth, Action: login
+[05-May-2025 06:56:08 Asia/Jakarta] [Router] Session ID: p08q9ikukljk57l8rmnl8elabc
+[05-May-2025 06:56:08 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => a404a10557bc2b3f891909d009df1d372c4346dd0e139841b4caa09b0bd4e954
+)
+
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:56:08 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Set user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Regenerated session ID. Old: p08q9ikukljk57l8rmnl8elabc, New: 6gdrsujv3mbs2c8tp8snoolfs3
+[05-May-2025 06:56:08 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Starting session with path: /Salvio3
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Session started successfully. ID: 6gdrsujv3mbs2c8tp8snoolfs3
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 06:56:08 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 06:56:08 Asia/Jakarta] [Router] Session ID: 6gdrsujv3mbs2c8tp8snoolfs3
+[05-May-2025 06:56:08 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => a404a10557bc2b3f891909d009df1d372c4346dd0e139841b4caa09b0bd4e954
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 06:56:08 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Starting session with path: /Salvio3
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Session started successfully. ID: 3nb5m0uuvggs55ohqd6itjatvs
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] New session initialized with ID: akdpek6n2t5d1m2o8shoel5qg8
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:56:59 Asia/Jakarta] [Router] Controller: categories, Action: index
+[05-May-2025 06:56:59 Asia/Jakarta] [Router] Session ID: akdpek6n2t5d1m2o8shoel5qg8
+[05-May-2025 06:56:59 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Set flash message - Type: error, Message: Please login to continue
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Set flash_error: Please login to continue
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Starting session with path: /Salvio3
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Session started successfully. ID: akdpek6n2t5d1m2o8shoel5qg8
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:56:59 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 06:56:59 Asia/Jakarta] [Router] Session ID: akdpek6n2t5d1m2o8shoel5qg8
+[05-May-2025 06:56:59 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [flash_error] => Please login to continue
+)
+
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Get flash_error: Please login to continue
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Get flash message - Type: error, Message: Please login to continue
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Set csrf_token: 768d1eefec52ec2d17bd9a4200e9d17e536a36337cd2160127438776b5cef648
+[05-May-2025 06:56:59 Asia/Jakarta] [Session] Generated CSRF token: 768d1eefec52ec2d17bd9a4200e9d17e536a36337cd2160127438776b5cef648
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Starting session with path: /Salvio3
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Session started successfully. ID: sfq3tmnbtp3dkooq24l9k3r7h6
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] New session initialized with ID: q4724g8u7qdncfv6si0cpg2e2l
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:57:34 Asia/Jakarta] [Router] Controller: auth, Action: login
+[05-May-2025 06:57:34 Asia/Jakarta] [Router] Session ID: q4724g8u7qdncfv6si0cpg2e2l
+[05-May-2025 06:57:34 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Starting session with path: /Salvio3
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Session started successfully. ID: q4724g8u7qdncfv6si0cpg2e2l
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:57:34 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 06:57:34 Asia/Jakarta] [Router] Session ID: q4724g8u7qdncfv6si0cpg2e2l
+[05-May-2025 06:57:34 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Set csrf_token: 9a3bcc095bd1b5372370d73d47564080e1b9866d77fbb407e8cf7c0288f7e9b7
+[05-May-2025 06:57:34 Asia/Jakarta] [Session] Generated CSRF token: 9a3bcc095bd1b5372370d73d47564080e1b9866d77fbb407e8cf7c0288f7e9b7
+[05-May-2025 07:00:11 Asia/Jakarta] [Session] Starting session with path: /Salvio3
+[05-May-2025 07:00:11 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 07:00:11 Asia/Jakarta] [Session] Session started successfully. ID: u9q4rvratd95g6d59kjd30o3jk
+[05-May-2025 07:00:11 Asia/Jakarta] [Session] New session initialized with ID: ufepv19f8jp0r32t5kammsj5v7
+[05-May-2025 07:00:11 Asia/Jakarta] [Session] Set test_value: Hello from session test
+[05-May-2025 07:00:11 Asia/Jakarta] [Session] Get test_value: Hello from session test
+[05-May-2025 07:00:39 Asia/Jakarta] [Session] Starting session with path: /Salvio3
+[05-May-2025 07:00:39 Asia/Jakarta] [Session] Session save path: C:\xampp\tmp
+[05-May-2025 07:00:39 Asia/Jakarta] [Session] Session started successfully. ID: b5of6hltkj2agt3lmo0gugq820
+[05-May-2025 07:00:39 Asia/Jakarta] [Session] New session initialized with ID: eauie8qjbg3m03hjuhbg3d9mor
+[05-May-2025 07:00:39 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:00:39 Asia/Jakarta] [Session] Set user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[2025-05-05 07:00:39] Error: [2] session_regenerate_id(): Session ID cannot be regenerated after headers have already been sent in C:\xampp\htdocs\Salvio3\core\Session.php on line 157
+[05-May-2025 07:00:39 Asia/Jakarta] [Session] Failed to regenerate session ID!
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:01:09 Asia/Jakarta] [Router] Controller: auth, Action: login
+[05-May-2025 07:01:09 Asia/Jakarta] [Router] Session ID: onfl9seqf0aucdpb5pka0m3bvi
+[05-May-2025 07:01:09 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:01:09 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 07:01:09 Asia/Jakarta] [Router] Session ID: onfl9seqf0aucdpb5pka0m3bvi
+[05-May-2025 07:01:09 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Set csrf_token: ca3df6b21940494218824e28f05be4b157ca577053e501de5b35a5a139c37cd4
+[05-May-2025 07:01:09 Asia/Jakarta] [Session] Generated CSRF token: ca3df6b21940494218824e28f05be4b157ca577053e501de5b35a5a139c37cd4
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:01:54 Asia/Jakarta] [Router] Controller: auth, Action: login
+[05-May-2025 07:01:54 Asia/Jakarta] [Router] Session ID: onfl9seqf0aucdpb5pka0m3bvi
+[05-May-2025 07:01:54 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => ca3df6b21940494218824e28f05be4b157ca577053e501de5b35a5a139c37cd4
+)
+
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:01:54 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Set user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Regenerated session ID. Old: onfl9seqf0aucdpb5pka0m3bvi, New: cbrs8p58v3405aifgg0agdkpgm
+[05-May-2025 07:01:54 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:01:54 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 07:01:54 Asia/Jakarta] [Router] Session ID: cbrs8p58v3405aifgg0agdkpgm
+[05-May-2025 07:01:54 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => ca3df6b21940494218824e28f05be4b157ca577053e501de5b35a5a139c37cd4
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:01:54 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:08 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 07:02:08 Asia/Jakarta] [Router] Session ID: d1lj3jg4cplkengb6cd459gu71
+[05-May-2025 07:02:08 Asia/Jakarta] [Router] Session Data: Array
+(
+    [csrf_token] => 0fd670fed15f970f62e2fd5fe06c50eed833e170a8342289be34ffb390343474
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:17:05
+            [updated_at] => 2025-05-05 05:17:05
+        )
+
+    [__initialized] => 1
+)
+
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:17:05
+    [updated_at] => 2025-05-05 05:17:05
+)
+
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:02:08 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:09 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 07:02:09 Asia/Jakarta] [Router] Session ID: d1lj3jg4cplkengb6cd459gu71
+[05-May-2025 07:02:09 Asia/Jakarta] [Router] Session Data: Array
+(
+    [csrf_token] => 0fd670fed15f970f62e2fd5fe06c50eed833e170a8342289be34ffb390343474
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:17:05
+            [updated_at] => 2025-05-05 05:17:05
+        )
+
+    [__initialized] => 1
+)
+
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:17:05
+    [updated_at] => 2025-05-05 05:17:05
+)
+
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:02:09 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:02:11 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:11 Asia/Jakarta] [Router] Controller: pos, Action: index
+[05-May-2025 07:02:11 Asia/Jakarta] [Router] Session ID: d1lj3jg4cplkengb6cd459gu71
+[05-May-2025 07:02:11 Asia/Jakarta] [Router] Session Data: Array
+(
+    [csrf_token] => 0fd670fed15f970f62e2fd5fe06c50eed833e170a8342289be34ffb390343474
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:17:05
+            [updated_at] => 2025-05-05 05:17:05
+        )
+
+    [__initialized] => 1
+)
+
+[05-May-2025 07:02:18 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:18 Asia/Jakarta] [Router] Controller: pos, Action: index
+[05-May-2025 07:02:18 Asia/Jakarta] [Router] Session ID: cbrs8p58v3405aifgg0agdkpgm
+[05-May-2025 07:02:18 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => ca3df6b21940494218824e28f05be4b157ca577053e501de5b35a5a139c37cd4
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 07:02:25 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:25 Asia/Jakarta] [Router] Controller: products, Action: index
+[05-May-2025 07:02:25 Asia/Jakarta] [Router] Session ID: d1lj3jg4cplkengb6cd459gu71
+[05-May-2025 07:02:25 Asia/Jakarta] [Router] Session Data: Array
+(
+    [csrf_token] => 0fd670fed15f970f62e2fd5fe06c50eed833e170a8342289be34ffb390343474
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:17:05
+            [updated_at] => 2025-05-05 05:17:05
+        )
+
+    [__initialized] => 1
+)
+
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:28 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 07:02:28 Asia/Jakarta] [Router] Session ID: d1lj3jg4cplkengb6cd459gu71
+[05-May-2025 07:02:28 Asia/Jakarta] [Router] Session Data: Array
+(
+    [csrf_token] => 0fd670fed15f970f62e2fd5fe06c50eed833e170a8342289be34ffb390343474
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:17:05
+            [updated_at] => 2025-05-05 05:17:05
+        )
+
+    [__initialized] => 1
+)
+
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:17:05
+    [updated_at] => 2025-05-05 05:17:05
+)
+
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:28 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 07:02:28 Asia/Jakarta] [Router] Session ID: d1lj3jg4cplkengb6cd459gu71
+[05-May-2025 07:02:28 Asia/Jakarta] [Router] Session Data: Array
+(
+    [csrf_token] => 0fd670fed15f970f62e2fd5fe06c50eed833e170a8342289be34ffb390343474
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:17:05
+            [updated_at] => 2025-05-05 05:17:05
+        )
+
+    [__initialized] => 1
+)
+
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:17:05
+    [updated_at] => 2025-05-05 05:17:05
+)
+
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:02:28 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:03:06 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 07:03:06 Asia/Jakarta] [Router] Session ID: d1lj3jg4cplkengb6cd459gu71
+[05-May-2025 07:03:06 Asia/Jakarta] [Router] Session Data: Array
+(
+    [csrf_token] => 0fd670fed15f970f62e2fd5fe06c50eed833e170a8342289be34ffb390343474
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:17:05
+            [updated_at] => 2025-05-05 05:17:05
+        )
+
+    [__initialized] => 1
+)
+
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:17:05
+    [updated_at] => 2025-05-05 05:17:05
+)
+
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:03:06 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:06:44 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:06:44 Asia/Jakarta] [Router] Controller: categories, Action: index
+[05-May-2025 07:06:44 Asia/Jakarta] [Router] Session ID: d1lj3jg4cplkengb6cd459gu71
+[05-May-2025 07:06:44 Asia/Jakarta] [Router] Session Data: Array
+(
+    [csrf_token] => 0fd670fed15f970f62e2fd5fe06c50eed833e170a8342289be34ffb390343474
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:17:05
+            [updated_at] => 2025-05-05 05:17:05
+        )
+
+    [__initialized] => 1
+)
+
+[05-May-2025 07:06:44 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:06:44 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:17:05
+    [updated_at] => 2025-05-05 05:17:05
+)
+
+[05-May-2025 07:06:44 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:06:44 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method Category::getAll() in C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php:22
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php(55): CategoriesController->index()
+#1 {main}
+  thrown in C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php on line 22
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:09:46 Asia/Jakarta] [Router] Controller: categories, Action: index
+[05-May-2025 07:09:46 Asia/Jakarta] [Router] Session ID: 8jvsvb3v6qrng85hofh1rdgfv4
+[05-May-2025 07:09:46 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Set flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Set flash_error: Please login to continue
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:09:46 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 07:09:46 Asia/Jakarta] [Router] Session ID: 8jvsvb3v6qrng85hofh1rdgfv4
+[05-May-2025 07:09:46 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [flash_error] => Please login to continue
+)
+
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Get flash_error: Please login to continue
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Get flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Set csrf_token: d08114156bfaa6bbd4e678c41ca0449facec7ea4ed301bda46d9ef494410d335
+[05-May-2025 07:09:46 Asia/Jakarta] [Session] Generated CSRF token: d08114156bfaa6bbd4e678c41ca0449facec7ea4ed301bda46d9ef494410d335
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:10:53 Asia/Jakarta] [Router] Controller: auth, Action: login
+[05-May-2025 07:10:53 Asia/Jakarta] [Router] Session ID: 8jvsvb3v6qrng85hofh1rdgfv4
+[05-May-2025 07:10:53 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => d08114156bfaa6bbd4e678c41ca0449facec7ea4ed301bda46d9ef494410d335
+)
+
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:10:53 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Set user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Regenerated session ID. Old: 8jvsvb3v6qrng85hofh1rdgfv4, New: tqfbtofppe78kapgr5mq9isvvu
+[05-May-2025 07:10:53 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:10:53 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 07:10:53 Asia/Jakarta] [Router] Session ID: tqfbtofppe78kapgr5mq9isvvu
+[05-May-2025 07:10:53 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => d08114156bfaa6bbd4e678c41ca0449facec7ea4ed301bda46d9ef494410d335
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:10:53 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:16:20 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:16:20 Asia/Jakarta] [Router] Controller: categories, Action: index
+[05-May-2025 07:16:20 Asia/Jakarta] [Router] Session ID: d1lj3jg4cplkengb6cd459gu71
+[05-May-2025 07:16:20 Asia/Jakarta] [Router] Session Data: Array
+(
+    [csrf_token] => 0fd670fed15f970f62e2fd5fe06c50eed833e170a8342289be34ffb390343474
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:17:05
+            [updated_at] => 2025-05-05 05:17:05
+        )
+
+    [__initialized] => 1
+)
+
+[05-May-2025 07:16:20 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:16:20 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:17:05
+    [updated_at] => 2025-05-05 05:17:05
+)
+
+[05-May-2025 07:16:20 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:16:20 Asia/Jakarta] Query Preparation Error: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'status' in where clause is ambiguous
+[05-May-2025 07:16:20 Asia/Jakarta] PHP Fatal error:  Uncaught Exception: Query preparation failed in C:\xampp\htdocs\Salvio3\core\Database.php:50
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\models\Category.php(52): Database->query('\r\n            S...')
+#1 C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php(22): Category->getAll(1, 10, '')
+#2 C:\xampp\htdocs\Salvio3\index.php(55): CategoriesController->index()
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\core\Database.php on line 50
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:16:21 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 07:16:21 Asia/Jakarta] [Router] Session ID: d1lj3jg4cplkengb6cd459gu71
+[05-May-2025 07:16:21 Asia/Jakarta] [Router] Session Data: Array
+(
+    [csrf_token] => 0fd670fed15f970f62e2fd5fe06c50eed833e170a8342289be34ffb390343474
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:17:05
+            [updated_at] => 2025-05-05 05:17:05
+        )
+
+    [__initialized] => 1
+)
+
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:17:05
+    [updated_at] => 2025-05-05 05:17:05
+)
+
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:16:21 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:16:23 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:16:23 Asia/Jakarta] [Router] Controller: categories, Action: index
+[05-May-2025 07:16:23 Asia/Jakarta] [Router] Session ID: d1lj3jg4cplkengb6cd459gu71
+[05-May-2025 07:16:23 Asia/Jakarta] [Router] Session Data: Array
+(
+    [csrf_token] => 0fd670fed15f970f62e2fd5fe06c50eed833e170a8342289be34ffb390343474
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:17:05
+            [updated_at] => 2025-05-05 05:17:05
+        )
+
+    [__initialized] => 1
+)
+
+[05-May-2025 07:16:23 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:16:23 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:17:05
+    [updated_at] => 2025-05-05 05:17:05
+)
+
+[05-May-2025 07:16:23 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:16:23 Asia/Jakarta] Query Preparation Error: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'status' in where clause is ambiguous
+[05-May-2025 07:16:23 Asia/Jakarta] PHP Fatal error:  Uncaught Exception: Query preparation failed in C:\xampp\htdocs\Salvio3\core\Database.php:50
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\models\Category.php(52): Database->query('\r\n            S...')
+#1 C:\xampp\htdocs\Salvio3\controllers\CategoriesController.php(22): Category->getAll(1, 10, '')
+#2 C:\xampp\htdocs\Salvio3\index.php(55): CategoriesController->index()
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\core\Database.php on line 50
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:25:26 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 07:25:26 Asia/Jakarta] [Router] Session ID: 5srla454pqkekvcoqnno1fjk8i
+[05-May-2025 07:25:26 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Set csrf_token: 508f743d1695c2309eaf783cef79bb2dd76c01099458135f403b32931960bf32
+[05-May-2025 07:25:26 Asia/Jakarta] [Session] Generated CSRF token: 508f743d1695c2309eaf783cef79bb2dd76c01099458135f403b32931960bf32
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:26:59 Asia/Jakarta] [Router] Controller: auth, Action: login
+[05-May-2025 07:26:59 Asia/Jakarta] [Router] Session ID: 5srla454pqkekvcoqnno1fjk8i
+[05-May-2025 07:26:59 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 508f743d1695c2309eaf783cef79bb2dd76c01099458135f403b32931960bf32
+)
+
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:26:59 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Set user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Regenerated session ID. Old: 5srla454pqkekvcoqnno1fjk8i, New: n38hbqtf4mr0c5k2n33sjqcch6
+[05-May-2025 07:26:59 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:26:59 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 07:26:59 Asia/Jakarta] [Router] Session ID: n38hbqtf4mr0c5k2n33sjqcch6
+[05-May-2025 07:26:59 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 508f743d1695c2309eaf783cef79bb2dd76c01099458135f403b32931960bf32
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:26:59 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:27:58 Asia/Jakarta] [Router] Controller: categories, Action: index
+[05-May-2025 07:27:58 Asia/Jakarta] [Router] Session ID: pemii2r1ef67j0e2tesp5paabv
+[05-May-2025 07:27:58 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Set flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Set flash_error: Please login to continue
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:27:58 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 07:27:58 Asia/Jakarta] [Router] Session ID: pemii2r1ef67j0e2tesp5paabv
+[05-May-2025 07:27:58 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [flash_error] => Please login to continue
+)
+
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Get flash_error: Please login to continue
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Get flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Set csrf_token: ca66a6242b0ef36f564ee46a00185365471f2437e9ed58bf8f8fdb19df9fa822
+[05-May-2025 07:27:58 Asia/Jakarta] [Session] Generated CSRF token: ca66a6242b0ef36f564ee46a00185365471f2437e9ed58bf8f8fdb19df9fa822
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:29:39 Asia/Jakarta] [Router] Controller: auth, Action: login
+[05-May-2025 07:29:39 Asia/Jakarta] [Router] Session ID: pemii2r1ef67j0e2tesp5paabv
+[05-May-2025 07:29:39 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => ca66a6242b0ef36f564ee46a00185365471f2437e9ed58bf8f8fdb19df9fa822
+)
+
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:29:39 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Set user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Regenerated session ID. Old: pemii2r1ef67j0e2tesp5paabv, New: n0ut6tmuo3mfotomhkv6s3pm5o
+[05-May-2025 07:29:39 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:29:39 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 07:29:39 Asia/Jakarta] [Router] Session ID: n0ut6tmuo3mfotomhkv6s3pm5o
+[05-May-2025 07:29:39 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => ca66a6242b0ef36f564ee46a00185365471f2437e9ed58bf8f8fdb19df9fa822
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:29:39 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:30:11 Asia/Jakarta] [Router] Controller: categories, Action: index
+[05-May-2025 07:30:11 Asia/Jakarta] [Router] Session ID: 2rspm0mskuulskh8m72kk064cq
+[05-May-2025 07:30:11 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Set flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Set flash_error: Please login to continue
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:30:11 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 07:30:11 Asia/Jakarta] [Router] Session ID: 2rspm0mskuulskh8m72kk064cq
+[05-May-2025 07:30:11 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [flash_error] => Please login to continue
+)
+
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Get flash_error: Please login to continue
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Get flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Set csrf_token: b7890a2852aef9b4f3523783651aa4258c54621349b2a01d43a67407f08d256e
+[05-May-2025 07:30:11 Asia/Jakarta] [Session] Generated CSRF token: b7890a2852aef9b4f3523783651aa4258c54621349b2a01d43a67407f08d256e
+[05-May-2025 07:32:43 Asia/Jakarta] [Session] Set test_key: test_value
+[05-May-2025 07:32:43 Asia/Jakarta] [Session] Get test_key: test_value
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:33:05 Asia/Jakarta] [Router] Controller: categories, Action: index
+[05-May-2025 07:33:05 Asia/Jakarta] [Router] Session ID: lmdk54gpljjcfnnu0sop5ot89n
+[05-May-2025 07:33:05 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Set flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Set flash_error: Please login to continue
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:33:05 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 07:33:05 Asia/Jakarta] [Router] Session ID: lmdk54gpljjcfnnu0sop5ot89n
+[05-May-2025 07:33:05 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [flash_error] => Please login to continue
+)
+
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Get flash_error: Please login to continue
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Get flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Set csrf_token: e7c1879342f3351558f853abb3ff3277c923783fc005087794bbd6e2ee5a8c80
+[05-May-2025 07:33:05 Asia/Jakarta] [Session] Generated CSRF token: e7c1879342f3351558f853abb3ff3277c923783fc005087794bbd6e2ee5a8c80
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:33:56 Asia/Jakarta] [Router] Controller: auth, Action: login
+[05-May-2025 07:33:56 Asia/Jakarta] [Router] Session ID: lmdk54gpljjcfnnu0sop5ot89n
+[05-May-2025 07:33:56 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => e7c1879342f3351558f853abb3ff3277c923783fc005087794bbd6e2ee5a8c80
+)
+
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:33:56 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Set user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Regenerated session ID. Old: lmdk54gpljjcfnnu0sop5ot89n, New: vod7q5nknb3jd7gv2h3108uvhp
+[05-May-2025 07:33:56 Asia/Jakarta] [Auth] Login successful for user: admin
+[05-May-2025 07:33:56 Asia/Jakarta] [Auth] Session ID: vod7q5nknb3jd7gv2h3108uvhp
+[05-May-2025 07:33:56 Asia/Jakarta] [Auth] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => e7c1879342f3351558f853abb3ff3277c923783fc005087794bbd6e2ee5a8c80
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 07:33:56 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:33:56 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 07:33:56 Asia/Jakarta] [Router] Session ID: vod7q5nknb3jd7gv2h3108uvhp
+[05-May-2025 07:33:56 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => e7c1879342f3351558f853abb3ff3277c923783fc005087794bbd6e2ee5a8c80
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:33:56 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:03 Asia/Jakarta] [Router] Controller: categories, Action: index
+[05-May-2025 07:34:03 Asia/Jakarta] [Router] Session ID: ejbi8k29m7cqhpqih7fiqhp380
+[05-May-2025 07:34:03 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Set flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Set flash_error: Please login to continue
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:03 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 07:34:03 Asia/Jakarta] [Router] Session ID: ejbi8k29m7cqhpqih7fiqhp380
+[05-May-2025 07:34:03 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [flash_error] => Please login to continue
+)
+
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Get flash_error: Please login to continue
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Get flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Set csrf_token: 92b71fd96fcefd8d9ccf00ec2fa471fb1ef973e1dd06b4e992e0e7613b38d32d
+[05-May-2025 07:34:03 Asia/Jakarta] [Session] Generated CSRF token: 92b71fd96fcefd8d9ccf00ec2fa471fb1ef973e1dd06b4e992e0e7613b38d32d
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Path: /Salvio3
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:37 Asia/Jakarta] [Router] Controller: categories, Action: index
+[05-May-2025 07:34:37 Asia/Jakarta] [Router] Session ID: 6k12dnt78mjt5nrml1v33ugjo9
+[05-May-2025 07:34:37 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Set flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Set flash_error: Please login to continue
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Path: /Salvio3
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:37 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 07:34:37 Asia/Jakarta] [Router] Session ID: 6k12dnt78mjt5nrml1v33ugjo9
+[05-May-2025 07:34:37 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [flash_error] => Please login to continue
+)
+
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Get flash_error: Please login to continue
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Get flash message - Type: error, Message: Please login to continue
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Set csrf_token: abf045258628cf539d120a3e9d7da4275c39b179b0fd29a2c486103e80fe46d9
+[05-May-2025 07:34:37 Asia/Jakarta] [Session] Generated CSRF token: abf045258628cf539d120a3e9d7da4275c39b179b0fd29a2c486103e80fe46d9
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Before session_start()
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Session Cookie Params:
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Data: Array
+(
+    [lifetime] => 7200
+    [path] => /
+    [domain] => 
+    [secure] => 
+    [httponly] => 1
+    [samesite] => Lax
+)
+
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Session Name: salvio_session
+[05-May-2025 12:01:15 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 12:01:15 Asia/Jakarta] [Session] Path: /Salvio3
+[05-May-2025 12:01:15 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] After session_start()
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Session ID: puno83nfh5u440ql43angrlqg1
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Session Data:
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Response Headers:
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Data: Array
+(
+    [0] => X-Powered-By: PHP/8.2.12
+    [1] => Expires: Thu, 19 Nov 1981 08:52:00 GMT
+    [2] => Cache-Control: no-store, no-cache, must-revalidate
+    [3] => Pragma: no-cache
+    [4] => Set-Cookie: salvio_session=puno83nfh5u440ql43angrlqg1; expires=Mon, 05 May 2025 07:01:15 GMT; Max-Age=7200; path=/Salvio3; domain=localhost; HttpOnly; SameSite=Lax
+)
+
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] No Session Cookie Found
+[05-May-2025 12:01:15 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Auth Check Result:
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Data: 
+[05-May-2025 12:01:15 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 12:01:15 Asia/Jakarta] [Session Debug] Current User:
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Before session_start()
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Session Cookie Params:
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Data: Array
+(
+    [lifetime] => 7200
+    [path] => /
+    [domain] => 
+    [secure] => 
+    [httponly] => 1
+    [samesite] => Lax
+)
+
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Session Name: salvio_session
+[05-May-2025 12:02:23 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 12:02:23 Asia/Jakarta] [Session] Path: /Salvio3
+[05-May-2025 12:02:23 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 12:02:23 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] After session_start()
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Session ID: e1nloc2e6ki7ij07055i9308oj
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Session Data:
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Data: Array
+(
+    [__initialized] => 1
+)
+
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Response Headers:
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Data: Array
+(
+    [0] => X-Powered-By: PHP/8.2.12
+    [1] => Expires: Thu, 19 Nov 1981 08:52:00 GMT
+    [2] => Cache-Control: no-store, no-cache, must-revalidate
+    [3] => Pragma: no-cache
+    [4] => Set-Cookie: salvio_session=e1nloc2e6ki7ij07055i9308oj; expires=Mon, 05 May 2025 07:02:23 GMT; Max-Age=7200; path=/Salvio3; HttpOnly; SameSite=Lax
+)
+
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] No Session Cookie Found
+[05-May-2025 12:02:23 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Auth Check Result:
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Data: 
+[05-May-2025 12:02:23 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 12:02:23 Asia/Jakarta] [Session Debug] Current User:

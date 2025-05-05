@@ -4,12 +4,12 @@
  * Handles routing and bootstrapping
  */
 
-// Define root path
-define('ROOT_PATH', __DIR__);
-
 // Error reporting for development
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+// Define root path
+define('ROOT_PATH', __DIR__);
 
 // Load configuration
 require_once 'config/config.php';
@@ -22,7 +22,7 @@ require_once 'core/Controller.php';
 require_once 'core/Session.php';
 require_once 'core/Auth.php';
 
-// Start session
+// Start session before any output
 Session::start();
 
 // Initialize authentication
@@ -37,6 +37,11 @@ $url = explode('/', $url);
 // Default controller and action
 $controller = !empty($url[0]) ? $url[0] : 'auth';
 $action = isset($url[1]) ? $url[1] : 'index';
+
+// Debug log
+error_log("[Router] Controller: {$controller}, Action: {$action}");
+error_log("[Router] Session ID: " . session_id());
+error_log("[Router] Session Data: " . print_r($_SESSION, true));
 
 // Capitalize controller name for class loading
 $controller = ucfirst($controller) . 'Controller';

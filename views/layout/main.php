@@ -193,6 +193,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link <?= $this->getActiveMenu('categories') ?>" href="<?= APP_URL ?>/categories">
+                        <i class="fas fa-tags"></i>
+                        <span>Categories</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link <?= $this->getActiveMenu('products') ?>" href="<?= APP_URL ?>/products">
                         <i class="fas fa-box"></i>
                         <span>Products</span>

@@ -65,7 +65,7 @@ class View {
         include $viewFile;
         
         // Get view content
-        $content = ob_get_clean();
+        $this->data['content'] = ob_get_clean();
         
         // Render with layout if set
         if ($this->layout !== null) {
@@ -74,9 +74,10 @@ class View {
                 throw new Exception("Layout {$this->layout} not found");
             }
             
+            extract($this->data);
             include $layoutFile;
         } else {
-            echo $content;
+            echo $this->data['content'];
         }
     }
 

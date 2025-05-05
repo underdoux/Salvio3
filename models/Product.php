@@ -69,29 +69,6 @@ class Product extends Model {
     }
 
     /**
-     * Get products by category
-     * @param int $categoryId
-     * @param int $limit
-     * @param int $offset
-     * @return array
-     */
-    public function getByCategory($categoryId, $limit = 10, $offset = 0) {
-        return $this->db->query("
-            SELECT p.*, c.name as category_name
-            FROM {$this->table} p
-            LEFT JOIN categories c ON p.category_id = c.id
-            WHERE p.category_id = ?
-            AND p.status = 'active'
-            ORDER BY p.name ASC
-            LIMIT ? OFFSET ?
-        ")
-        ->bind(1, $categoryId)
-        ->bind(2, $limit)
-        ->bind(3, $offset)
-        ->resultSet();
-    }
-
-    /**
      * Search products
      * Override parent search method
      * @param array $fields Fields to search in
@@ -222,5 +199,46 @@ class Product extends Model {
             FROM {$this->table}
             WHERE status = 'active'
         ")->single();
+    }
+
+    /**
+     * Count products in a category
+     * @param int $categoryId Category ID
+     * @return int Number of products
+     */
+    public function countByCategory($categoryId) {
+        $result = $this->db->query("
+            SELECT COUNT(*) as total 
+            FROM {$this->table}
+            WHERE category_id = ?
+            AND status = 'active'
+        ")
+        ->bind(1, $categoryId)
+        ->single();
+
+        return (int)$result['total'];
+    }
+
+    /**
+     * Get products by category with pagination
+     * @param int $categoryId Category ID
+     * @param int $limit Items per page
+     * @param int $offset Offset for pagination
+     * @return array Products
+     */
+    public function getByCategory($categoryId, $limit = 10, $offset = 0) {
+        return $this->db->query("
+            SELECT p.*, c.name as category_name
+            FROM {$this->table} p
+            LEFT JOIN categories c ON p.category_id = c.id
+            WHERE p.category_id = ?
+            AND p.status = 'active'
+            ORDER BY p.name ASC
+            LIMIT ? OFFSET ?
+        ")
+        ->bind(1, $categoryId)
+        ->bind(2, $limit)
+        ->bind(3, $offset)
+        ->resultSet();
     }
 }
