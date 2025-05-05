@@ -3,87 +3,22 @@
  * Application Configuration
  */
 
-// Application settings
-define('APP_NAME', 'Salvio POS');
-define('APP_VERSION', '1.0.0');
-define('APP_ENV', 'development'); // development, production
-define('APP_DEBUG', true);
-define('APP_URL', 'http://localhost/Salvio3');
-define('APP_TIMEZONE', 'Asia/Jakarta');
-define('APP_LOCALE', 'id');
-define('APP_CURRENCY', 'IDR');
+// Debug mode (set to false in production)
+define('DEBUG', true);
 
-// Load database configuration
-require_once 'database.php';
+// Application URL
+define('BASE_URL', 'http://localhost/Salvio3');
 
-// Path definitions
-if (!defined('ROOT_PATH')) {
-    define('ROOT_PATH', dirname(__DIR__));
-}
-define('APP_PATH', ROOT_PATH . '/app');
-define('CONFIG_PATH', ROOT_PATH . '/config');
-define('CONTROLLER_PATH', ROOT_PATH . '/controllers');
-define('MODEL_PATH', ROOT_PATH . '/models');
-define('VIEW_PATH', ROOT_PATH . '/views');
-define('CORE_PATH', ROOT_PATH . '/core');
-define('HELPER_PATH', ROOT_PATH . '/helpers');
-define('UPLOAD_PATH', ROOT_PATH . '/uploads');
-define('LOG_PATH', ROOT_PATH . '/logs');
-define('CACHE_PATH', ROOT_PATH . '/cache');
-define('BACKUP_PATH', ROOT_PATH . '/backups');
+// Default timezone
+date_default_timezone_set('Asia/Jakarta');
 
-// Security settings
-define('CSRF_TOKEN_NAME', 'csrf_token');
-define('CSRF_TOKEN_LENGTH', 32);
-define('SESSION_NAME', 'salvio_session');
-define('SESSION_LIFETIME', 7200); // 2 hours
-define('REMEMBER_COOKIE_NAME', 'remember_token');
-define('REMEMBER_COOKIE_LIFETIME', 2592000); // 30 days
-define('PASSWORD_MIN_LENGTH', 6);
-define('PASSWORD_HASH_ALGO', PASSWORD_DEFAULT);
-define('PASSWORD_HASH_OPTIONS', ['cost' => 12]);
-
-// Upload settings
-define('UPLOAD_MAX_SIZE', 5242880); // 5MB
-define('UPLOAD_ALLOWED_TYPES', [
-    'image/jpeg',
-    'image/png',
-    'image/gif',
-    'application/pdf',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-]);
-define('UPLOAD_MAX_FILENAME_LENGTH', 255);
-
-// Pagination settings
-define('ITEMS_PER_PAGE', 10);
-define('MAX_PAGE_LINKS', 5);
-
-// Email settings
-define('MAIL_DRIVER', 'smtp');
-define('MAIL_HOST', 'smtp.gmail.com');
-define('MAIL_PORT', 587);
-define('MAIL_USERNAME', '');
-define('MAIL_PASSWORD', '');
-define('MAIL_ENCRYPTION', 'tls');
-define('MAIL_FROM_ADDRESS', '');
-define('MAIL_FROM_NAME', APP_NAME);
-
-// WhatsApp settings
-define('WA_ENABLED', false);
-define('WA_API_URL', '');
-define('WA_API_KEY', '');
-define('WA_SENDER', '');
-
-// BPOM API settings
-define('BPOM_API_ENABLED', true);
-define('BPOM_BASE_URL', 'https://cekbpom.pom.go.id');
-define('BPOM_SEARCH_URL', BPOM_BASE_URL . '/search');
-define('BPOM_DETAIL_URL', BPOM_BASE_URL . '/detail');
-define('BPOM_CACHE_TIME', 86400); // 24 hours
+// Session configuration
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_only_cookies', 1);
+ini_set('session.cookie_secure', 0); // Set to 1 in production with HTTPS
 
 // Error reporting
-if (APP_ENV === 'development') {
+if (DEBUG) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 } else {
@@ -91,63 +26,99 @@ if (APP_ENV === 'development') {
     ini_set('display_errors', 0);
 }
 
-// Set timezone
-date_default_timezone_set(APP_TIMEZONE);
+// Upload configuration
+define('MAX_UPLOAD_SIZE', 64 * 1024 * 1024); // 64MB
+define('ALLOWED_IMAGE_TYPES', ['jpg', 'jpeg', 'png', 'gif']);
+define('ALLOWED_DOCUMENT_TYPES', ['pdf', 'doc', 'docx', 'xls', 'xlsx']);
 
-// Set locale
-setlocale(LC_ALL, APP_LOCALE);
+// Pagination defaults
+define('DEFAULT_PAGE_SIZE', 10);
+define('MAX_PAGE_SIZE', 100);
 
-// Create required directories if they don't exist
-$directories = [
-    UPLOAD_PATH,
-    LOG_PATH,
-    CACHE_PATH,
-    BACKUP_PATH,
-    UPLOAD_PATH . '/products',
-    UPLOAD_PATH . '/users',
-    UPLOAD_PATH . '/invoices'
-];
+// Security configuration
+define('PASSWORD_MIN_LENGTH', 8);
+define('PASSWORD_MAX_LENGTH', 72); // bcrypt limit
+define('LOGIN_MAX_ATTEMPTS', 5);
+define('LOGIN_LOCKOUT_TIME', 15 * 60); // 15 minutes
+define('SESSION_LIFETIME', 2 * 60 * 60); // 2 hours
+define('REMEMBER_ME_LIFETIME', 30 * 24 * 60 * 60); // 30 days
 
-foreach ($directories as $dir) {
-    if (!file_exists($dir)) {
-        mkdir($dir, 0755, true);
-    }
+// Email configuration
+define('MAIL_FROM_ADDRESS', 'no-reply@example.com');
+define('MAIL_FROM_NAME', 'Salvio POS');
+define('MAIL_REPLY_TO', 'support@example.com');
+
+// WhatsApp configuration
+define('WHATSAPP_ENABLED', false);
+define('WHATSAPP_PROVIDER', 'wablas'); // wablas, twilio, fonnte
+define('WHATSAPP_API_URL', 'https://api.wablas.com');
+define('WHATSAPP_API_KEY', 'your-api-key');
+
+// Notification settings
+define('NOTIFICATION_STOCK_THRESHOLD', 10); // Low stock threshold
+define('NOTIFICATION_PAYMENT_REMINDER_DAYS', 3); // Days before payment due
+define('NOTIFICATION_ORDER_STATUS', true);
+define('NOTIFICATION_NEW_CUSTOMER', true);
+
+// Financial settings
+define('DEFAULT_TAX_RATE', 0.11); // 11% tax
+define('DEFAULT_CURRENCY', 'IDR');
+define('CURRENCY_DECIMALS', 2);
+define('THOUSAND_SEPARATOR', '.');
+define('DECIMAL_SEPARATOR', ',');
+
+// Commission settings
+define('DEFAULT_COMMISSION_RATE', 0.05); // 5% commission
+define('COMMISSION_CALCULATION_PERIOD', 'monthly'); // daily, weekly, monthly
+define('MIN_COMMISSION_AMOUNT', 10000);
+
+// Report settings
+define('REPORT_CACHE_TIME', 60 * 60); // 1 hour
+define('REPORT_DEFAULT_FORMAT', 'pdf');
+define('REPORT_TIMEZONE', 'Asia/Jakarta');
+
+// API settings
+define('API_RATE_LIMIT', 60); // requests per minute
+define('API_TOKEN_LIFETIME', 60 * 24 * 60 * 60); // 60 days
+
+// Cache settings
+define('CACHE_ENABLED', true);
+define('CACHE_LIFETIME', 60 * 60); // 1 hour
+define('CACHE_PREFIX', 'salvio_');
+
+// Log settings
+define('LOG_PATH', __DIR__ . '/../logs');
+define('LOG_LEVEL', DEBUG ? 'debug' : 'error');
+define('LOG_MAX_FILES', 30);
+
+// Backup settings
+define('BACKUP_PATH', __DIR__ . '/../backups');
+define('BACKUP_MAX_FILES', 30);
+define('BACKUP_COMPRESS', true);
+
+// Custom functions
+function format_currency($amount) {
+    return number_format($amount, CURRENCY_DECIMALS, DECIMAL_SEPARATOR, THOUSAND_SEPARATOR);
 }
 
-// Initialize error logging
-ini_set('log_errors', 1);
-ini_set('error_log', LOG_PATH . '/error.log');
-
-// Set session configuration
-ini_set('session.name', SESSION_NAME);
-ini_set('session.gc_maxlifetime', SESSION_LIFETIME);
-ini_set('session.cookie_lifetime', SESSION_LIFETIME);
-ini_set('session.use_strict_mode', 1);
-ini_set('session.cookie_httponly', 1);
-ini_set('session.cookie_samesite', 'Lax');
-if (APP_ENV === 'production') {
-    ini_set('session.cookie_secure', 1);
+function format_date($date, $format = 'Y-m-d H:i:s') {
+    return date($format, strtotime($date));
 }
 
-// Custom error handler
-function customErrorHandler($errno, $errstr, $errfile, $errline) {
-    $error = date('[Y-m-d H:i:s]') . " Error: [$errno] $errstr in $errfile on line $errline\n";
-    error_log($error, 3, LOG_PATH . '/error.log');
-    
-    if (APP_DEBUG) {
-        echo "<div style='background:#f8d7da;color:#721c24;padding:10px;margin:10px;border:1px solid #f5c6cb;border-radius:4px'>";
-        echo "<strong>Error:</strong> " . htmlspecialchars($errstr);
-        echo "<br><strong>File:</strong> " . htmlspecialchars($errfile);
-        echo "<br><strong>Line:</strong> " . $errline;
-        echo "</div>";
-    } else {
-        echo "<div style='background:#f8d7da;color:#721c24;padding:10px;margin:10px;border:1px solid #f5c6cb;border-radius:4px'>";
-        echo "An error occurred. Please try again later.";
-        echo "</div>";
-    }
-    
-    return true;
+function is_production() {
+    return !DEBUG;
 }
 
-// Set custom error handler
-set_error_handler('customErrorHandler');
+function get_upload_path($type = '') {
+    return rtrim(UPLOAD_PATH . '/' . $type, '/');
+}
+
+function get_upload_url($path) {
+    return BASE_URL . '/uploads/' . ltrim($path, '/');
+}
+
+// Load environment-specific configuration if exists
+$envConfig = __DIR__ . '/config.' . (DEBUG ? 'development' : 'production') . '.php';
+if (file_exists($envConfig)) {
+    require_once $envConfig;
+}

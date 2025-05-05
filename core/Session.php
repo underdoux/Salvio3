@@ -4,249 +4,203 @@
  * Handles session management and flash messages
  */
 class Session {
-    private static $initialized = false;
+    private static $instance = null;
+    private $flash = [];
+
+    private function __construct() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
+        // Initialize flash data
+        if (!isset($_SESSION['flash'])) {
+            $_SESSION['flash'] = [];
+        }
+        
+        // Move flash data to instance
+        $this->flash = $_SESSION['flash'];
+        $_SESSION['flash'] = [];
+    }
 
     /**
-     * Start session
+     * Get Session instance (Singleton)
      */
-    public static function start() {
-        if (self::$initialized) {
-            return;
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new self();
         }
-
-        if (headers_sent()) {
-            error_log("[Session] Headers already sent, cannot start session");
-            return;
-        }
-
-        // Get application path for cookie
-        $appPath = '/';  // Use root path to ensure cookie is available across all paths
-
-        // Set session save handler if needed
-        ini_set('session.save_handler', 'files');
-        ini_set('session.gc_probability', 1);
-        ini_set('session.gc_divisor', 100);
-        ini_set('session.gc_maxlifetime', SESSION_LIFETIME);
-        
-        // Get the application base path from APP_URL
-        $basePath = parse_url(APP_URL, PHP_URL_PATH);
-        if (!$basePath) $basePath = '';
-
-        // Set session cookie parameters
-        session_set_cookie_params([
-            'lifetime' => SESSION_LIFETIME,
-            'path' => $basePath,
-            'domain' => $_SERVER['HTTP_HOST'],
-            'secure' => isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on',
-            'httponly' => true,
-            'samesite' => 'Lax'
-        ]);
-
-        // Debug log cookie settings
-        error_log("[Session] Cookie settings:");
-        error_log("[Session] Path: " . ($basePath ? '/' . $basePath : '/'));
-        error_log("[Session] Domain: " . $_SERVER['HTTP_HOST']);
-        error_log("[Session] Secure: " . (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'true' : 'false'));
-
-        // Set session handler configurations
-        ini_set('session.use_strict_mode', 1);
-        ini_set('session.use_cookies', 1);
-        ini_set('session.use_only_cookies', 1);
-        ini_set('session.cache_limiter', 'nocache');
-
-        // Debug log
-        error_log("[Session] Starting session with parameters:");
-        error_log("[Session] Path: " . $appPath);
-        error_log("[Session] Cookie lifetime: " . SESSION_LIFETIME);
-        error_log("[Session] Session name: " . SESSION_NAME);
-
-        // Set session name
-        session_name(SESSION_NAME);
-
-        // Start or resume session
-        if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
-            session_start();
-            self::$initialized = true;
-
-            // Initialize session if needed
-            if (!isset($_SESSION['__initialized'])) {
-                session_regenerate_id(true);
-                $_SESSION['__initialized'] = true;
-                $_SESSION['__last_activity'] = time();
-            }
-
-            // Check session expiry
-            if (isset($_SESSION['__last_activity']) && (time() - $_SESSION['__last_activity'] > SESSION_LIFETIME)) {
-                self::clear();
-                session_start();
-                self::$initialized = true;
-                $_SESSION['__initialized'] = true;
-            }
-
-            // Update last activity time
-            $_SESSION['__last_activity'] = time();
-        } else {
-            error_log("[Session] Failed to start session - Headers already sent or session_start failed");
-        }
+        return self::$instance;
     }
 
     /**
      * Set session value
-     * @param string $key Session key
-     * @param mixed $value Session value
      */
-    public static function set($key, $value) {
-        self::ensureStarted();
+    public function set($key, $value) {
         $_SESSION[$key] = $value;
-        error_log("[Session] Set {$key}: " . print_r($value, true));
     }
 
     /**
      * Get session value
-     * @param string $key Session key
-     * @param mixed $default Default value if key not found
-     * @return mixed
      */
-    public static function get($key, $default = null) {
-        self::ensureStarted();
-        $value = $_SESSION[$key] ?? $default;
-        error_log("[Session] Get {$key}: " . print_r($value, true));
-        return $value;
+    public function get($key, $default = null) {
+        return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
+    }
+
+    /**
+     * Remove session value
+     */
+    public function remove($key) {
+        if (isset($_SESSION[$key])) {
+            unset($_SESSION[$key]);
+        }
     }
 
     /**
      * Check if session key exists
-     * @param string $key Session key
-     * @return bool
      */
-    public static function has($key) {
-        self::ensureStarted();
-        $exists = isset($_SESSION[$key]);
-        error_log("[Session] Check {$key} exists: " . ($exists ? 'true' : 'false'));
-        return $exists;
+    public function has($key) {
+        return isset($_SESSION[$key]);
     }
 
     /**
-     * Remove session key
-     * @param string $key Session key
+     * Set flash message
      */
-    public static function remove($key) {
-        self::ensureStarted();
-        error_log("[Session] Remove {$key}");
-        unset($_SESSION[$key]);
+    public function setFlash($type, $message) {
+        $_SESSION['flash'][$type] = $message;
+    }
+
+    /**
+     * Get flash messages
+     */
+    public function getFlash() {
+        return $this->flash;
+    }
+
+    /**
+     * Check if has flash message
+     */
+    public function hasFlash($type) {
+        return isset($this->flash[$type]);
+    }
+
+    /**
+     * Get flash message
+     */
+    public function getFlashMessage($type) {
+        return isset($this->flash[$type]) ? $this->flash[$type] : null;
+    }
+
+    /**
+     * Clear all flash messages
+     */
+    public function clearFlash() {
+        $this->flash = [];
+        $_SESSION['flash'] = [];
+    }
+
+    /**
+     * Regenerate session ID
+     */
+    public function regenerate() {
+        session_regenerate_id(true);
+    }
+
+    /**
+     * Destroy session
+     */
+    public function destroy() {
+        session_destroy();
+        $this->flash = [];
+        $_SESSION = [];
+    }
+
+    /**
+     * Set multiple session values
+     */
+    public function setMultiple(array $data) {
+        foreach ($data as $key => $value) {
+            $this->set($key, $value);
+        }
+    }
+
+    /**
+     * Get multiple session values
+     */
+    public function getMultiple(array $keys, $default = null) {
+        $values = [];
+        foreach ($keys as $key) {
+            $values[$key] = $this->get($key, $default);
+        }
+        return $values;
+    }
+
+    /**
+     * Remove multiple session values
+     */
+    public function removeMultiple(array $keys) {
+        foreach ($keys as $key) {
+            $this->remove($key);
+        }
+    }
+
+    /**
+     * Get all session data
+     */
+    public function all() {
+        return $_SESSION;
     }
 
     /**
      * Clear all session data
      */
-    public static function clear() {
-        self::ensureStarted();
-        error_log("[Session] Clear all session data");
+    public function clear() {
         $_SESSION = [];
-        
-        // Delete the session cookie
-        if (isset($_COOKIE[session_name()])) {
-            $params = session_get_cookie_params();
-            setcookie(
-                session_name(),
-                '',
-                [
-                    'expires' => time() - 42000,
-                    'path' => $params['path'],
-                    'domain' => $params['domain'],
-                    'secure' => $params['secure'],
-                    'httponly' => $params['httponly'],
-                    'samesite' => $params['samesite'] ?? 'Lax'
-                ]
-            );
-        }
-        
-        session_destroy();
-        self::$initialized = false;
     }
 
     /**
-     * Regenerate session ID
-     * @param bool $deleteOldSession Delete old session data
+     * Get session ID
      */
-    public static function regenerate($deleteOldSession = true) {
-        self::ensureStarted();
-        $oldId = session_id();
-        if (session_regenerate_id($deleteOldSession)) {
-            error_log("[Session] Regenerated session ID. Old: {$oldId}, New: " . session_id());
-            return true;
-        }
-        error_log("[Session] Failed to regenerate session ID!");
-        return false;
+    public function getId() {
+        return session_id();
     }
 
     /**
-     * Set flash message
-     * @param string $type Message type (success, error, info, warning)
-     * @param string $message Message content
+     * Set session name
      */
-    public static function setFlash($type, $message) {
-        self::ensureStarted();
-        error_log("[Session] Set flash message - Type: {$type}, Message: {$message}");
-        self::set('flash_' . $type, $message);
+    public function setName($name) {
+        session_name($name);
     }
 
     /**
-     * Get flash message
-     * @param string $type Message type
-     * @return string|null Message content
+     * Get session name
      */
-    public static function getFlash($type) {
-        self::ensureStarted();
-        $key = 'flash_' . $type;
-        $message = self::get($key);
-        self::remove($key);
-        error_log("[Session] Get flash message - Type: {$type}, Message: " . ($message ?? 'null'));
-        return $message;
+    public function getName() {
+        return session_name();
     }
 
     /**
-     * Generate CSRF token
-     * @return string
+     * Set session cookie parameters
      */
-    public static function generateCsrfToken() {
-        self::ensureStarted();
-        $token = bin2hex(random_bytes(32));
-        self::set('csrf_token', $token);
-        error_log("[Session] Generated CSRF token: {$token}");
-        return $token;
+    public function setCookieParams($lifetime, $path, $domain, $secure = false, $httponly = true) {
+        session_set_cookie_params($lifetime, $path, $domain, $secure, $httponly);
     }
 
     /**
-     * Verify CSRF token
-     * @param string $token Token to verify
-     * @return bool
+     * Get session cookie parameters
      */
-    public static function verifyCsrfToken($token) {
-        self::ensureStarted();
-        $valid = hash_equals(self::get('csrf_token', ''), $token);
-        error_log("[Session] Verify CSRF token: " . ($valid ? 'valid' : 'invalid'));
-        return $valid;
+    public function getCookieParams() {
+        return session_get_cookie_params();
     }
 
     /**
-     * Check if flash message exists
-     * @param string $type Message type
-     * @return bool
+     * Prevent cloning of singleton
      */
-    public static function hasFlash($type) {
-        self::ensureStarted();
-        $exists = isset($_SESSION['flash_' . $type]);
-        error_log("[Session] Check flash message exists - Type: {$type}, Exists: " . ($exists ? 'true' : 'false'));
-        return $exists;
-    }
+    private function __clone() {}
 
     /**
-     * Ensure session is started
+     * Prevent unserializing of singleton
      */
-    private static function ensureStarted() {
-        if (!self::$initialized) {
-            self::start();
-        }
+    public function __wakeup() {
+        throw new Exception("Cannot unserialize singleton");
     }
 }

@@ -1,143 +1,204 @@
 <?php
 /**
- * PDF Generator Helper Class
- * Uses TCPDF to generate PDF documents
+ * PDF Generator Helper
+ * Uses TCPDF to generate PDF reports
  */
-class PdfGenerator {
+class PDFGenerator {
     private $pdf;
+    private $defaultFont = 'helvetica';
 
     public function __construct() {
-        require_once VENDOR_PATH . '/tcpdf/tcpdf.php';
-        
-        // Create new PDF document
+        // Include TCPDF library
+        require_once 'vendor/tecnickcom/tcpdf/tcpdf.php';
+
+        // Initialize TCPDF
         $this->pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        
+
         // Set document information
         $this->pdf->SetCreator(PDF_CREATOR);
         $this->pdf->SetAuthor(APP_NAME);
-        $this->pdf->SetTitle('Invoice');
-        
+        $this->pdf->SetTitle('Dashboard Report');
+
         // Set default header data
-        $this->pdf->SetHeaderData('', 0, APP_NAME, '');
-        
+        $this->pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, APP_NAME, 'Dashboard Report');
+
+        // Set header and footer fonts
+        $this->pdf->setHeaderFont(Array($this->defaultFont, '', PDF_FONT_SIZE_MAIN));
+        $this->pdf->setFooterFont(Array($this->defaultFont, '', PDF_FONT_SIZE_DATA));
+
+        // Set default monospaced font
+        $this->pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
         // Set margins
-        $this->pdf->SetMargins(15, 15, 15);
-        $this->pdf->SetHeaderMargin(5);
-        $this->pdf->SetFooterMargin(10);
-        
+        $this->pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $this->pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+        $this->pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
         // Set auto page breaks
-        $this->pdf->SetAutoPageBreak(TRUE, 25);
-        
-        // Set default font
-        $this->pdf->SetFont('helvetica', '', 10);
+        $this->pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+        // Set image scale factor
+        $this->pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+        // Set default font subsetting mode
+        $this->pdf->setFontSubsetting(true);
+
+        // Set font
+        $this->pdf->SetFont($this->defaultFont, '', 10);
     }
 
     /**
-     * Generate invoice PDF
-     * @param array $sale Sale data with items
+     * Generate dashboard report
      */
-    public function generateInvoice($sale) {
+    public function generateDashboardReport($data, $startDate, $endDate) {
         // Add a page
         $this->pdf->AddPage();
-        
-        // Invoice header
-        $this->pdf->SetFont('helvetica', 'B', 20);
-        $this->pdf->Cell(0, 10, 'INVOICE', 0, 1, 'C');
-        $this->pdf->SetFont('helvetica', '', 10);
-        $this->pdf->Cell(0, 5, '#' . $sale['invoice_number'], 0, 1, 'C');
+
+        // Report header
+        $this->pdf->SetFont($this->defaultFont, 'B', 16);
+        $this->pdf->Cell(0, 10, 'Dashboard Report', 0, 1, 'C');
+        $this->pdf->SetFont($this->defaultFont, '', 10);
+        $this->pdf->Cell(0, 10, "Period: {$startDate} to {$endDate}", 0, 1, 'C');
         $this->pdf->Ln(10);
-        
-        // Company and customer info
-        $this->pdf->SetFont('helvetica', 'B', 12);
-        $this->pdf->Cell(95, 5, 'From:', 0, 0);
-        $this->pdf->Cell(95, 5, 'To:', 0, 1);
-        
-        $this->pdf->SetFont('helvetica', '', 10);
-        // Company details
-        $this->pdf->Cell(95, 5, APP_NAME, 0, 0);
-        // Customer details
-        $this->pdf->Cell(95, 5, $sale['customer_name'], 0, 1);
-        
-        $this->pdf->Cell(95, 5, 'Sales Person: ' . $sale['user_name'], 0, 0);
-        if (!empty($sale['customer_email'])) {
-            $this->pdf->Cell(95, 5, $sale['customer_email'], 0, 1);
-        } else {
+
+        // Sales Statistics
+        $this->addSection('Sales Statistics', [
+            ['Total Sales', format_currency($data['salesStats']['total_sales'])],
+            ['Total Orders', number_format($data['salesStats']['total_orders'])],
+            ['Average Order', format_currency($data['salesStats']['average_order'])],
+            ['Growth', $data['salesStats']['sales_growth'] . '%']
+        ]);
+
+        // Top Products
+        $this->addSection('Top Selling Products', $data['topProducts'], [
+            ['Product', 80],
+            ['Quantity', 30],
+            ['Amount', 40]
+        ], function($item) {
+            return [
+                $item['name'],
+                number_format($item['quantity']),
+                format_currency($item['total_amount'])
+            ];
+        });
+
+        // Payment Statistics
+        $this->addSection('Payment Statistics', $data['paymentStats'], [
+            ['Method', 50],
+            ['Count', 30],
+            ['Amount', 40],
+            ['Percentage', 30]
+        ], function($item) use ($data) {
+            $total = array_sum(array_column($data['paymentStats'], 'amount'));
+            $percentage = ($item['amount'] / $total) * 100;
+            return [
+                $item['method'],
+                number_format($item['count']),
+                format_currency($item['amount']),
+                number_format($percentage, 1) . '%'
+            ];
+        });
+
+        // Customer Statistics
+        $this->addSection('Customer Statistics', [
+            ['New Customers', number_format($data['customerStats']['new_customers'])],
+            ['Total Customers', number_format($data['customerStats']['total_customers'])],
+            ['Average Value', format_currency($data['customerStats']['average_value'])],
+            ['Growth', $data['customerStats']['customer_growth'] . '%']
+        ]);
+    }
+
+    /**
+     * Add a section to the report
+     */
+    private function addSection($title, $data, $columns = null, $callback = null) {
+        $this->pdf->SetFont($this->defaultFont, 'B', 12);
+        $this->pdf->Cell(0, 10, $title, 0, 1);
+        $this->pdf->SetFont($this->defaultFont, '', 10);
+
+        if (is_array($columns)) {
+            // Table header
+            $this->pdf->SetFillColor(240, 240, 240);
+            foreach ($columns as $col) {
+                $this->pdf->Cell($col[1], 7, $col[0], 1, 0, 'L', true);
+            }
             $this->pdf->Ln();
-        }
-        
-        $this->pdf->Cell(95, 5, 'Date: ' . formatDate($sale['created_at']), 0, 0);
-        if (!empty($sale['customer_phone'])) {
-            $this->pdf->Cell(95, 5, $sale['customer_phone'], 0, 1);
+
+            // Table data
+            $this->pdf->SetFillColor(255, 255, 255);
+            foreach ($data as $row) {
+                $values = $callback ? $callback($row) : $row;
+                foreach ($values as $i => $value) {
+                    $this->pdf->Cell($columns[$i][1], 6, $value, 1);
+                }
+                $this->pdf->Ln();
+            }
         } else {
-            $this->pdf->Ln();
+            // Key-value pairs
+            foreach ($data as $row) {
+                $this->pdf->Cell(60, 6, $row[0] . ':', 0);
+                $this->pdf->Cell(0, 6, $row[1], 0);
+                $this->pdf->Ln();
+            }
         }
-        
-        if (!empty($sale['customer_address'])) {
-            $this->pdf->Cell(95, 5, '', 0, 0);
-            $this->pdf->MultiCell(95, 5, $sale['customer_address'], 0, 'L');
-        }
-        
+
         $this->pdf->Ln(10);
-        
-        // Items table
-        $this->pdf->SetFont('helvetica', 'B', 10);
+    }
+
+    /**
+     * Output the PDF
+     */
+    public function output($filename = 'report.pdf', $destination = 'I') {
+        $this->pdf->Output($filename, $destination);
+    }
+
+    /**
+     * Add chart image to PDF
+     */
+    public function addChart($chartImage, $width = 180) {
+        $this->pdf->Image($chartImage, null, null, $width);
+        $this->pdf->Ln(10);
+    }
+
+    /**
+     * Add page break
+     */
+    public function addPage() {
+        $this->pdf->AddPage();
+    }
+
+    /**
+     * Add text
+     */
+    public function addText($text, $fontSize = 10, $style = '') {
+        $this->pdf->SetFont($this->defaultFont, $style, $fontSize);
+        $this->pdf->Write(0, $text);
+        $this->pdf->Ln();
+    }
+
+    /**
+     * Add table
+     */
+    public function addTable($headers, $data) {
+        // Calculate column widths
+        $width = 190; // Total available width
+        $colWidth = $width / count($headers);
+
+        // Headers
         $this->pdf->SetFillColor(240, 240, 240);
-        // Table header
-        $this->pdf->Cell(60, 7, 'Product', 1, 0, 'L', true);
-        $this->pdf->Cell(25, 7, 'Quantity', 1, 0, 'C', true);
-        $this->pdf->Cell(35, 7, 'Unit Price', 1, 0, 'R', true);
-        $this->pdf->Cell(35, 7, 'Discount', 1, 0, 'R', true);
-        $this->pdf->Cell(35, 7, 'Total', 1, 1, 'R', true);
-        
-        // Table content
-        $this->pdf->SetFont('helvetica', '', 10);
-        foreach ($sale['items'] as $item) {
-            $this->pdf->Cell(60, 6, $item['product_name'], 1);
-            $this->pdf->Cell(25, 6, number_format($item['quantity']), 1, 0, 'C');
-            $this->pdf->Cell(35, 6, formatCurrency($item['unit_price']), 1, 0, 'R');
-            $this->pdf->Cell(35, 6, formatCurrency($item['discount_amount']), 1, 0, 'R');
-            $this->pdf->Cell(35, 6, formatCurrency($item['total_amount']), 1, 1, 'R');
+        foreach ($headers as $header) {
+            $this->pdf->Cell($colWidth, 7, $header, 1, 0, 'C', true);
         }
-        
-        // Totals
-        $this->pdf->SetFont('helvetica', 'B', 10);
-        $this->pdf->Cell(155, 6, 'Subtotal:', 1, 0, 'R');
-        $this->pdf->Cell(35, 6, formatCurrency($sale['total_amount']), 1, 1, 'R');
-        
-        if ($sale['discount_amount'] > 0) {
-            $this->pdf->Cell(155, 6, 'Total Discount:', 1, 0, 'R');
-            $this->pdf->Cell(35, 6, formatCurrency($sale['discount_amount']), 1, 1, 'R');
+        $this->pdf->Ln();
+
+        // Data
+        $this->pdf->SetFillColor(255, 255, 255);
+        foreach ($data as $row) {
+            foreach ($row as $cell) {
+                $this->pdf->Cell($colWidth, 6, $cell, 1, 0, 'L');
+            }
+            $this->pdf->Ln();
         }
-        
-        $this->pdf->Cell(155, 6, 'Final Total:', 1, 0, 'R');
-        $this->pdf->Cell(35, 6, formatCurrency($sale['final_amount']), 1, 1, 'R');
-        
-        // Payment info
-        $this->pdf->Ln(10);
-        $this->pdf->SetFont('helvetica', 'B', 10);
-        $this->pdf->Cell(0, 5, 'Payment Information:', 0, 1);
-        $this->pdf->SetFont('helvetica', '', 10);
-        $this->pdf->Cell(0, 5, 'Payment Method: ' . ucfirst(str_replace('_', ' ', $sale['payment_type'])), 0, 1);
-        $this->pdf->Cell(0, 5, 'Payment Status: ' . ucfirst($sale['payment_status']), 0, 1);
-        
-        // Notes
-        if (!empty($sale['notes'])) {
-            $this->pdf->Ln(5);
-            $this->pdf->SetFont('helvetica', 'B', 10);
-            $this->pdf->Cell(0, 5, 'Notes:', 0, 1);
-            $this->pdf->SetFont('helvetica', '', 10);
-            $this->pdf->MultiCell(0, 5, $sale['notes'], 0, 'L');
-        }
-        
-        // Terms and conditions
-        $this->pdf->Ln(10);
-        $this->pdf->SetFont('helvetica', 'B', 10);
-        $this->pdf->Cell(0, 5, 'Terms & Conditions:', 0, 1);
-        $this->pdf->SetFont('helvetica', '', 9);
-        $this->pdf->MultiCell(0, 4, "1. All prices are in " . APP_CURRENCY . "\n2. Payment is due upon receipt unless other terms are agreed upon\n3. Goods sold are not returnable unless defective\n4. Prices are subject to change without notice", 0, 'L');
-        
-        // Output PDF
-        $filename = 'Invoice_' . $sale['invoice_number'] . '.pdf';
-        $this->pdf->Output($filename, 'D');
+        $this->pdf->Ln(5);
     }
 }
