@@ -17,8 +17,8 @@ echo "Session Status: " . session_status() . "\n";
 echo "Session Save Path: " . session_save_path() . "\n";
 
 echo "\nApplication Info:\n";
-echo "APP_URL: " . APP_URL . "\n";
-echo "SESSION_NAME: " . SESSION_NAME . "\n";
+echo "APP_URL: " . BASE_URL . "\n";
+echo "SESSION_NAME: " . session_name() . "\n";
 echo "SESSION_LIFETIME: " . SESSION_LIFETIME . "\n";
 
 echo "\nRequest Info:\n";
