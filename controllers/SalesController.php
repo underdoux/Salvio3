@@ -82,15 +82,15 @@ class SalesController extends Controller {
             {$whereClause}
             GROUP BY s.id
             ORDER BY s.created_at DESC
-            LIMIT ? OFFSET ?
+            LIMIT :limit OFFSET :offset
         ";
 
         $query = $this->saleModel->getDb()->query($sql);
         foreach ($params as $i => $param) {
             $query->bind($i + 1, $param);
         }
-        $query->bind(count($params) + 1, $limit);
-        $query->bind(count($params) + 2, $offset);
+        $query->bind(':limit', $limit);
+        $query->bind(':offset', $offset);
 
         $sales = $query->resultSet();
 

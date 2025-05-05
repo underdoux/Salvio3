@@ -13,6 +13,11 @@ class CategoriesController extends Controller {
         $this->categoryModel = $this->model('Category');
     }
 
+    // Add view method to match parent signature
+    public function view($view, $data = []) {
+        $this->view->render($view, $data);
+    }
+
     /**
      * List all categories
      */
@@ -229,9 +234,6 @@ class CategoriesController extends Controller {
         $this->redirect('categories');
     }
 
-    /**
-     * View category details
-     */
     /**
      * View category details
      */
