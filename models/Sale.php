@@ -23,7 +23,7 @@ class Sale extends Model {
      */
     public function generateInvoiceNumber() {
         $prefix = date('Ymd');
-        $lastInvoice = $this->db->query("
+        $lastInvoice = $this->getDb()->query("
             SELECT invoice_number 
             FROM {$this->table} 
             WHERE invoice_number LIKE ?
@@ -50,7 +50,7 @@ class Sale extends Model {
      */
     public function createWithItems($saleData, $items) {
         try {
-            $this->db->beginTransaction();
+            $this->getDb()->beginTransaction();
 
             // Create sale
             $saleId = $this->create($saleData);
@@ -73,11 +73,11 @@ class Sale extends Model {
                 $this->createInitialPayment($saleId, $saleData);
             }
 
-            $this->db->commit();
+            $this->getDb()->commit();
             return $saleId;
 
         } catch (Exception $e) {
-            $this->db->rollback();
+            $this->getDb()->rollback();
             error_log("Sale Creation Error: " . $e->getMessage());
             return false;
         }
@@ -91,7 +91,7 @@ class Sale extends Model {
      */
     private function addSaleItem($saleId, $item) {
         // Insert sale item
-        $this->db->query("
+        $this->getDb()->query("
             INSERT INTO sale_items (
                 sale_id, 
                 product_id, 
@@ -122,7 +122,7 @@ class Sale extends Model {
      */
     private function updateStock($productId, $quantity) {
         // Update product stock
-        $this->db->query("
+        $this->getDb()->query("
             UPDATE products 
             SET stock = stock - ?, 
                 updated_at = CURRENT_TIMESTAMP 
@@ -133,7 +133,7 @@ class Sale extends Model {
         ->execute();
 
         // Record stock movement
-        $this->db->query("
+        $this->getDb()->query("
             INSERT INTO stock_movements (
                 product_id, 
                 reference_id, 
@@ -144,7 +144,7 @@ class Sale extends Model {
             ) VALUES (?, ?, 'sale', ?, 'out', 'Sale deduction')
         ")
         ->bind(1, $productId)
-        ->bind(2, $this->db->lastInsertId())
+        ->bind(2, $this->getDb()->lastInsertId())
         ->bind(3, $quantity)
         ->execute();
     }
@@ -167,7 +167,7 @@ class Sale extends Model {
 
             $dueDate = date('Y-m-d', strtotime("+".($i+1)." month"));
             
-            $this->db->query("
+        $this->getDb()->query("
                 INSERT INTO installments (
                     sale_id, 
                     amount, 
@@ -192,7 +192,7 @@ class Sale extends Model {
             ? $saleData['final_amount'] 
             : ($saleData['final_amount'] * 0.5); // 50% for partial payment
 
-        $this->db->query("
+        $this->getDb()->query("
             INSERT INTO payments (
                 sale_id, 
                 amount, 
@@ -225,7 +225,7 @@ class Sale extends Model {
      * @return float Total sales amount
      */
     public function getTodaySales() {
-        $result = $this->db->query("
+        $result = $this->getDb()->query("
             SELECT COALESCE(SUM(final_amount), 0) as total 
             FROM {$this->table} 
             WHERE DATE(created_at) = CURRENT_DATE
@@ -239,7 +239,7 @@ class Sale extends Model {
      * @return int Order count
      */
     public function getTodayOrderCount() {
-        $result = $this->db->query("
+        $result = $this->getDb()->query("
             SELECT COUNT(*) as count 
             FROM {$this->table} 
             WHERE DATE(created_at) = CURRENT_DATE
@@ -253,7 +253,7 @@ class Sale extends Model {
      * @return float Monthly revenue
      */
     public function getMonthlyRevenue() {
-        $result = $this->db->query("
+        $result = $this->getDb()->query("
             SELECT COALESCE(SUM(final_amount), 0) as total 
             FROM {$this->table} 
             WHERE YEAR(created_at) = YEAR(CURRENT_DATE) 
@@ -268,7 +268,7 @@ class Sale extends Model {
      * @return float Last month's revenue
      */
     public function getLastMonthRevenue() {
-        $result = $this->db->query("
+        $result = $this->getDb()->query("
             SELECT COALESCE(SUM(final_amount), 0) as total 
             FROM {$this->table} 
             WHERE created_at >= DATE_SUB(DATE_FORMAT(CURRENT_DATE, '%Y-%m-01'), INTERVAL 1 MONTH)

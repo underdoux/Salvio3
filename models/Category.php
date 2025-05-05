@@ -21,37 +21,35 @@ class Category extends Model {
      */
     public function getAll($page = 1, $limit = 10, $search = '') {
         $offset = ($page - 1) * $limit;
-        $where = "WHERE c.status = 'active'";
-        
-        if (!empty($search)) {
-            $where .= " AND c.name LIKE ?";
-            $searchTerm = "%{$search}%";
-        }
+        $searchTerm = null;
 
         // Get total count
-        $countSql = "SELECT COUNT(*) as total FROM {$this->table} c {$where}";
-        $countQuery = $this->db->query($countSql);
         if (!empty($search)) {
+            $searchTerm = "%{$search}%";
+            $countSql = "SELECT COUNT(*) as total FROM {$this->table} c WHERE c.status = 'active' AND c.name LIKE ?";
+            $countQuery = $this->getDb()->query($countSql);
             $countQuery->bind(1, $searchTerm);
+        } else {
+            $countSql = "SELECT COUNT(*) as total FROM {$this->table} c WHERE c.status = 'active'";
+            $countQuery = $this->getDb()->query($countSql);
         }
         $total = $countQuery->single()['total'];
 
         // Get paginated data
         $sql = "SELECT c.*, p.name as parent_name, 
-            (SELECT COUNT(*) FROM products p WHERE p.category_id = c.id AND p.status = 'active') as product_count 
+            (SELECT COUNT(*) FROM products pr WHERE pr.category_id = c.id AND pr.status = 'active') as product_count 
             FROM {$this->table} c 
-            LEFT JOIN {$this->table} p ON c.parent_id = p.id";
-        
+            LEFT JOIN {$this->table} p ON c.parent_id = p.id
+            WHERE c.status = 'active'";
+
         if (!empty($search)) {
-            $sql .= " WHERE c.status = 'active' AND c.name LIKE ?";
-        } else {
-            $sql .= " WHERE c.status = 'active'";
+            $sql .= " AND c.name LIKE ?";
         }
-        
+
         $sql .= " ORDER BY c.name ASC LIMIT ? OFFSET ?";
 
-        $query = $this->db->query($sql);
-        
+        $query = $this->getDb()->query($sql);
+
         if (!empty($search)) {
             $query->bind(1, $searchTerm);
             $query->bind(2, $limit);
@@ -75,7 +73,7 @@ class Category extends Model {
      * @return array|null
      */
     public function getById($id) {
-        return $this->db->query("
+        return $this->getDb()->query("
             SELECT c.* FROM {$this->table} c
             WHERE c.id = ? AND c.status = 'active'
         ")
@@ -88,7 +86,7 @@ class Category extends Model {
      * @return array
      */
     public function getActive() {
-        return $this->db->query("
+        return $this->getDb()->query("
             SELECT c.* FROM {$this->table} c
             WHERE c.status = 'active'
             ORDER BY c.name ASC
@@ -131,7 +129,7 @@ class Category extends Model {
             ORDER BY path
         ";
 
-        $query = $this->db->query($sql);
+        $query = $this->getDb()->query($sql);
         if ($parentId !== null) {
             $query->bind(1, $parentId);
         }
@@ -143,7 +141,7 @@ class Category extends Model {
      * @return array
      */
     public function getWithProductCount() {
-        return $this->db->query("
+        return $this->getDb()->query("
             SELECT 
                 c.*,
                 COUNT(p.id) as product_count
@@ -164,7 +162,7 @@ class Category extends Model {
      */
     public function getWithProducts($id, $limit = 10, $offset = 0) {
         // Get category details
-        $category = $this->db->query("
+        $category = $this->getDb()->query("
             SELECT c.* FROM {$this->table} c
             WHERE c.id = ? AND c.status = 'active'
         ")
@@ -176,7 +174,7 @@ class Category extends Model {
         }
 
         // Get category products
-        $products = $this->db->query("
+        $products = $this->getDb()->query("
             SELECT p.*
             FROM products p
             WHERE p.category_id = ?
@@ -190,7 +188,7 @@ class Category extends Model {
         ->resultSet();
 
         // Get total product count
-        $total = $this->db->query("
+        $total = $this->getDb()->query("
             SELECT COUNT(*) as total
             FROM products p
             WHERE p.category_id = ?
@@ -212,7 +210,7 @@ class Category extends Model {
      * @return bool
      */
     public function hasChildren($id) {
-        $result = $this->db->query("
+        $result = $this->getDb()->query("
             SELECT COUNT(*) as count
             FROM {$this->table} c
             WHERE c.parent_id = ?
@@ -230,7 +228,7 @@ class Category extends Model {
      * @return bool
      */
     public function hasProducts($id) {
-        $result = $this->db->query("
+        $result = $this->getDb()->query("
             SELECT COUNT(*) as count
             FROM products p
             WHERE p.category_id = ?
@@ -248,7 +246,7 @@ class Category extends Model {
      * @return array
      */
     public function getBreadcrumb($id) {
-        return $this->db->query("
+        return $this->getDb()->query("
             WITH RECURSIVE category_path AS (
                 -- Base case: start with the target category
                 SELECT 
@@ -287,14 +285,14 @@ class Category extends Model {
     public function create($data) {
         $sql = "INSERT INTO {$this->table} (name, description, parent_id, status) VALUES (?, ?, ?, ?)";
         
-        $this->db->query($sql)
+        $this->getDb()->query($sql)
             ->bind(1, $data['name'])
             ->bind(2, $data['description'] ?? null)
             ->bind(3, $data['parent_id'] ?? null)
             ->bind(4, $data['status'] ?? 'active')
             ->execute();
             
-        return $this->db->lastInsertId();
+        return $this->getDb()->lastInsertId();
     }
 
     /**
@@ -321,7 +319,7 @@ class Category extends Model {
         $params[] = $id;
         $sql = "UPDATE {$this->table} c SET " . implode(', ', $updates) . " WHERE c.id = ?";
         
-        $query = $this->db->query($sql);
+        $query = $this->getDb()->query($sql);
         for ($i = 0; $i < count($params); $i++) {
             $query->bind($i + 1, $params[$i]);
         }
@@ -335,7 +333,7 @@ class Category extends Model {
      * @return bool Success status
      */
     public function delete($id) {
-        return $this->db->query("UPDATE {$this->table} c SET c.status = 'inactive' WHERE c.id = ? AND c.status = 'active'")
+        return $this->getDb()->query("UPDATE {$this->table} c SET c.status = 'inactive' WHERE c.id = ? AND c.status = 'active'")
             ->bind(1, $id)
             ->execute();
     }
@@ -352,12 +350,12 @@ class Category extends Model {
 
         // Get total count
         $countSql = "SELECT COUNT(*) as total FROM products p WHERE p.category_id = ? AND p.status = 'active'";
-        $countQuery = $this->db->query($countSql)->bind(1, $id);
+        $countQuery = $this->getDb()->query($countSql)->bind(1, $id);
         $total = $countQuery->single()['total'];
 
         // Get paginated data
         $sql = "SELECT p.* FROM products p WHERE p.category_id = ? AND p.status = 'active' ORDER BY p.name ASC LIMIT ? OFFSET ?";
-        $query = $this->db->query($sql)
+        $query = $this->getDb()->query($sql)
             ->bind(1, $id)
             ->bind(2, $limit)
             ->bind(3, $offset);
@@ -412,7 +410,7 @@ class Category extends Model {
             ORDER BY path
         ";
 
-        $query = $this->db->query($sql);
+        $query = $this->getDb()->query($sql);
         if ($excludeId) {
             $query->bind(1, $excludeId);
             $query->bind(2, $excludeId);

@@ -15,6 +15,13 @@ abstract class Model {
     }
 
     /**
+     * Get database instance
+     */
+    public function getDb() {
+        return $this->db;
+    }
+
+    /**
      * Find record by ID
      */
     public function find($id) {

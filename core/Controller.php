@@ -14,6 +14,9 @@ abstract class Controller {
         $this->auth = Auth::getInstance();
         $this->session = Session::getInstance();
         $this->db = Database::getInstance();
+        
+        // Load common helpers
+        $this->loadHelpers(['url']);
     }
 
     /**
@@ -68,8 +71,20 @@ abstract class Controller {
     /**
      * Redirect to URL
      */
+    /**
+     * Load helper files
+     */
+    protected function loadHelpers($helpers) {
+        foreach ($helpers as $helper) {
+            $helperFile = "helpers/{$helper}_helper.php";
+            if (file_exists($helperFile)) {
+                require_once $helperFile;
+            }
+        }
+    }
+
     protected function redirect($url) {
-        header('Location: ' . BASE_URL . '/' . $url);
+        header('Location: ' . base_url($url));
         exit;
     }
 

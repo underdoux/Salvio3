@@ -39,9 +39,11 @@ print_r($_COOKIE);
 echo "\nSession Name: " . session_name() . "\n";
 echo "Session ID: " . session_id() . "\n";
 
-echo "\nAll Headers:\n";
-foreach (getallheaders() as $name => $value) {
-    echo "$name: $value\n";
+echo "\nServer Variables:\n";
+foreach ($_SERVER as $name => $value) {
+    if (is_string($value)) {
+        echo "$name: $value\n";
+    }
 }
 
 echo "\nPHP Session Settings:\n";

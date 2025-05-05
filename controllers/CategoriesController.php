@@ -232,7 +232,10 @@ class CategoriesController extends Controller {
     /**
      * View category details
      */
-    public function view($id = null) {
+    /**
+     * View category details
+     */
+    public function viewCategory($id = null) {
         if (!$id) {
             $this->redirect('categories');
             return;
@@ -259,5 +262,12 @@ class CategoriesController extends Controller {
                 'lastPage' => $products['last_page']
             ]
         ]);
+    }
+
+    /**
+     * Implementation of parent view method
+     */
+    public function view($view, $data = []) {
+        parent::view($view, $data);
     }
 }
