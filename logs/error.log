@@ -7991,3 +7991,465 @@ Stack trace:
 #0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
 #1 unknown:0 - ErrorHandler->handleShutdown()
 --------------------------------------------------------------------------------
+[2025-05-05 18:58:15] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:62 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 18:58:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 18:58:15] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 18:58:16] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:62 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 18:58:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 18:58:16] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 18:58:16] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:62 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 18:58:16 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 18:58:16] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 18:58:17] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:62 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 18:58:17 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 18:58:17] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 19:05:02] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:60 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 19:05:02 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 19:05:02] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 19:07:06] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:60 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 19:07:06 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 19:07:06] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 19:13:30] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:60 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 19:13:30 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 19:13:30] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 19:13:31] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:60 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 19:13:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 19:13:31] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 19:13:31] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:60 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 19:13:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 19:13:31] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 19:13:31] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:60 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 19:13:31 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 19:13:31] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 19:27:18] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:61 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 19:27:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 19:27:18] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 19:27:18] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:61 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 19:27:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 19:27:18] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-05 19:27:18] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:61 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[05-May-2025 19:27:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-05 19:27:19] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-06 00:01:39] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:61 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[06-May-2025 00:01:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-06 00:01:39] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-06 00:01:40] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:61 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[06-May-2025 00:01:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-06 00:01:40] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-06 00:01:40] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:61 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[06-May-2025 00:01:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-06 00:01:40] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-06 00:01:41] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:61 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[06-May-2025 00:01:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-06 00:01:41] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-06 00:01:41] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:61 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[06-May-2025 00:01:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-06 00:01:41] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-06 00:26:34] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:61 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[06-May-2025 00:26:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-06 00:26:34] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-06 00:47:46] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:61 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[06-May-2025 00:47:46 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-06 00:47:46] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------
+[2025-05-06 00:47:47] Error: Call to undefined method AuthController::model() in C:\xampp\htdocs\Salvio3\controllers\AuthController.php:11
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php:61 - AuthController->__construct()
+--------------------------------------------------------------------------------
+[06-May-2025 00:47:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php on line 160
+[2025-05-06 00:47:47] E_ERROR: Uncaught Error: Call to undefined method ErrorHandler::e() in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(176): include()
+#1 C:\xampp\htdocs\Salvio3\helpers\error_handler.php(86): ErrorHandler->displayError(500, Array)
+#2 [internal function]: ErrorHandler->handleException(Object(Error))
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\errors\500.php:160
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\helpers\error_handler.php:96 - ErrorHandler->handleError()
+#1 unknown:0 - ErrorHandler->handleShutdown()
+--------------------------------------------------------------------------------

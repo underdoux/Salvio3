@@ -42,18 +42,20 @@
     </style>
 </head>
 <body>
-    <?php if (Session::hasFlash('success') || Session::hasFlash('error')): ?>
+    <?php 
+    $session = Session::getInstance();
+    if ($session->hasFlash('success') || $session->hasFlash('error')): ?>
         <div class="flash-message container mt-3">
-            <?php if (Session::hasFlash('success')): ?>
+            <?php if ($session->hasFlash('success')): ?>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?= View::escape(Session::getFlash('success')) ?>
+                    <?= View::escape($session->getFlashMessage('success')) ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php endif; ?>
             
-            <?php if (Session::hasFlash('error')): ?>
+            <?php if ($session->hasFlash('error')): ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?= View::escape(Session::getFlash('error')) ?>
+                    <?= View::escape($session->getFlashMessage('error')) ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             <?php endif; ?>

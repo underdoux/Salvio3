@@ -3,14 +3,12 @@
  * Main Application Entry Point
  */
 
-// Define base path
-define('BASE_PATH', __DIR__);
-define('CONFIG_PATH', BASE_PATH . '/config');
-define('LOG_PATH', BASE_PATH . '/logs');
+// Load helper functions first
+require_once 'helpers/functions.php';
 
 // Load configuration
-require_once CONFIG_PATH . '/config.php';
-require_once CONFIG_PATH . '/database.php';
+require_once 'config/config.php';
+require_once 'config/database.php';
 
 // Load core classes
 require_once 'core/Controller.php';
@@ -23,6 +21,7 @@ require_once 'core/Auth.php';
 // Load helpers
 require_once 'helpers/error_handler.php';
 require_once 'helpers/maintenance_mode.php';
+require_once 'helpers/url_helper.php';
 
 // Start session
 Session::start();
@@ -96,5 +95,4 @@ try {
     $errorController->serverError($error);
 }
 
-// Load helper functions
-require_once 'helpers/functions.php';
+

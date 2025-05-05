@@ -19,9 +19,11 @@ class View {
      */
     private function loadHelpers($helpers) {
         foreach ($helpers as $helper) {
-            $helperFile = "helpers/{$helper}_helper.php";
+            $helperFile = __DIR__ . "/../helpers/{$helper}_helper.php";
             if (file_exists($helperFile)) {
                 require_once $helperFile;
+            } else {
+                error_log("Helper file not found: {$helperFile}");
             }
         }
     }
@@ -68,7 +70,7 @@ class View {
         ob_start();
         
         // Include view file
-        $viewFile = 'views/' . $view . '.php';
+        $viewFile = __DIR__ . '/../views/' . $view . '.php';
         if (!file_exists($viewFile)) {
             throw new Exception("View file not found: {$viewFile}");
         }
@@ -86,7 +88,7 @@ class View {
             ob_start();
             
             // Include layout file
-            $layoutFile = 'views/' . $this->layout . '.php';
+            $layoutFile = __DIR__ . '/../views/' . $this->layout . '.php';
             if (!file_exists($layoutFile)) {
                 throw new Exception("Layout file not found: {$layoutFile}");
             }
@@ -133,7 +135,7 @@ class View {
      */
     public function partial($view, $data = []) {
         extract(array_merge($this->data, $data));
-        include 'views/' . $view . '.php';
+        include __DIR__ . '/../views/' . $view . '.php';
     }
 
     /**

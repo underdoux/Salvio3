@@ -264,10 +264,4 @@ class CategoriesController extends Controller {
         ]);
     }
 
-    /**
-     * Implementation of parent view method
-     */
-    public function view($view, $data = []) {
-        parent::view($view, $data);
-    }
 }

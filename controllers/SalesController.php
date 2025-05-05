@@ -95,12 +95,7 @@ class SalesController extends Controller {
         $sales = $query->resultSet();
 
         // Get sales statistics
-        $stats = [
-            'today_sales' => $this->saleModel->getTodaySales(),
-            'today_orders' => $this->saleModel->getTodayOrderCount(),
-            'monthly_revenue' => $this->saleModel->getMonthlyRevenue(),
-            'last_month_revenue' => $this->saleModel->getLastMonthRevenue()
-        ];
+        $stats = $this->saleModel->getStatistics();
 
         $this->view->render('sales/index', [
             'title' => 'Sales - ' . APP_NAME,

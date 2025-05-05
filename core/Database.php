@@ -188,6 +188,7 @@ class Database {
      * Prevent unserializing of singleton
      */
     public function __wakeup(): void {
+        // Changed to public visibility to fix error
         throw new Exception("Cannot unserialize singleton");
     }
 }
