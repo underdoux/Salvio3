@@ -1,92 +1,38 @@
 <?php
 /**
  * BPOM Controller
- * Handles BPOM data scraping and management
+ * Handles BPOM product reference operations
  */
 class BpomController extends Controller {
     private $bpomModel;
-    private $productModel;
 
     public function __construct() {
         parent::__construct();
         $this->requireAuth();
         $this->bpomModel = $this->model('BpomReference');
-        $this->productModel = $this->model('Product');
     }
 
     /**
-     * BPOM search interface
+     * Show BPOM search page
      */
     public function index() {
-        // Get statistics
-        $stats = $this->bpomModel->getStats();
-        
-        // Get expiring registrations
-        $expiringRegistrations = $this->bpomModel->getExpiringRegistrations();
+        $search = $this->getQuery('search', '');
+        $refresh = $this->getQuery('refresh', false);
+        $results = [];
+
+        if (!empty($search)) {
+            $results = $this->bpomModel->search($search, $refresh);
+        }
 
         $this->view->render('bpom/index', [
-            'title' => 'BPOM Search - ' . APP_NAME,
-            'stats' => $stats,
-            'expiringRegistrations' => $expiringRegistrations
+            'title' => 'BPOM Products - ' . APP_NAME,
+            'search' => $search,
+            'results' => $results
         ]);
     }
 
     /**
-     * Search BPOM database
-     */
-    public function search() {
-        $id = $this->getQuery('id');
-        
-        if (empty($id)) {
-            $this->jsonResponse([
-                'success' => false,
-                'message' => 'Registration number is required'
-            ]);
-            return;
-        }
-
-        try {
-            // First check local database
-            $result = $this->bpomModel->getByRegistrationNumber($id);
-            
-            if ($result) {
-                $this->jsonResponse([
-                    'success' => true,
-                    'source' => 'local',
-                    'data' => $result
-                ]);
-                return;
-            }
-
-            // If not found locally, scrape from BPOM website
-            $data = $this->scrapeBpomData($id);
-            
-            if ($data) {
-                // Save to database
-                $this->bpomModel->updateOrCreate($data);
-                
-                $this->jsonResponse([
-                    'success' => true,
-                    'source' => 'scraped',
-                    'data' => $data
-                ]);
-            } else {
-                $this->jsonResponse([
-                    'success' => false,
-                    'message' => 'Product not found in BPOM database'
-                ]);
-            }
-        } catch (Exception $e) {
-            $this->logError('BPOM scraping error: ' . $e->getMessage());
-            $this->jsonResponse([
-                'success' => false,
-                'message' => 'Error searching BPOM database'
-            ]);
-        }
-    }
-
-    /**
-     * Bulk import interface
+     * Show import page
      */
     public function import() {
         $this->requireAdmin();
@@ -98,9 +44,9 @@ class BpomController extends Controller {
     }
 
     /**
-     * Process bulk import
+     * Handle CSV import
      */
-    public function processImport() {
+    public function importCsv() {
         $this->requireAdmin();
 
         if (!$this->isPost()) {
@@ -115,159 +61,126 @@ class BpomController extends Controller {
         }
 
         // Handle file upload
-        $file = $_FILES['import_file'] ?? null;
-        if (!$file || $file['error'] !== UPLOAD_ERR_OK) {
-            $this->setFlash('error', 'Please select a valid file');
+        if (!isset($_FILES['csv_file']) || $_FILES['csv_file']['error'] !== UPLOAD_ERR_OK) {
+            $this->setFlash('error', 'Please select a valid CSV file');
             $this->redirect('bpom/import');
             return;
         }
 
-        try {
-            $imported = 0;
-            $failed = 0;
-            
-            // Read CSV file
-            $handle = fopen($file['tmp_name'], 'r');
-            
-            // Skip header row
-            fgetcsv($handle);
-            
-            while (($row = fgetcsv($handle)) !== false) {
-                $registrationNumber = trim($row[0] ?? '');
-                if (empty($registrationNumber)) continue;
+        $file = $_FILES['csv_file'];
+        $tempPath = $file['tmp_name'];
 
-                try {
-                    $data = $this->scrapeBpomData($registrationNumber);
-                    if ($data && $this->bpomModel->updateOrCreate($data)) {
-                        $imported++;
-                    } else {
-                        $failed++;
-                    }
-                    
-                    // Respect rate limiting
-                    sleep(2);
-                } catch (Exception $e) {
-                    $failed++;
-                    $this->logError("Error importing BPOM data for {$registrationNumber}: " . $e->getMessage());
-                }
+        // Validate file type
+        $mimeType = mime_content_type($tempPath);
+        if (!in_array($mimeType, ['text/csv', 'text/plain', 'application/vnd.ms-excel'])) {
+            $this->setFlash('error', 'Invalid file type. Please upload a CSV file');
+            $this->redirect('bpom/import');
+            return;
+        }
+
+        // Process import
+        $results = $this->bpomModel->importFromCsv($tempPath);
+
+        if ($results['success'] > 0) {
+            $message = "{$results['success']} products imported successfully.";
+            if ($results['failed'] > 0) {
+                $message .= " {$results['failed']} products failed.";
             }
-            
-            fclose($handle);
-
-            $this->setFlash('success', "Import completed. Imported: {$imported}, Failed: {$failed}");
-        } catch (Exception $e) {
-            $this->setFlash('error', 'Error processing import: ' . $e->getMessage());
+            $this->setFlash('success', $message);
+            $this->logActivity('bpom', "Imported {$results['success']} BPOM products");
+        } else {
+            $this->setFlash('error', 'Failed to import products: ' . implode(', ', $results['errors']));
         }
 
         $this->redirect('bpom/import');
     }
 
     /**
-     * Scrape data from BPOM website
-     * @param string $registrationNumber BPOM registration number
-     * @return array|null Scraped data or null if not found
+     * Export BPOM data to CSV
      */
-    private function scrapeBpomData($registrationNumber) {
-        $url = BPOM_SEARCH_URL;
-        $ch = curl_init();
-
-        // Set cURL options
-        curl_setopt_array($ch, [
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => http_build_query([
-                'search' => $registrationNumber
-            ]),
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-        ]);
-
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($httpCode !== 200 || !$response) {
-            throw new Exception("Failed to access BPOM website");
-        }
-
-        // Create DOM document
-        $dom = new DOMDocument();
-        @$dom->loadHTML($response);
-        $xpath = new DOMXPath($dom);
-
-        // Extract data
-        $data = [
-            'registration_number' => $registrationNumber,
-            'product_name' => $this->extractText($xpath, '//td[contains(text(), "Nama Produk")]/following-sibling::td[1]'),
-            'manufacturer' => $this->extractText($xpath, '//td[contains(text(), "Pendaftar")]/following-sibling::td[1]'),
-            'category' => $this->extractText($xpath, '//td[contains(text(), "Kategori")]/following-sibling::td[1]'),
-            'issued_date' => $this->parseDate($this->extractText($xpath, '//td[contains(text(), "Tanggal Terbit")]/following-sibling::td[1]')),
-            'expired_date' => $this->parseDate($this->extractText($xpath, '//td[contains(text(), "Masa Berlaku")]/following-sibling::td[1]')),
-            'status' => 'active'
-        ];
-
-        // Validate required fields
-        if (empty($data['product_name'])) {
-            return null;
-        }
-
-        return $data;
-    }
-
-    /**
-     * Extract text from XPath query
-     */
-    private function extractText($xpath, $query) {
-        $nodes = $xpath->query($query);
-        if ($nodes->length > 0) {
-            return trim($nodes->item(0)->textContent);
-        }
-        return '';
-    }
-
-    /**
-     * Parse date from Indonesian format
-     */
-    private function parseDate($dateString) {
-        if (empty($dateString)) return null;
-
-        $months = [
-            'Januari' => '01',
-            'Februari' => '02',
-            'Maret' => '03',
-            'April' => '04',
-            'Mei' => '05',
-            'Juni' => '06',
-            'Juli' => '07',
-            'Agustus' => '08',
-            'September' => '09',
-            'Oktober' => '10',
-            'November' => '11',
-            'Desember' => '12'
-        ];
-
-        foreach ($months as $indo => $num) {
-            $dateString = str_replace($indo, $num, $dateString);
-        }
-
-        $date = DateTime::createFromFormat('d m Y', $dateString);
-        return $date ? $date->format('Y-m-d') : null;
-    }
-
-    /**
-     * Clean up old records
-     */
-    public function cleanup() {
+    public function export() {
         $this->requireAdmin();
 
-        $days = (int)($this->getQuery('days', 365));
-        $deleted = $this->bpomModel->cleanupOldRecords($days);
+        $filename = 'bpom_products_' . date('Y-m-d_His') . '.csv';
+        $filepath = UPLOAD_PATH . '/temp/' . $filename;
 
+        // Create temp directory if it doesn't exist
+        if (!file_exists(UPLOAD_PATH . '/temp')) {
+            mkdir(UPLOAD_PATH . '/temp', 0755, true);
+        }
+
+        if ($this->bpomModel->exportToCsv($filepath)) {
+            // Send file to browser
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            header('Cache-Control: no-cache, no-store, must-revalidate');
+            header('Pragma: no-cache');
+            header('Expires: 0');
+            
+            readfile($filepath);
+            unlink($filepath); // Delete temp file
+            exit;
+        }
+
+        $this->setFlash('error', 'Failed to export BPOM data');
+        $this->redirect('bpom');
+    }
+
+    /**
+     * Search BPOM products via AJAX
+     */
+    public function search() {
+        if (!$this->isAjax()) {
+            $this->redirect('bpom');
+            return;
+        }
+
+        $keyword = $this->getQuery('keyword', '');
+        $refresh = $this->getQuery('refresh', false);
+
+        if (empty($keyword)) {
+            $this->jsonResponse(['success' => false, 'message' => 'Search keyword is required']);
+            return;
+        }
+
+        $results = $this->bpomModel->search($keyword, $refresh);
+        
         $this->jsonResponse([
             'success' => true,
-            'message' => "{$deleted} old records deleted",
-            'deleted' => $deleted
+            'source' => $results['source'],
+            'data' => $results['data']
         ]);
+    }
+
+    /**
+     * Get product details via AJAX
+     */
+    public function getProduct() {
+        if (!$this->isAjax()) {
+            $this->redirect('bpom');
+            return;
+        }
+
+        $registrationNumber = $this->getQuery('registration_number', '');
+        $refresh = $this->getQuery('refresh', false);
+
+        if (empty($registrationNumber)) {
+            $this->jsonResponse(['success' => false, 'message' => 'Registration number is required']);
+            return;
+        }
+
+        $product = $this->bpomModel->getByRegistrationNumber($registrationNumber, $refresh);
+        
+        if ($product) {
+            $this->jsonResponse([
+                'success' => true,
+                'data' => $product
+            ]);
+        } else {
+            $this->jsonResponse([
+                'success' => false,
+                'message' => 'Product not found'
+            ]);
+        }
     }
 }

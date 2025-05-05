@@ -1,202 +1,147 @@
 <?php
 /**
  * Auth Class
- * Handles user authentication and authorization
+ * Handles authentication and authorization
  */
 class Auth {
-    private static $user = null;
+    private static $instance = null;
+    private $user = null;
+    private $session;
 
-    /**
-     * Initialize Auth
-     */
-    public static function init() {
-        // Ensure session is started
-        Session::start();
-
-        // Initialize static user cache if session exists
-        if (Session::has('user')) {
-            self::$user = Session::get('user');
-        }
-
-        // Check for remember me cookie
-        if (!self::check() && isset($_COOKIE['remember_token'])) {
-            self::loginWithToken($_COOKIE['remember_token']);
-        }
-
-        // Debug log
-        error_log("[Auth] Initialized - Session ID: " . session_id());
-        error_log("[Auth] User in session: " . (self::$user ? 'yes' : 'no'));
+    private function __construct() {
+        $this->session = Session::getInstance();
+        $this->checkSession();
     }
 
     /**
-     * Attempt login
-     * @param string $username Username
-     * @param string $password Password
-     * @return bool Success status
+     * Get Auth instance (Singleton)
      */
-    public static function attempt($username, $password) {
-        $userModel = new User();
-        $user = $userModel->findByUsername($username);
-
-        if ($user && password_verify($password, $user['password'])) {
-            self::login($user);
-            return true;
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new self();
         }
-
-        return false;
-    }
-
-    /**
-     * Login with remember token
-     * @param string $token Remember token
-     * @return bool Success status
-     */
-    public static function loginWithToken($token) {
-        $userModel = new User();
-        $user = $userModel->findByRememberToken($token);
-
-        if ($user) {
-            self::login($user);
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Login user
-     * @param array $user User data
-     */
-    public static function login($user) {
-        // Remove sensitive data
-        unset($user['password']);
-        unset($user['remember_token']);
-        unset($user['reset_token']);
-        unset($user['reset_expires']);
-
-        // Store user data in session
-        Session::set('user', $user);
-        Session::regenerate();
-
-        // Update static cache
-        self::$user = $user;
-
-        // Debug log
-        error_log("[Auth] Login successful for user: " . $user['username']);
-        error_log("[Auth] Session ID: " . session_id());
-        error_log("[Auth] Session data: " . print_r($_SESSION, true));
-    }
-
-    /**
-     * Logout user
-     */
-    public static function logout() {
-        Session::remove('user');
-        Session::regenerate();
-        self::$user = null;
-
-        // Remove remember me cookie
-        if (isset($_COOKIE['remember_token'])) {
-            setcookie('remember_token', '', time() - 3600, '/');
-        }
+        return self::$instance;
     }
 
     /**
      * Check if user is logged in
-     * @return bool
      */
-    public static function check() {
-        return Session::has('user');
+    private function checkSession() {
+        $userId = $this->session->get('user_id');
+        if ($userId) {
+            $db = Database::getInstance();
+            $this->user = $db->query("
+                SELECT id, username, email, name, role, status
+                FROM users 
+                WHERE id = ? AND status = 'active'
+            ")
+            ->bind(1, $userId)
+            ->single();
+        }
+    }
+
+    /**
+     * Attempt to login user
+     */
+    public function attempt($username, $password) {
+        $db = Database::getInstance();
+        $user = $db->query("
+            SELECT id, username, password, email, name, role, status
+            FROM users 
+            WHERE username = ? AND status = 'active'
+        ")
+        ->bind(1, $username)
+        ->single();
+
+        if ($user && password_verify($password, $user['password'])) {
+            unset($user['password']);
+            $this->user = $user;
+            $this->session->set('user_id', $user['id']);
+
+            // Update last login
+            $db->query("
+                UPDATE users 
+                SET last_login = CURRENT_TIMESTAMP 
+                WHERE id = ?
+            ")
+            ->bind(1, $user['id'])
+            ->execute();
+
+            // Log activity
+            $this->logActivity('auth', 'User logged in');
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Log user out
+     */
+    public function logout() {
+        $this->logActivity('auth', 'User logged out');
+        $this->session->destroy();
+        $this->user = null;
+    }
+
+    /**
+     * Check if user is logged in
+     */
+    public function check() {
+        return $this->user !== null;
     }
 
     /**
      * Get current user
-     * @return array|null User data
      */
-    public static function user() {
-        if (self::$user === null && self::check()) {
-            self::$user = Session::get('user');
-        }
-        return self::$user;
-    }
-
-    /**
-     * Get user ID
-     * @return int|null User ID
-     */
-    public static function id() {
-        $user = self::user();
-        return $user ? $user['id'] : null;
-    }
-
-    /**
-     * Get user name
-     * @return string|null User name
-     */
-    public static function name() {
-        $user = self::user();
-        return $user ? $user['name'] : null;
+    public function user() {
+        return $this->user;
     }
 
     /**
      * Check if user has role
-     * @param string $role Role name
-     * @return bool
      */
-    public static function hasRole($role) {
-        $user = self::user();
-        return $user && $user['role'] === $role;
+    public function hasRole($role) {
+        return $this->check() && $this->user['role'] === $role;
     }
 
     /**
      * Check if user is admin
-     * @return bool
      */
-    public static function isAdmin() {
-        return self::hasRole('admin');
+    public function isAdmin() {
+        return $this->hasRole('admin');
     }
 
     /**
-     * Hash password
-     * @param string $password Password to hash
-     * @return string Hashed password
+     * Log activity
      */
-    public static function hashPassword($password) {
-        return password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
-    }
-
-    /**
-     * Generate random token
-     * @param int $length Token length
-     * @return string Random token
-     */
-    public static function generateToken($length = 32) {
-        return bin2hex(random_bytes($length));
-    }
-
-    /**
-     * Require authentication
-     * Redirects to login if not authenticated
-     */
-    public static function requireAuth() {
-        if (!self::check()) {
-            Session::setFlash('error', 'Please login to continue');
-            header('Location: ' . APP_URL . '/auth');
-            exit;
+    private function logActivity($type, $description) {
+        if ($this->check()) {
+            $db = Database::getInstance();
+            $db->query("
+                INSERT INTO activity_logs 
+                (user_id, type, description, ip_address, user_agent) 
+                VALUES (?, ?, ?, ?, ?)
+            ")
+            ->bind(1, $this->user['id'])
+            ->bind(2, $type)
+            ->bind(3, $description)
+            ->bind(4, $_SERVER['REMOTE_ADDR'])
+            ->bind(5, $_SERVER['HTTP_USER_AGENT'])
+            ->execute();
         }
     }
 
     /**
-     * Require admin role
-     * Redirects to dashboard if not admin
+     * Prevent cloning of singleton
      */
-    public static function requireAdmin() {
-        self::requireAuth();
-        
-        if (!self::isAdmin()) {
-            Session::setFlash('error', 'Access denied');
-            header('Location: ' . APP_URL . '/dashboard');
-            exit;
-        }
+    private function __clone() {}
+
+    /**
+     * Prevent unserializing of singleton
+     */
+    public function __wakeup() {
+        throw new Exception("Cannot unserialize singleton");
     }
 }

@@ -1,210 +1,159 @@
 <?php
 /**
  * Base Controller Class
- * All controllers extend this class
+ * All controllers should extend this class
  */
-class Controller {
+abstract class Controller {
     protected $view;
-    protected $currentUser;
+    protected $auth;
+    protected $session;
+    protected $db;
 
     public function __construct() {
         $this->view = new View();
-        $this->currentUser = Auth::user();
+        $this->auth = Auth::getInstance();
+        $this->session = Session::getInstance();
+        $this->db = Database::getInstance();
     }
 
     /**
-     * Load model
-     * @param string $model Model name
-     * @return object Model instance
-     */
-    protected function model($model) {
-        if (file_exists('models/' . $model . '.php')) {
-            require_once 'models/' . $model . '.php';
-            return new $model();
-        }
-        throw new Exception("Model {$model} not found");
-    }
-
-    /**
-     * Redirect to URL
-     * @param string $url URL to redirect to
-     */
-    protected function redirect($url) {
-        header('Location: ' . APP_URL . '/' . $url);
-        exit;
-    }
-
-    /**
-     * Set flash message
-     * @param string $type Message type (success, error, info, warning)
-     * @param string $message Message content
-     */
-    protected function setFlash($type, $message) {
-        Session::setFlash($type, $message);
-    }
-
-    /**
-     * Get POST data
-     * @param string $key POST key
-     * @param mixed $default Default value if key not found
-     * @return mixed
-     */
-    protected function getPost($key = null, $default = null) {
-        if ($key === null) {
-            return $_POST;
-        }
-        return $_POST[$key] ?? $default;
-    }
-
-    /**
-     * Get GET data
-     * @param string $key GET key
-     * @param mixed $default Default value if key not found
-     * @return mixed
-     */
-    protected function getQuery($key = null, $default = null) {
-        if ($key === null) {
-            return $_GET;
-        }
-        return $_GET[$key] ?? $default;
-    }
-
-    /**
-     * Check if request is POST
-     * @return bool
-     */
-    protected function isPost() {
-        return $_SERVER['REQUEST_METHOD'] === 'POST';
-    }
-
-    /**
-     * Check if request is GET
-     * @return bool
-     */
-    protected function isGet() {
-        return $_SERVER['REQUEST_METHOD'] === 'GET';
-    }
-
-    /**
-     * Check if request is AJAX
-     * @return bool
-     */
-    protected function isAjax() {
-        return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
-               strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-    }
-
-    /**
-     * Require authentication
-     * Redirects to login if not authenticated
+     * Require authentication for all actions
      */
     protected function requireAuth() {
-        if (!Auth::check()) {
+        if (!$this->auth->check()) {
             $this->setFlash('error', 'Please login to continue');
-            $this->redirect('auth');
+            $this->redirect('auth/login');
         }
     }
 
     /**
      * Require admin role
-     * Redirects to dashboard if not admin
      */
     protected function requireAdmin() {
         $this->requireAuth();
-        
-        if (!Auth::hasRole('admin')) {
+        if (!$this->auth->isAdmin()) {
             $this->setFlash('error', 'Access denied');
             $this->redirect('dashboard');
         }
     }
 
     /**
-     * Get current user
-     * @return array|null User data
+     * Get query parameter
      */
-    protected function getCurrentUser() {
-        return $this->currentUser;
+    protected function getQuery($key, $default = null) {
+        return isset($_GET[$key]) ? $_GET[$key] : $default;
+    }
+
+    /**
+     * Get post parameter
+     */
+    protected function getPost($key, $default = null) {
+        return isset($_POST[$key]) ? $_POST[$key] : $default;
+    }
+
+    /**
+     * Check if request is POST
+     */
+    protected function isPost() {
+        return $_SERVER['REQUEST_METHOD'] === 'POST';
+    }
+
+    /**
+     * Set flash message
+     */
+    protected function setFlash($type, $message) {
+        $this->session->setFlash($type, $message);
+    }
+
+    /**
+     * Redirect to URL
+     */
+    protected function redirect($url) {
+        header('Location: ' . BASE_URL . '/' . $url);
+        exit;
+    }
+
+    /**
+     * Generate CSRF token
+     */
+    protected function generateCsrf() {
+        $token = bin2hex(random_bytes(32));
+        $this->session->set('csrf_token', $token);
+        return $token;
+    }
+
+    /**
+     * Validate CSRF token
+     */
+    protected function validateCsrf() {
+        $token = $this->getPost('csrf_token');
+        $storedToken = $this->session->get('csrf_token');
+        $this->session->remove('csrf_token');
+        return $token && $storedToken && hash_equals($token, $storedToken);
     }
 
     /**
      * Log activity
-     * @param string $type Activity type
-     * @param string $description Activity description
      */
     protected function logActivity($type, $description) {
-        $activityLog = $this->model('ActivityLog');
-        $activityLog->log(
-            $type,
-            $description,
-            Auth::id(),
-            $_SERVER['REMOTE_ADDR'],
-            $_SERVER['HTTP_USER_AGENT']
-        );
+        if ($this->auth->check()) {
+            $this->db->query("
+                INSERT INTO activity_logs 
+                (user_id, type, description, ip_address, user_agent) 
+                VALUES (?, ?, ?, ?, ?)
+            ")
+            ->bind(1, $this->auth->user()['id'])
+            ->bind(2, $type)
+            ->bind(3, $description)
+            ->bind(4, $_SERVER['REMOTE_ADDR'])
+            ->bind(5, $_SERVER['HTTP_USER_AGENT'])
+            ->execute();
+        }
+    }
+
+    /**
+     * Get pagination data
+     */
+    protected function getPagination($total, $page, $limit) {
+        $lastPage = ceil($total / $limit);
+        $page = max(1, min($page, $lastPage));
+        
+        return [
+            'total' => $total,
+            'per_page' => $limit,
+            'current_page' => $page,
+            'last_page' => $lastPage,
+            'from' => ($page - 1) * $limit + 1,
+            'to' => min($page * $limit, $total),
+            'has_more' => $page < $lastPage
+        ];
     }
 
     /**
      * Handle file upload
-     * @param string $field Form field name
-     * @param string $directory Upload directory
-     * @param array $allowedTypes Allowed file types
-     * @param int $maxSize Maximum file size in bytes
-     * @return string|false Filename on success, false on failure
      */
-    protected function handleUpload($field, $directory, $allowedTypes = [], $maxSize = 5242880) {
-        if (!isset($_FILES[$field]) || $_FILES[$field]['error'] !== UPLOAD_ERR_OK) {
-            return false;
+    protected function handleUpload($file, $directory, $allowedTypes = ['jpg', 'jpeg', 'png']) {
+        if (!isset($file['error']) || $file['error'] !== UPLOAD_ERR_OK) {
+            throw new Exception('File upload failed');
         }
 
-        $file = $_FILES[$field];
-        
-        // Validate file size
-        if ($file['size'] > $maxSize) {
-            $this->setFlash('error', 'File is too large');
-            return false;
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        if (!in_array($extension, $allowedTypes)) {
+            throw new Exception('Invalid file type');
         }
 
-        // Validate file type
-        $fileType = mime_content_type($file['tmp_name']);
-        if (!empty($allowedTypes) && !in_array($fileType, $allowedTypes)) {
-            $this->setFlash('error', 'Invalid file type');
-            return false;
-        }
-
-        // Generate unique filename
-        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $filename = uniqid() . '.' . $extension;
-        $destination = $directory . '/' . $filename;
+        $path = 'uploads/' . $directory . '/' . $filename;
 
-        // Create directory if it doesn't exist
-        if (!file_exists($directory)) {
-            mkdir($directory, 0755, true);
-        }
-
-        // Move uploaded file
-        if (!move_uploaded_file($file['tmp_name'], $destination)) {
-            $this->setFlash('error', 'Failed to upload file');
-            return false;
+        if (!move_uploaded_file($file['tmp_name'], $path)) {
+            throw new Exception('Failed to move uploaded file');
         }
 
         return $filename;
     }
 
     /**
-     * Delete file
-     * @param string $path File path
-     * @return bool
-     */
-    protected function deleteFile($path) {
-        if (file_exists($path)) {
-            return unlink($path);
-        }
-        return false;
-    }
-
-    /**
      * Send JSON response
-     * @param mixed $data Response data
-     * @param int $status HTTP status code
      */
     protected function json($data, $status = 200) {
         http_response_code($status);
@@ -214,19 +163,20 @@ class Controller {
     }
 
     /**
-     * Validate CSRF token
-     * @return bool
+     * Send error response
      */
-    protected function validateCsrf() {
-        $token = $this->getPost('csrf_token');
-        return Session::verifyCsrfToken($token);
+    protected function error($message, $status = 400) {
+        $this->json(['error' => $message], $status);
     }
 
     /**
-     * Generate CSRF token
-     * @return string
+     * Send success response
      */
-    protected function generateCsrf() {
-        return Session::generateCsrfToken();
+    protected function success($data = [], $message = 'Success') {
+        $this->json([
+            'success' => true,
+            'message' => $message,
+            'data' => $data
+        ]);
     }
 }

@@ -1,72 +1,58 @@
 <?php
 /**
  * Price Controller
- * Handles price adjustments and history tracking
+ * Handles price adjustments and history
  */
 class PriceController extends Controller {
     private $priceHistoryModel;
     private $productModel;
+    private $discountRuleModel;
 
     public function __construct() {
         parent::__construct();
         $this->requireAuth();
         $this->priceHistoryModel = $this->model('PriceHistory');
         $this->productModel = $this->model('Product');
+        $this->discountRuleModel = $this->model('DiscountRule');
     }
 
     /**
-     * Price history dashboard
+     * Show price history
      */
     public function index() {
         $this->requireAdmin();
 
-        // Get recent price changes
-        $recentChanges = $this->priceHistoryModel->getRecentChanges();
-
-        // Get price change statistics
-        $stats = $this->priceHistoryModel->getStats(
-            date('Y-m-01'), // Start of current month
-            date('Y-m-d')  // Today
-        );
-
-        // Get category trends
-        $categoryTrends = $this->priceHistoryModel->getCategoryTrends(
-            date('Y-m-01'),
-            date('Y-m-d')
-        );
-
-        // Get products with frequent changes
-        $frequentChanges = $this->priceHistoryModel->getFrequentChanges();
+        $startDate = $this->getQuery('start_date', date('Y-m-01'));
+        $endDate = $this->getQuery('end_date', date('Y-m-t'));
+        $summary = $this->priceHistoryModel->getSummary($startDate, $endDate);
 
         $this->view->render('prices/index', [
-            'title' => 'Price Management - ' . APP_NAME,
-            'recentChanges' => $recentChanges,
-            'stats' => $stats,
-            'categoryTrends' => $categoryTrends,
-            'frequentChanges' => $frequentChanges
+            'title' => 'Price History - ' . APP_NAME,
+            'summary' => $summary,
+            'startDate' => $startDate,
+            'endDate' => $endDate
         ]);
     }
 
     /**
      * Show price adjustment form
      */
-    public function adjust($id = null) {
+    public function adjust($productId = null) {
         $this->requireAdmin();
 
-        if (!$id) {
+        if (!$productId) {
             $this->redirect('products');
             return;
         }
 
-        $product = $this->productModel->getById($id);
+        $product = $this->productModel->getById($productId);
         if (!$product) {
             $this->setFlash('error', 'Product not found');
             $this->redirect('products');
             return;
         }
 
-        // Get price history
-        $history = $this->priceHistoryModel->getProductHistory($id);
+        $history = $this->priceHistoryModel->getByProduct($productId);
 
         $this->view->render('prices/adjust', [
             'title' => 'Adjust Price - ' . APP_NAME,
@@ -79,237 +65,187 @@ class PriceController extends Controller {
     /**
      * Process price adjustment
      */
-    public function update($id = null) {
+    public function update($productId = null) {
         $this->requireAdmin();
 
-        if (!$this->isPost() || !$id) {
+        if (!$this->isPost() || !$productId) {
             $this->redirect('products');
             return;
         }
 
         if (!$this->validateCsrf()) {
             $this->setFlash('error', 'Invalid form submission');
-            $this->redirect('prices/adjust/' . $id);
+            $this->redirect('prices/adjust/' . $productId);
             return;
         }
 
-        $product = $this->productModel->getById($id);
+        $product = $this->productModel->getById($productId);
         if (!$product) {
             $this->setFlash('error', 'Product not found');
             $this->redirect('products');
             return;
         }
 
-        $newPrice = floatval($this->getPost('price'));
-        $reason = trim($this->getPost('reason'));
-        $changeType = $this->getPost('change_type', 'regular');
-
-        // Validate input
-        if ($newPrice <= 0) {
-            $this->setFlash('error', 'Price must be greater than 0');
-            $this->redirect('prices/adjust/' . $id);
-            return;
-        }
-
-        if (empty($reason)) {
-            $this->setFlash('error', 'Please provide a reason for the price change');
-            $this->redirect('prices/adjust/' . $id);
-            return;
-        }
+        $data = [
+            'product_id' => $productId,
+            'old_price' => $product['selling_price'],
+            'new_price' => floatval($this->getPost('new_price')),
+            'change_type' => $this->getPost('change_type'),
+            'reason' => trim($this->getPost('reason')),
+            'user_id' => $this->getUserId()
+        ];
 
         // Validate price change
-        $validation = $this->priceHistoryModel->validateChange(
-            $product['selling_price'],
-            $newPrice,
-            $this->getUserId()
+        $validation = $this->priceHistoryModel->validatePriceChange(
+            $data['new_price'],
+            $product,
+            $this->getUserRole()
         );
 
         if (!$validation['valid']) {
             $this->setFlash('error', $validation['message']);
-            $this->redirect('prices/adjust/' . $id);
+            $this->redirect('prices/adjust/' . $productId);
             return;
         }
 
-        // Log price change
-        if ($this->priceHistoryModel->logChange(
-            $id,
-            $product['selling_price'],
-            $newPrice,
-            $reason,
-            $changeType,
-            $this->getUserId()
-        )) {
-            $this->logActivity('price', "Updated price for {$product['name']} from {$product['selling_price']} to {$newPrice}");
+        // Record price change
+        if ($this->priceHistoryModel->recordChange($data)) {
+            $this->logActivity('price', "Updated price for product #{$productId}");
             $this->setFlash('success', 'Price updated successfully');
-            $this->redirect('prices/adjust/' . $id);
+            $this->redirect('products/view/' . $productId);
         } else {
             $this->setFlash('error', 'Failed to update price');
-            $this->redirect('prices/adjust/' . $id);
+            $this->redirect('prices/adjust/' . $productId);
         }
     }
 
     /**
-     * Bulk price adjustment
+     * Show discount rules
      */
-    public function bulkAdjust() {
+    public function discounts() {
+        $this->requireAdmin();
+
+        $rules = $this->discountRuleModel->getAll();
+        $summary = $this->discountRuleModel->getDiscountSummary();
+
+        $this->view->render('prices/discounts', [
+            'title' => 'Discount Rules - ' . APP_NAME,
+            'rules' => $rules,
+            'summary' => $summary,
+            'csrfToken' => $this->generateCsrf()
+        ]);
+    }
+
+    /**
+     * Create discount rule
+     */
+    public function createDiscount() {
         $this->requireAdmin();
 
         if (!$this->isPost()) {
-            $this->redirect('prices');
+            $this->redirect('prices/discounts');
             return;
         }
 
         if (!$this->validateCsrf()) {
             $this->setFlash('error', 'Invalid form submission');
-            $this->redirect('prices');
+            $this->redirect('prices/discounts');
             return;
         }
 
-        $type = $this->getPost('adjustment_type');
-        $value = floatval($this->getPost('adjustment_value'));
-        $categoryId = $this->getPost('category_id');
-        $reason = trim($this->getPost('reason'));
+        $data = [
+            'name' => trim($this->getPost('name')),
+            'type' => $this->getPost('type'),
+            'value' => floatval($this->getPost('value')),
+            'min_purchase' => floatval($this->getPost('min_purchase')) ?: null,
+            'max_discount' => floatval($this->getPost('max_discount')) ?: null,
+            'start_date' => $this->getPost('start_date'),
+            'end_date' => $this->getPost('end_date'),
+            'allowed_roles' => json_encode($this->getPost('allowed_roles', [])),
+            'status' => 'active'
+        ];
 
-        if (empty($reason)) {
-            $this->setFlash('error', 'Please provide a reason for the price changes');
-            $this->redirect('prices');
-            return;
+        if ($this->discountRuleModel->createRule($data)) {
+            $this->logActivity('discount', "Created discount rule: {$data['name']}");
+            $this->setFlash('success', 'Discount rule created successfully');
+        } else {
+            $this->setFlash('error', 'Failed to create discount rule');
         }
 
-        try {
-            $this->db->beginTransaction();
-
-            // Get products to adjust
-            $sql = "SELECT id, selling_price FROM products WHERE status = 'active'";
-            $params = [];
-
-            if ($categoryId) {
-                $sql .= " AND category_id = ?";
-                $params[] = $categoryId;
-            }
-
-            $query = $this->db->query($sql);
-            foreach ($params as $i => $param) {
-                $query->bind($i + 1, $param);
-            }
-            $products = $query->resultSet();
-
-            $updated = 0;
-            foreach ($products as $product) {
-                // Calculate new price
-                $newPrice = $type === 'percentage' 
-                    ? $product['selling_price'] * (1 + ($value / 100))
-                    : $product['selling_price'] + $value;
-
-                // Validate price change
-                $validation = $this->priceHistoryModel->validateChange(
-                    $product['selling_price'],
-                    $newPrice,
-                    $this->getUserId()
-                );
-
-                if ($validation['valid']) {
-                    // Log price change
-                    if ($this->priceHistoryModel->logChange(
-                        $product['id'],
-                        $product['selling_price'],
-                        $newPrice,
-                        $reason . ' (Bulk Update)',
-                        'bulk',
-                        $this->getUserId()
-                    )) {
-                        $updated++;
-                    }
-                }
-            }
-
-            $this->db->commit();
-            $this->logActivity('price', "Bulk price update: {$updated} products updated");
-            $this->setFlash('success', "{$updated} products updated successfully");
-        } catch (Exception $e) {
-            $this->db->rollback();
-            $this->setFlash('error', 'Failed to update prices: ' . $e->getMessage());
-        }
-
-        $this->redirect('prices');
+        $this->redirect('prices/discounts');
     }
 
     /**
-     * Export price history
+     * Update discount rule
      */
-    public function export() {
+    public function updateDiscount($id = null) {
         $this->requireAdmin();
 
-        $startDate = $this->getQuery('start_date', date('Y-m-01'));
-        $endDate = $this->getQuery('end_date', date('Y-m-d'));
-        $categoryId = $this->getQuery('category_id');
-
-        // Get price history data
-        $sql = "
-            SELECT 
-                p.name as product_name,
-                p.sku,
-                c.name as category_name,
-                ph.old_price,
-                ph.new_price,
-                ph.change_type,
-                ph.reason,
-                u.name as user_name,
-                ph.created_at
-            FROM price_history ph
-            JOIN products p ON ph.product_id = p.id
-            LEFT JOIN categories c ON p.category_id = c.id
-            LEFT JOIN users u ON ph.user_id = u.id
-            WHERE DATE(ph.created_at) BETWEEN ? AND ?
-        ";
-
-        $params = [$startDate, $endDate];
-
-        if ($categoryId) {
-            $sql .= " AND p.category_id = ?";
-            $params[] = $categoryId;
+        if (!$this->isPost() || !$id) {
+            $this->redirect('prices/discounts');
+            return;
         }
 
-        $sql .= " ORDER BY ph.created_at DESC";
-
-        $query = $this->db->query($sql);
-        foreach ($params as $i => $param) {
-            $query->bind($i + 1, $param);
+        if (!$this->validateCsrf()) {
+            $this->setFlash('error', 'Invalid form submission');
+            $this->redirect('prices/discounts');
+            return;
         }
-        $data = $query->resultSet();
 
-        // Generate CSV
-        header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="price_history.csv"');
+        $data = [
+            'name' => trim($this->getPost('name')),
+            'type' => $this->getPost('type'),
+            'value' => floatval($this->getPost('value')),
+            'min_purchase' => floatval($this->getPost('min_purchase')) ?: null,
+            'max_discount' => floatval($this->getPost('max_discount')) ?: null,
+            'start_date' => $this->getPost('start_date'),
+            'end_date' => $this->getPost('end_date'),
+            'allowed_roles' => json_encode($this->getPost('allowed_roles', [])),
+            'status' => $this->getPost('status')
+        ];
 
-        $output = fopen('php://output', 'w');
-        fputcsv($output, [
-            'Product',
-            'SKU',
-            'Category',
-            'Old Price',
-            'New Price',
-            'Change Type',
-            'Reason',
-            'Updated by',
-            'Date'
-        ]);
+        if ($this->discountRuleModel->update($id, $data)) {
+            $this->logActivity('discount', "Updated discount rule #{$id}");
+            $this->setFlash('success', 'Discount rule updated successfully');
+        } else {
+            $this->setFlash('error', 'Failed to update discount rule');
+        }
 
-        foreach ($data as $row) {
-            fputcsv($output, [
-                $row['product_name'],
-                $row['sku'],
-                $row['category_name'],
-                $row['old_price'],
-                $row['new_price'],
-                ucfirst($row['change_type']),
-                $row['reason'],
-                $row['user_name'],
-                formatDate($row['created_at'])
+        $this->redirect('prices/discounts');
+    }
+
+    /**
+     * Get best discount (AJAX)
+     */
+    public function getBestDiscount() {
+        if (!$this->isAjax()) {
+            $this->redirect('products');
+            return;
+        }
+
+        $amount = floatval($this->getQuery('amount'));
+        if (!$amount) {
+            $this->jsonResponse(['success' => false, 'message' => 'Invalid amount']);
+            return;
+        }
+
+        $discount = $this->discountRuleModel->getBestDiscount($amount, $this->getUserRole());
+        
+        if ($discount) {
+            $discountAmount = $this->discountRuleModel->calculateDiscount($amount, $discount);
+            $this->jsonResponse([
+                'success' => true,
+                'discount' => [
+                    'rule' => $discount,
+                    'amount' => $discountAmount,
+                    'final_price' => $amount - $discountAmount
+                ]
+            ]);
+        } else {
+            $this->jsonResponse([
+                'success' => false,
+                'message' => 'No applicable discount found'
             ]);
         }
-
-        fclose($output);
-        exit;
     }
 }

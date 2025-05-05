@@ -1,189 +1,231 @@
 <?php
 /**
  * BPOM Reference Model
- * Handles BPOM data storage and retrieval
+ * Handles BPOM product reference data operations
  */
 class BpomReference extends Model {
     protected $table = 'bpom_references';
     protected $fillable = [
-        'id',
-        'product_name',
-        'registration_number',
-        'manufacturer',
-        'category',
-        'issued_date',
-        'expired_date',
-        'status'
+        'nomor_registrasi',
+        'nama_produk',
+        'bentuk_sediaan',
+        'nama_pendaftar',
+        'komposisi',
+        'kategori',
+        'tanggal_terbit',
+        'scrape_source'
     ];
 
     /**
-     * Search BPOM references
+     * Search BPOM products
      * @param string $keyword Search keyword
-     * @param int $limit Results limit
-     * @return array
+     * @param bool $refresh Whether to refresh data from BPOM website
+     * @return array Search results
      */
-    public function search($keyword, $limit = 10) {
-        return $this->db->query("
-            SELECT * FROM {$this->table}
-            WHERE (registration_number LIKE ? OR product_name LIKE ?)
-            AND status = 'active'
-            ORDER BY product_name ASC
-            LIMIT ?
-        ")
-        ->bind(1, "%{$keyword}%")
-        ->bind(2, "%{$keyword}%")
-        ->bind(3, $limit)
-        ->resultSet();
+    public function search($keyword, $refresh = false) {
+        // First try to find in local database
+        if (!$refresh) {
+            $sql = "
+                SELECT * FROM {$this->table}
+                WHERE nomor_registrasi LIKE ? 
+                OR nama_produk LIKE ?
+                ORDER BY nama_produk ASC
+            ";
+            $searchTerm = "%{$keyword}%";
+            $results = $this->db->query($sql)
+                ->bind(1, $searchTerm)
+                ->bind(2, $searchTerm)
+                ->resultSet();
+
+            if (!empty($results)) {
+                return [
+                    'source' => 'local',
+                    'data' => $results
+                ];
+            }
+        }
+
+        // If not found locally or refresh requested, try BPOM website
+        require_once HELPER_PATH . '/bpom_scraper.php';
+        $scraper = new BpomScraper();
+        $results = $scraper->search($keyword);
+
+        if ($results) {
+            // Save results to database
+            foreach ($results as $product) {
+                $this->saveProduct($product);
+            }
+
+            return [
+                'source' => 'bpom',
+                'data' => $results
+            ];
+        }
+
+        return [
+            'source' => 'none',
+            'data' => []
+        ];
     }
 
     /**
-     * Get by registration number
+     * Get product by registration number
      * @param string $registrationNumber BPOM registration number
-     * @return array|null
+     * @param bool $refresh Whether to refresh data from BPOM website
+     * @return array|null Product data
      */
-    public function getByRegistrationNumber($registrationNumber) {
-        return $this->db->query("
-            SELECT * FROM {$this->table}
-            WHERE registration_number = ?
-            AND status = 'active'
+    public function getByRegistrationNumber($registrationNumber, $refresh = false) {
+        // First try to find in local database
+        if (!$refresh) {
+            $product = $this->db->query("
+                SELECT * FROM {$this->table}
+                WHERE nomor_registrasi = ?
+            ")
+            ->bind(1, $registrationNumber)
+            ->single();
+
+            if ($product) {
+                return $product;
+            }
+        }
+
+        // If not found locally or refresh requested, try BPOM website
+        require_once HELPER_PATH . '/bpom_scraper.php';
+        $scraper = new BpomScraper();
+        $product = $scraper->getProductDetails($registrationNumber);
+
+        if ($product) {
+            return $this->saveProduct($product);
+        }
+
+        return null;
+    }
+
+    /**
+     * Save or update product data
+     * @param array $data Product data
+     * @return array Saved product data
+     */
+    public function saveProduct($data) {
+        // Check if product exists
+        $existing = $this->db->query("
+            SELECT id FROM {$this->table}
+            WHERE nomor_registrasi = ?
         ")
-        ->bind(1, $registrationNumber)
+        ->bind(1, $data['nomor_registrasi'])
         ->single();
-    }
 
-    /**
-     * Get expired or soon to expire registrations
-     * @param int $daysThreshold Days threshold for expiration warning
-     * @return array
-     */
-    public function getExpiringRegistrations($daysThreshold = 90) {
-        return $this->db->query("
-            SELECT *,
-                   DATEDIFF(expired_date, CURDATE()) as days_remaining
-            FROM {$this->table}
-            WHERE status = 'active'
-            AND expired_date IS NOT NULL
-            AND expired_date <= DATE_ADD(CURDATE(), INTERVAL ? DAY)
-            ORDER BY expired_date ASC
-        ")
-        ->bind(1, $daysThreshold)
-        ->resultSet();
-    }
-
-    /**
-     * Update or create BPOM reference
-     * @param array $data BPOM data
-     * @return bool Success status
-     */
-    public function updateOrCreate($data) {
-        // Check if record exists
-        $existing = $this->getByRegistrationNumber($data['registration_number']);
-        
         if ($existing) {
-            // Update existing record
-            return $this->update($existing['id'], $data);
+            // Update existing product
+            $this->update($existing['id'], $data);
+            return $this->getById($existing['id']);
         } else {
-            // Create new record
-            return $this->create($data);
+            // Create new product
+            $id = $this->create($data);
+            return $this->getById($id);
         }
     }
 
     /**
-     * Get BPOM statistics
-     * @return array
+     * Import products from CSV file
+     * @param string $file CSV file path
+     * @return array Import results
      */
-    public function getStats() {
-        return $this->db->query("
-            SELECT
-                COUNT(*) as total_records,
-                COUNT(CASE WHEN expired_date < CURDATE() THEN 1 END) as expired_count,
-                COUNT(CASE 
-                    WHEN expired_date >= CURDATE() 
-                    AND expired_date <= DATE_ADD(CURDATE(), INTERVAL 90 DAY) 
-                    THEN 1 
-                END) as expiring_soon_count,
-                MIN(created_at) as oldest_record,
-                MAX(created_at) as latest_record
-            FROM {$this->table}
-            WHERE status = 'active'
-        ")->single();
+    public function importFromCsv($file) {
+        $results = [
+            'total' => 0,
+            'success' => 0,
+            'failed' => 0,
+            'errors' => []
+        ];
+
+        if (($handle = fopen($file, "r")) !== false) {
+            // Skip header row
+            fgetcsv($handle);
+            
+            while (($data = fgetcsv($handle)) !== false) {
+                $results['total']++;
+                
+                try {
+                    $product = [
+                        'nomor_registrasi' => $data[0],
+                        'nama_produk' => $data[1],
+                        'bentuk_sediaan' => $data[2] ?? null,
+                        'nama_pendaftar' => $data[3] ?? null,
+                        'komposisi' => $data[4] ?? null,
+                        'kategori' => $data[5] ?? null,
+                        'tanggal_terbit' => $data[6] ?? null,
+                        'scrape_source' => 'csv_import'
+                    ];
+
+                    $this->saveProduct($product);
+                    $results['success']++;
+
+                } catch (Exception $e) {
+                    $results['failed']++;
+                    $results['errors'][] = "Row {$results['total']}: {$e->getMessage()}";
+                }
+            }
+            fclose($handle);
+        }
+
+        return $results;
     }
 
     /**
-     * Get products by category
-     * @param string $category BPOM category
-     * @param int $limit Results limit
-     * @return array
-     */
-    public function getByCategory($category, $limit = 10) {
-        return $this->db->query("
-            SELECT * FROM {$this->table}
-            WHERE category = ?
-            AND status = 'active'
-            ORDER BY product_name ASC
-            LIMIT ?
-        ")
-        ->bind(1, $category)
-        ->bind(2, $limit)
-        ->resultSet();
-    }
-
-    /**
-     * Get unique categories
-     * @return array
-     */
-    public function getCategories() {
-        return $this->db->query("
-            SELECT DISTINCT category
-            FROM {$this->table}
-            WHERE category IS NOT NULL
-            AND status = 'active'
-            ORDER BY category ASC
-        ")->resultSet();
-    }
-
-    /**
-     * Get unique manufacturers
-     * @return array
-     */
-    public function getManufacturers() {
-        return $this->db->query("
-            SELECT DISTINCT manufacturer
-            FROM {$this->table}
-            WHERE manufacturer IS NOT NULL
-            AND status = 'active'
-            ORDER BY manufacturer ASC
-        ")->resultSet();
-    }
-
-    /**
-     * Mark registration as expired
-     * @param string $registrationNumber BPOM registration number
+     * Export products to CSV
+     * @param string $file Output file path
      * @return bool Success status
      */
-    public function markAsExpired($registrationNumber) {
-        return $this->db->query("
-            UPDATE {$this->table}
-            SET status = 'inactive',
-                updated_at = CURRENT_TIMESTAMP
-            WHERE registration_number = ?
-        ")
-        ->bind(1, $registrationNumber)
-        ->execute();
-    }
+    public function exportToCsv($file) {
+        try {
+            $products = $this->db->query("
+                SELECT 
+                    nomor_registrasi,
+                    nama_produk,
+                    bentuk_sediaan,
+                    nama_pendaftar,
+                    komposisi,
+                    kategori,
+                    tanggal_terbit
+                FROM {$this->table}
+                ORDER BY nama_produk ASC
+            ")->resultSet();
 
-    /**
-     * Clean up old records
-     * @param int $days Days threshold for deletion
-     * @return int Number of records deleted
-     */
-    public function cleanupOldRecords($days = 365) {
-        return $this->db->query("
-            DELETE FROM {$this->table}
-            WHERE status = 'inactive'
-            AND updated_at < DATE_SUB(CURDATE(), INTERVAL ? DAY)
-        ")
-        ->bind(1, $days)
-        ->execute();
+            if (($handle = fopen($file, "w")) !== false) {
+                // Write header
+                fputcsv($handle, [
+                    'Nomor Registrasi',
+                    'Nama Produk',
+                    'Bentuk Sediaan',
+                    'Nama Pendaftar',
+                    'Komposisi',
+                    'Kategori',
+                    'Tanggal Terbit'
+                ]);
+
+                // Write data
+                foreach ($products as $product) {
+                    fputcsv($handle, [
+                        $product['nomor_registrasi'],
+                        $product['nama_produk'],
+                        $product['bentuk_sediaan'],
+                        $product['nama_pendaftar'],
+                        $product['komposisi'],
+                        $product['kategori'],
+                        $product['tanggal_terbit']
+                    ]);
+                }
+
+                fclose($handle);
+                return true;
+            }
+
+            return false;
+
+        } catch (Exception $e) {
+            error_log("BPOM Export Error: " . $e->getMessage());
+            return false;
+        }
     }
 }

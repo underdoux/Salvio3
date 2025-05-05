@@ -1,7 +1,7 @@
 <?php
 /**
  * PriceHistory Model
- * Handles price change tracking and history
+ * Handles product price history and changes
  */
 class PriceHistory extends Model {
     protected $table = 'price_history';
@@ -15,59 +15,131 @@ class PriceHistory extends Model {
     ];
 
     /**
-     * Log price change
-     * @param int $productId Product ID
-     * @param float $oldPrice Old price
-     * @param float $newPrice New price
-     * @param string $reason Reason for change
-     * @param string $changeType Type of change (regular, promotion, etc.)
-     * @param int $userId User making the change
-     * @return bool Success status
+     * Record price change
+     * @param array $data Price change data
+     * @return int|false Price history ID or false on failure
      */
-    public function logChange($productId, $oldPrice, $newPrice, $reason, $changeType = 'regular', $userId = null) {
-        $data = [
-            'product_id' => $productId,
-            'old_price' => $oldPrice,
-            'new_price' => $newPrice,
-            'change_type' => $changeType,
-            'reason' => $reason,
-            'user_id' => $userId
-        ];
-
+    public function recordChange($data) {
         try {
             $this->db->beginTransaction();
 
             // Create price history record
-            $this->create($data);
+            $historyId = $this->create($data);
+            if (!$historyId) {
+                throw new Exception("Failed to create price history record");
+            }
 
             // Update product price
             $this->db->query("
                 UPDATE products 
                 SET 
                     selling_price = ?,
-                    updated_at = CURRENT_TIMESTAMP
+                    updated_at = CURRENT_TIMESTAMP 
                 WHERE id = ?
             ")
-            ->bind(1, $newPrice)
-            ->bind(2, $productId)
+            ->bind(1, $data['new_price'])
+            ->bind(2, $data['product_id'])
             ->execute();
 
             $this->db->commit();
-            return true;
+            return $historyId;
+
         } catch (Exception $e) {
             $this->db->rollback();
-            error_log("Price change failed: " . $e->getMessage());
+            error_log("Price Change Error: " . $e->getMessage());
             return false;
         }
     }
 
     /**
-     * Get price history for product
-     * @param int $productId Product ID
-     * @param int $limit Number of records to return
-     * @return array
+     * Validate price change
+     * @param float $newPrice New price
+     * @param array $product Product data
+     * @param string $userRole User role
+     * @return array Validation result
      */
-    public function getProductHistory($productId, $limit = null) {
+    public function validatePriceChange($newPrice, $product, $userRole) {
+        $result = [
+            'valid' => true,
+            'message' => 'Price change is valid'
+        ];
+
+        // Check minimum price
+        if ($product['min_price'] && $newPrice < $product['min_price']) {
+            $result['valid'] = false;
+            $result['message'] = "Price cannot be lower than " . 
+                formatCurrency($product['min_price']);
+            return $result;
+        }
+
+        // Check maximum discount
+        if ($product['max_discount_rate']) {
+            $maxDiscount = $product['selling_price'] * ($product['max_discount_rate'] / 100);
+            $minAllowedPrice = $product['selling_price'] - $maxDiscount;
+
+            if ($newPrice < $minAllowedPrice) {
+                $result['valid'] = false;
+                $result['message'] = "Maximum allowed discount is {$product['max_discount_rate']}%";
+                return $result;
+            }
+        }
+
+        // Additional role-based validation
+        if ($userRole === 'sales') {
+            // Sales can only apply predefined discounts
+            $discountRules = $this->getDiscountRules($userRole);
+            $validPrices = array_map(function($rule) use ($product) {
+                if ($rule['type'] === 'percentage') {
+                    $discount = $product['selling_price'] * ($rule['value'] / 100);
+                    if ($rule['max_discount'] && $discount > $rule['max_discount']) {
+                        $discount = $rule['max_discount'];
+                    }
+                    return $product['selling_price'] - $discount;
+                } else {
+                    return $product['selling_price'] - $rule['value'];
+                }
+            }, $discountRules);
+
+            if (!in_array($newPrice, $validPrices)) {
+                $result['valid'] = false;
+                $result['message'] = "Invalid discount amount for sales role";
+                return $result;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get price history by product
+     * @param int $productId Product ID
+     * @param array $filters Filter options
+     * @return array Price history
+     */
+    public function getByProduct($productId, $filters = []) {
+        $where = ['ph.product_id = ?'];
+        $params = [$productId];
+        $index = 2;
+
+        if (!empty($filters['start_date'])) {
+            $where[] = 'DATE(ph.created_at) >= ?';
+            $params[] = $filters['start_date'];
+            $index++;
+        }
+
+        if (!empty($filters['end_date'])) {
+            $where[] = 'DATE(ph.created_at) <= ?';
+            $params[] = $filters['end_date'];
+            $index++;
+        }
+
+        if (!empty($filters['change_type'])) {
+            $where[] = 'ph.change_type = ?';
+            $params[] = $filters['change_type'];
+        }
+
+        $whereClause = implode(' AND ', $where);
+
         $sql = "
             SELECT 
                 ph.*,
@@ -75,125 +147,11 @@ class PriceHistory extends Model {
                 p.name as product_name,
                 p.sku
             FROM {$this->table} ph
+            JOIN users u ON ph.user_id = u.id
             JOIN products p ON ph.product_id = p.id
-            LEFT JOIN users u ON ph.user_id = u.id
-            WHERE ph.product_id = ?
+            WHERE {$whereClause}
             ORDER BY ph.created_at DESC
         ";
-
-        if ($limit) {
-            $sql .= " LIMIT ?";
-        }
-
-        $query = $this->db->query($sql)->bind(1, $productId);
-        if ($limit) {
-            $query->bind(2, $limit);
-        }
-
-        return $query->resultSet();
-    }
-
-    /**
-     * Get recent price changes
-     * @param int $limit Number of records to return
-     * @return array
-     */
-    public function getRecentChanges($limit = 10) {
-        return $this->db->query("
-            SELECT 
-                ph.*,
-                u.name as user_name,
-                p.name as product_name,
-                p.sku,
-                c.name as category_name
-            FROM {$this->table} ph
-            JOIN products p ON ph.product_id = p.id
-            LEFT JOIN users u ON ph.user_id = u.id
-            LEFT JOIN categories c ON p.category_id = c.id
-            ORDER BY ph.created_at DESC
-            LIMIT ?
-        ")
-        ->bind(1, $limit)
-        ->resultSet();
-    }
-
-    /**
-     * Get price change statistics
-     * @param string $startDate Start date (YYYY-MM-DD)
-     * @param string $endDate End date (YYYY-MM-DD)
-     * @return array
-     */
-    public function getStats($startDate = null, $endDate = null) {
-        $sql = "
-            SELECT
-                COUNT(*) as total_changes,
-                COUNT(DISTINCT product_id) as products_affected,
-                AVG(
-                    ((new_price - old_price) / old_price) * 100
-                ) as avg_change_percentage,
-                SUM(CASE WHEN new_price > old_price THEN 1 ELSE 0 END) as increases,
-                SUM(CASE WHEN new_price < old_price THEN 1 ELSE 0 END) as decreases,
-                MAX(ABS(
-                    ((new_price - old_price) / old_price) * 100
-                )) as max_change_percentage
-            FROM {$this->table}
-            WHERE 1=1
-        ";
-
-        $params = [];
-
-        if ($startDate) {
-            $sql .= " AND DATE(created_at) >= ?";
-            $params[] = $startDate;
-        }
-
-        if ($endDate) {
-            $sql .= " AND DATE(created_at) <= ?";
-            $params[] = $endDate;
-        }
-
-        $query = $this->db->query($sql);
-        foreach ($params as $i => $param) {
-            $query->bind($i + 1, $param);
-        }
-
-        return $query->single();
-    }
-
-    /**
-     * Get price trends by category
-     * @param string $startDate Start date (YYYY-MM-DD)
-     * @param string $endDate End date (YYYY-MM-DD)
-     * @return array
-     */
-    public function getCategoryTrends($startDate = null, $endDate = null) {
-        $sql = "
-            SELECT 
-                c.name as category_name,
-                COUNT(*) as total_changes,
-                AVG(
-                    ((ph.new_price - ph.old_price) / ph.old_price) * 100
-                ) as avg_change_percentage,
-                COUNT(DISTINCT ph.product_id) as products_affected
-            FROM {$this->table} ph
-            JOIN products p ON ph.product_id = p.id
-            JOIN categories c ON p.category_id = c.id
-            WHERE 1=1
-        ";
-
-        $params = [];
-
-        if ($startDate) {
-            $sql .= " AND DATE(ph.created_at) >= ?";
-            $params[] = $startDate;
-        }
-
-        if ($endDate) {
-            $sql .= " AND DATE(ph.created_at) <= ?";
-            $params[] = $endDate;
-        }
-
-        $sql .= " GROUP BY c.id ORDER BY total_changes DESC";
 
         $query = $this->db->query($sql);
         foreach ($params as $i => $param) {
@@ -204,57 +162,66 @@ class PriceHistory extends Model {
     }
 
     /**
-     * Get products with frequent price changes
-     * @param int $threshold Number of changes to consider frequent
-     * @param int $days Number of days to look back
-     * @return array
+     * Get price changes summary
+     * @param string $startDate Start date (Y-m-d)
+     * @param string $endDate End date (Y-m-d)
+     * @return array Summary data
      */
-    public function getFrequentChanges($threshold = 3, $days = 30) {
-        return $this->db->query("
+    public function getSummary($startDate = null, $endDate = null) {
+        $where = ['1=1'];
+        $params = [];
+        $index = 1;
+
+        if ($startDate) {
+            $where[] = 'DATE(created_at) >= ?';
+            $params[] = $startDate;
+            $index++;
+        }
+
+        if ($endDate) {
+            $where[] = 'DATE(created_at) <= ?';
+            $params[] = $endDate;
+        }
+
+        $whereClause = implode(' AND ', $where);
+
+        $sql = "
             SELECT 
-                p.id,
-                p.name as product_name,
-                p.sku,
-                c.name as category_name,
+                change_type,
                 COUNT(*) as change_count,
-                MIN(ph.old_price) as min_price,
-                MAX(ph.new_price) as max_price,
-                p.selling_price as current_price
-            FROM {$this->table} ph
-            JOIN products p ON ph.product_id = p.id
-            LEFT JOIN categories c ON p.category_id = c.id
-            WHERE ph.created_at >= DATE_SUB(CURDATE(), INTERVAL ? DAY)
-            GROUP BY p.id
-            HAVING change_count >= ?
+                AVG((new_price - old_price) / old_price * 100) as avg_change_percentage,
+                SUM(CASE WHEN new_price > old_price THEN 1 ELSE 0 END) as increases,
+                SUM(CASE WHEN new_price < old_price THEN 1 ELSE 0 END) as decreases
+            FROM {$this->table}
+            WHERE {$whereClause}
+            GROUP BY change_type
             ORDER BY change_count DESC
-        ")
-        ->bind(1, $days)
-        ->bind(2, $threshold)
-        ->resultSet();
+        ";
+
+        $query = $this->db->query($sql);
+        foreach ($params as $i => $param) {
+            $query->bind($i + 1, $param);
+        }
+
+        return $query->resultSet();
     }
 
     /**
-     * Validate price change
-     * @param float $oldPrice Old price
-     * @param float $newPrice New price
-     * @param int $userId User ID making the change
-     * @return array Validation result
+     * Get discount rules for role
+     * @param string $role User role
+     * @return array Active discount rules
      */
-    public function validateChange($oldPrice, $newPrice, $userId) {
-        $user = $this->db->query("
-            SELECT role FROM users WHERE id = ?
+    private function getDiscountRules($role) {
+        return $this->db->query("
+            SELECT *
+            FROM discount_rules
+            WHERE status = 'active'
+            AND (start_date IS NULL OR start_date <= CURRENT_DATE)
+            AND (end_date IS NULL OR end_date >= CURRENT_DATE)
+            AND JSON_CONTAINS(allowed_roles, ?)
+            ORDER BY value DESC
         ")
-        ->bind(1, $userId)
-        ->single();
-
-        $maxChangePercent = $user['role'] === 'admin' ? 50 : 20;
-        $changePercent = abs((($newPrice - $oldPrice) / $oldPrice) * 100);
-
-        return [
-            'valid' => $changePercent <= $maxChangePercent,
-            'message' => $changePercent > $maxChangePercent 
-                ? "Price change of {$changePercent}% exceeds maximum allowed ({$maxChangePercent}%)"
-                : null
-        ];
+        ->bind(1, json_encode($role))
+        ->resultSet();
     }
 }

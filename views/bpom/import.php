@@ -1,208 +1,152 @@
 <?php require_once VIEW_PATH . '/layout/header.php'; ?>
 
 <div class="container-fluid px-4">
-    <div class="row justify-content-center">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Import BPOM Data</h1>
+        <a href="<?= url('bpom') ?>" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> Back to BPOM Products
+        </a>
+    </div>
+
+    <!-- Import Form -->
+    <div class="row">
         <div class="col-lg-8">
-            <!-- Import Form -->
-            <div class="card mb-4">
+            <div class="card shadow-sm">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Import BPOM Data</h5>
+                    <h5 class="card-title mb-0">Upload CSV File</h5>
                 </div>
                 <div class="card-body">
-                    <form action="<?= url('bpom/processImport') ?>" method="POST" enctype="multipart/form-data">
+                    <form action="<?= url('bpom/importCsv') ?>" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
-
+                        
                         <div class="mb-4">
-                            <label for="import_file" class="form-label">Import File</label>
-                            <input type="file" class="form-control" id="import_file" name="import_file" accept=".csv" required>
-                            <small class="text-muted">Upload a CSV file containing BPOM registration numbers</small>
+                            <label for="csv_file" class="form-label">Select CSV File</label>
+                            <input type="file" 
+                                   class="form-control" 
+                                   id="csv_file" 
+                                   name="csv_file" 
+                                   accept=".csv" 
+                                   required>
+                            <div class="form-text">
+                                File must be in CSV format with the following columns:
+                            </div>
+                        </div>
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-sm table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Column</th>
+                                        <th>Description</th>
+                                        <th>Required</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Nomor Registrasi</td>
+                                        <td>BPOM registration number</td>
+                                        <td><span class="badge bg-danger">Yes</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nama Produk</td>
+                                        <td>Product name</td>
+                                        <td><span class="badge bg-danger">Yes</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bentuk Sediaan</td>
+                                        <td>Product form/type</td>
+                                        <td><span class="badge bg-secondary">No</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nama Pendaftar</td>
+                                        <td>Manufacturer/registrant name</td>
+                                        <td><span class="badge bg-secondary">No</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Komposisi</td>
+                                        <td>Product composition</td>
+                                        <td><span class="badge bg-secondary">No</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kategori</td>
+                                        <td>Product category</td>
+                                        <td><span class="badge bg-secondary">No</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tanggal Terbit</td>
+                                        <td>Issue date (YYYY-MM-DD)</td>
+                                        <td><span class="badge bg-secondary">No</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
 
                         <div class="alert alert-info">
-                            <h6 class="alert-heading">Import Guidelines</h6>
+                            <h6 class="alert-heading"><i class="fas fa-info-circle"></i> Important Notes:</h6>
                             <ul class="mb-0">
-                                <li>File must be in CSV format</li>
-                                <li>First column should contain BPOM registration numbers</li>
-                                <li>First row (header) will be skipped</li>
-                                <li>Each registration number will be verified with BPOM website</li>
-                                <li>Process may take some time depending on the number of records</li>
+                                <li>First row should contain column headers</li>
+                                <li>Use comma (,) as field separator</li>
+                                <li>Text fields should be enclosed in double quotes (")</li>
+                                <li>Date format should be YYYY-MM-DD</li>
+                                <li>Existing products will be updated if registration number matches</li>
                             </ul>
                         </div>
 
-                        <div class="alert alert-warning">
-                            <h6 class="alert-heading">Important Notes</h6>
-                            <ul class="mb-0">
-                                <li>The system will pause 2 seconds between each request to respect BPOM's server</li>
-                                <li>Large files will be processed in batches</li>
-                                <li>Do not close the browser during import</li>
-                                <li>Failed entries will be logged for review</li>
-                            </ul>
-                        </div>
-
-                        <div class="text-end">
-                            <a href="<?= url('bpom') ?>" class="btn btn-secondary">Cancel</a>
-                            <button type="submit" class="btn btn-primary" id="importButton">
-                                <i class="fas fa-file-import"></i> Start Import
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-file-import"></i> Import Data
                             </button>
+                            <a href="<?= url('bpom/export') ?>" class="btn btn-outline-primary">
+                                <i class="fas fa-download"></i> Download Current Data as Template
+                            </a>
                         </div>
                     </form>
-                </div>
-            </div>
-
-            <!-- Sample Format -->
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Sample CSV Format</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>registration_number</th>
-                                    <th>notes (optional)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>NA18150112345</td>
-                                    <td>Product A</td>
-                                </tr>
-                                <tr>
-                                    <td>NA18150112346</td>
-                                    <td>Product B</td>
-                                </tr>
-                                <tr>
-                                    <td>NA18150112347</td>
-                                    <td>Product C</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="mt-3">
-                        <a href="#" class="btn btn-sm btn-outline-primary" onclick="downloadSample()">
-                            <i class="fas fa-download"></i> Download Sample CSV
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-4">
-            <!-- Import Tips -->
-            <div class="card mb-4">
+            <!-- Sample CSV -->
+            <div class="card shadow-sm mb-4">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Import Tips</h5>
+                    <h5 class="card-title mb-0">Sample CSV Format</h5>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex mb-3">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-file-csv text-primary fa-2x"></i>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h6>Prepare Your File</h6>
-                            <p class="text-muted mb-0">Ensure your CSV file is properly formatted with registration numbers in the first column.</p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex mb-3">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-clock text-warning fa-2x"></i>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h6>Be Patient</h6>
-                            <p class="text-muted mb-0">Large imports may take time due to rate limiting and verification process.</p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-exclamation-triangle text-danger fa-2x"></i>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h6>Avoid Duplicates</h6>
-                            <p class="text-muted mb-0">System will update existing records if registration numbers match.</p>
-                        </div>
-                    </div>
+                    <pre class="mb-0"><code>Nomor Registrasi,Nama Produk,Bentuk Sediaan,Nama Pendaftar,Komposisi,Kategori,Tanggal Terbit
+"NA18150123456","Sample Product","Tablet","PT Example","Paracetamol 500mg","Obat Bebas","2023-01-01"
+"NA18150123457","Another Product","Sirup","PT Example","Ibuprofen 200mg","Obat Bebas Terbatas","2023-01-02"</code></pre>
                 </div>
             </div>
 
-            <!-- Quick Actions -->
-            <div class="card">
+            <!-- Tips -->
+            <div class="card shadow-sm">
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Quick Actions</h5>
+                    <h5 class="card-title mb-0">Tips</h5>
                 </div>
                 <div class="card-body">
-                    <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-outline-danger" onclick="cleanupOldRecords()">
-                            <i class="fas fa-broom"></i> Cleanup Old Records
-                        </button>
-                        <a href="<?= url('bpom') ?>" class="btn btn-outline-primary">
-                            <i class="fas fa-search"></i> Search BPOM
-                        </a>
+                    <div class="mb-3">
+                        <h6><i class="fas fa-file-excel text-success"></i> Using Excel?</h6>
+                        <ol class="mb-0">
+                            <li>Enter data in Excel</li>
+                            <li>Go to File > Save As</li>
+                            <li>Choose "CSV (Comma delimited)"</li>
+                            <li>Click Save</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h6><i class="fas fa-check-circle text-primary"></i> Best Practices</h6>
+                        <ul class="mb-0">
+                            <li>Verify data before import</li>
+                            <li>Backup existing data</li>
+                            <li>Test with small batch first</li>
+                            <li>Check results after import</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-// Handle form submission
-document.querySelector('form').addEventListener('submit', function() {
-    document.getElementById('importButton').disabled = true;
-    document.getElementById('importButton').innerHTML = `
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Importing...
-    `;
-});
-
-// Download sample CSV
-function downloadSample() {
-    const csv = 'registration_number,notes\nNA18150112345,Product A\nNA18150112346,Product B\nNA18150112347,Product C';
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'bpom_import_sample.csv';
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
-}
-
-// Cleanup old records
-async function cleanupOldRecords() {
-    if (!confirm('Are you sure you want to clean up old inactive records? This action cannot be undone.')) {
-        return;
-    }
-
-    try {
-        const response = await fetch('<?= url('bpom/cleanup') ?>');
-        const data = await response.json();
-        
-        if (data.success) {
-            alert(data.message);
-            location.reload();
-        } else {
-            alert('Failed to clean up records: ' + data.message);
-        }
-    } catch (error) {
-        alert('Error cleaning up records. Please try again later.');
-    }
-}
-
-// File size validation
-document.getElementById('import_file').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    const maxSize = 5 * 1024 * 1024; // 5MB
-
-    if (file && file.size > maxSize) {
-        alert('File size exceeds 5MB limit. Please choose a smaller file.');
-        e.target.value = '';
-    }
-});
-</script>
 
 <?php require_once VIEW_PATH . '/layout/footer.php'; ?>

@@ -1,0 +1,29 @@
+@echo off
+echo Running database migrations...
+
+echo Running schema.sql...
+mysql -u root -p salvio3 < schema.sql
+
+echo Running commission and price tables...
+mysql -u root -p salvio3 < updates/004_add_commission_and_price_tables.sql
+
+echo Running sales tables...
+mysql -u root -p salvio3 < updates/005_add_sales_tables.sql
+
+echo Running price and commission tables...
+mysql -u root -p salvio3 < updates/006_add_price_and_commission_tables.sql
+
+echo Running investor tables...
+mysql -u root -p salvio3 < updates/007_add_investor_tables.sql
+
+echo Running supplier tables...
+mysql -u root -p salvio3 < updates/008_add_supplier_tables.sql
+
+echo Running reporting tables...
+mysql -u root -p salvio3 < updates/009_add_reporting_tables.sql
+
+echo Running notification tables...
+mysql -u root -p salvio3 < updates/010_add_notification_tables.sql
+
+echo All migrations completed!
+pause

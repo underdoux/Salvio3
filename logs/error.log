@@ -6799,3 +6799,1019 @@ Stack trace:
 #2 C:\xampp\htdocs\Salvio3\index.php(60): SalesController->index()
 #3 {main}
   thrown in C:\xampp\htdocs\Salvio3\views\sales\index.php on line 7
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:22:29 Asia/Jakarta] [Auth] Initialized - Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:22:29 Asia/Jakarta] [Auth] User in session: yes
+[05-May-2025 13:22:29 Asia/Jakarta] [App] Request URI: /Salvio3/sales
+[05-May-2025 13:22:29 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:22:29 Asia/Jakarta] [App] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:22:29 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746426149
+)
+
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:22:29 Asia/Jakarta] [App] Auth Status: Authenticated
+[05-May-2025 13:22:29 Asia/Jakarta] [Router] Controller: sales, Action: index
+[05-May-2025 13:22:29 Asia/Jakarta] [Router] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:22:29 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746426149
+)
+
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Check flash message exists - Type: success, Exists: false
+[05-May-2025 13:22:29 Asia/Jakarta] [Session] Check flash message exists - Type: error, Exists: false
+[05-May-2025 13:22:29 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function url() in C:\xampp\htdocs\Salvio3\views\sales\index.php:7
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\core\View.php(65): include()
+#1 C:\xampp\htdocs\Salvio3\controllers\SalesController.php(105): View->render('sales/index', Array)
+#2 C:\xampp\htdocs\Salvio3\index.php(60): SalesController->index()
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\sales\index.php on line 7
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:22:31 Asia/Jakarta] [Auth] Initialized - Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:22:31 Asia/Jakarta] [Auth] User in session: yes
+[05-May-2025 13:22:31 Asia/Jakarta] [App] Request URI: /Salvio3/dashboard
+[05-May-2025 13:22:31 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:22:31 Asia/Jakarta] [App] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:22:31 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746426151
+)
+
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:22:31 Asia/Jakarta] [App] Auth Status: Authenticated
+[05-May-2025 13:22:31 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 13:22:31 Asia/Jakarta] [Router] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:22:31 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746426151
+)
+
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 13:22:31 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:40:40 Asia/Jakarta] [Auth] Initialized - Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:40:40 Asia/Jakarta] [Auth] User in session: yes
+[05-May-2025 13:40:40 Asia/Jakarta] [App] Request URI: /Salvio3/dashboard
+[05-May-2025 13:40:40 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:40:40 Asia/Jakarta] [App] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:40:40 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746427240
+)
+
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:40:40 Asia/Jakarta] [App] Auth Status: Authenticated
+[05-May-2025 13:40:40 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 13:40:40 Asia/Jakarta] [Router] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:40:40 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746427240
+)
+
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 13:40:40 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:40:41 Asia/Jakarta] [Auth] Initialized - Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:40:41 Asia/Jakarta] [Auth] User in session: yes
+[05-May-2025 13:40:41 Asia/Jakarta] [App] Request URI: /Salvio3/sales
+[05-May-2025 13:40:41 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:40:41 Asia/Jakarta] [App] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:40:41 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746427241
+)
+
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:40:41 Asia/Jakarta] [App] Auth Status: Authenticated
+[05-May-2025 13:40:41 Asia/Jakarta] [Router] Controller: sales, Action: index
+[05-May-2025 13:40:41 Asia/Jakarta] [Router] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:40:41 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746427241
+)
+
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Check flash message exists - Type: success, Exists: false
+[05-May-2025 13:40:41 Asia/Jakarta] [Session] Check flash message exists - Type: error, Exists: false
+[05-May-2025 13:40:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function url() in C:\xampp\htdocs\Salvio3\views\sales\index.php:7
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\core\View.php(65): include()
+#1 C:\xampp\htdocs\Salvio3\controllers\SalesController.php(105): View->render('sales/index', Array)
+#2 C:\xampp\htdocs\Salvio3\index.php(60): SalesController->index()
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\sales\index.php on line 7
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:40:46 Asia/Jakarta] [Auth] Initialized - Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:40:46 Asia/Jakarta] [Auth] User in session: yes
+[05-May-2025 13:40:46 Asia/Jakarta] [App] Request URI: /Salvio3/products?filter=low_stock
+[05-May-2025 13:40:46 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:40:46 Asia/Jakarta] [App] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:40:46 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746427246
+)
+
+[05-May-2025 13:40:46 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:40:46 Asia/Jakarta] [App] Auth Status: Authenticated
+[05-May-2025 13:40:46 Asia/Jakarta] [Router] Controller: products, Action: index
+[05-May-2025 13:40:46 Asia/Jakarta] [Router] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:40:46 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746427246
+)
+
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:11 Asia/Jakarta] [Auth] Initialized - Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:41:11 Asia/Jakarta] [Auth] User in session: yes
+[05-May-2025 13:41:11 Asia/Jakarta] [App] Request URI: /Salvio3/auth/logout
+[05-May-2025 13:41:11 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:41:11 Asia/Jakarta] [App] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:41:11 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746427271
+)
+
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:11 Asia/Jakarta] [App] Auth Status: Authenticated
+[05-May-2025 13:41:11 Asia/Jakarta] [Router] Controller: auth, Action: logout
+[05-May-2025 13:41:11 Asia/Jakarta] [Router] Session ID: 5k3da508j4lgjlup3sjdempljb
+[05-May-2025 13:41:11 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+    [__last_activity] => 1746427271
+)
+
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Remove user
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Regenerated session ID. Old: 5k3da508j4lgjlup3sjdempljb, New: u2chvtu933uf9cn6jbhlbeijq6
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Set flash message - Type: success, Message: You have been logged out
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Set flash_success: You have been logged out
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 13:41:11 Asia/Jakarta] [Auth] Initialized - Session ID: u2chvtu933uf9cn6jbhlbeijq6
+[05-May-2025 13:41:11 Asia/Jakarta] [Auth] User in session: no
+[05-May-2025 13:41:11 Asia/Jakarta] [App] Request URI: /Salvio3/auth
+[05-May-2025 13:41:11 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:41:11 Asia/Jakarta] [App] Session ID: u2chvtu933uf9cn6jbhlbeijq6
+[05-May-2025 13:41:11 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [__last_activity] => 1746427271
+    [flash_success] => You have been logged out
+)
+
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 13:41:11 Asia/Jakarta] [App] Auth Status: Not Authenticated
+[05-May-2025 13:41:11 Asia/Jakarta] [Router] Controller: auth, Action: index
+[05-May-2025 13:41:11 Asia/Jakarta] [Router] Session ID: u2chvtu933uf9cn6jbhlbeijq6
+[05-May-2025 13:41:11 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => 5e12206a79cc12a0761d3d421d68288bece7609651308f18b31a05167bb77963
+    [__last_activity] => 1746427271
+    [flash_success] => You have been logged out
+)
+
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Get flash_success: You have been logged out
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Get flash message - Type: success, Message: You have been logged out
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Set csrf_token: bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+[05-May-2025 13:41:11 Asia/Jakarta] [Session] Generated CSRF token: bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 13:41:14 Asia/Jakarta] [Auth] Initialized - Session ID: u2chvtu933uf9cn6jbhlbeijq6
+[05-May-2025 13:41:14 Asia/Jakarta] [Auth] User in session: no
+[05-May-2025 13:41:14 Asia/Jakarta] [App] Request URI: /Salvio3/auth/login
+[05-May-2025 13:41:14 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:41:14 Asia/Jakarta] [App] Session ID: u2chvtu933uf9cn6jbhlbeijq6
+[05-May-2025 13:41:14 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746427274
+)
+
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 13:41:14 Asia/Jakarta] [App] Auth Status: Not Authenticated
+[05-May-2025 13:41:14 Asia/Jakarta] [Router] Controller: auth, Action: login
+[05-May-2025 13:41:14 Asia/Jakarta] [Router] Session ID: u2chvtu933uf9cn6jbhlbeijq6
+[05-May-2025 13:41:14 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746427274
+)
+
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Check user exists: false
+[05-May-2025 13:41:14 Asia/Jakarta] Login attempt for username: admin
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Set user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Regenerated session ID. Old: u2chvtu933uf9cn6jbhlbeijq6, New: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:41:14 Asia/Jakarta] [Auth] Login successful for user: admin
+[05-May-2025 13:41:14 Asia/Jakarta] [Auth] Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:41:14 Asia/Jakarta] [Auth] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746427274
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 13:41:14 Asia/Jakarta] Login successful for username: admin
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:14 Asia/Jakarta] [Auth] Initialized - Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:41:14 Asia/Jakarta] [Auth] User in session: yes
+[05-May-2025 13:41:14 Asia/Jakarta] [App] Request URI: /Salvio3/dashboard
+[05-May-2025 13:41:14 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:41:14 Asia/Jakarta] [App] Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:41:14 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746427274
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:14 Asia/Jakarta] [App] Auth Status: Authenticated
+[05-May-2025 13:41:14 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 13:41:14 Asia/Jakarta] [Router] Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:41:14 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746427274
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 13:41:14 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:15 Asia/Jakarta] [Auth] Initialized - Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:41:15 Asia/Jakarta] [Auth] User in session: yes
+[05-May-2025 13:41:15 Asia/Jakarta] [App] Request URI: /Salvio3/sales
+[05-May-2025 13:41:15 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:41:15 Asia/Jakarta] [App] Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:41:15 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746427275
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:15 Asia/Jakarta] [App] Auth Status: Authenticated
+[05-May-2025 13:41:15 Asia/Jakarta] [Router] Controller: sales, Action: index
+[05-May-2025 13:41:15 Asia/Jakarta] [Router] Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:41:15 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746427275
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Check flash message exists - Type: success, Exists: false
+[05-May-2025 13:41:15 Asia/Jakarta] [Session] Check flash message exists - Type: error, Exists: false
+[05-May-2025 13:41:15 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function url() in C:\xampp\htdocs\Salvio3\views\sales\index.php:7
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\core\View.php(65): include()
+#1 C:\xampp\htdocs\Salvio3\controllers\SalesController.php(105): View->render('sales/index', Array)
+#2 C:\xampp\htdocs\Salvio3\index.php(60): SalesController->index()
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\sales\index.php on line 7
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:54:52 Asia/Jakarta] [Auth] Initialized - Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:54:52 Asia/Jakarta] [Auth] User in session: yes
+[05-May-2025 13:54:52 Asia/Jakarta] [App] Request URI: /Salvio3/dashboard
+[05-May-2025 13:54:52 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:54:52 Asia/Jakarta] [App] Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:54:52 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746428092
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:54:52 Asia/Jakarta] [App] Auth Status: Authenticated
+[05-May-2025 13:54:52 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 13:54:52 Asia/Jakarta] [Router] Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:54:52 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746428092
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 13:54:52 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:54:53 Asia/Jakarta] [Auth] Initialized - Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:54:53 Asia/Jakarta] [Auth] User in session: yes
+[05-May-2025 13:54:53 Asia/Jakarta] [App] Request URI: /Salvio3/dashboard
+[05-May-2025 13:54:53 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:54:53 Asia/Jakarta] [App] Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:54:53 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746428093
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:54:53 Asia/Jakarta] [App] Auth Status: Authenticated
+[05-May-2025 13:54:53 Asia/Jakarta] [Router] Controller: dashboard, Action: index
+[05-May-2025 13:54:53 Asia/Jakarta] [Router] Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:54:53 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746428093
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Get flash_success: 
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Remove flash_success
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Get flash message - Type: success, Message: null
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Get flash_error: 
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Remove flash_error
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Get flash message - Type: error, Message: null
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Get flash_info: 
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Remove flash_info
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Get flash message - Type: info, Message: null
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Get flash_warning: 
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Remove flash_warning
+[05-May-2025 13:54:53 Asia/Jakarta] [Session] Get flash message - Type: warning, Message: null
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Cookie settings:
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Path: //Salvio3
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Domain: localhost
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Secure: false
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Starting session with parameters:
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Path: /
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Cookie lifetime: 7200
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Session name: salvio_session
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Get user: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [name] => Administrator
+    [role] => admin
+    [status] => active
+    [last_login] => 
+    [created_at] => 2025-05-05 05:24:33
+    [updated_at] => 2025-05-05 05:24:33
+)
+
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:54:55 Asia/Jakarta] [Auth] Initialized - Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:54:55 Asia/Jakarta] [Auth] User in session: yes
+[05-May-2025 13:54:55 Asia/Jakarta] [App] Request URI: /Salvio3/products
+[05-May-2025 13:54:55 Asia/Jakarta] [App] Session status: 2
+[05-May-2025 13:54:55 Asia/Jakarta] [App] Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:54:55 Asia/Jakarta] [App] Session data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746428095
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+
+[05-May-2025 13:54:55 Asia/Jakarta] [Session] Check user exists: true
+[05-May-2025 13:54:55 Asia/Jakarta] [App] Auth Status: Authenticated
+[05-May-2025 13:54:55 Asia/Jakarta] [Router] Controller: products, Action: index
+[05-May-2025 13:54:55 Asia/Jakarta] [Router] Session ID: 8h68kuu565dm2tdnsv7pb7d3q3
+[05-May-2025 13:54:55 Asia/Jakarta] [Router] Session Data: Array
+(
+    [__initialized] => 1
+    [csrf_token] => bd8d6597ec40a59ae892b0ef08c8b645a8f34eed255bf6a13cb38e4fe23e7e78
+    [__last_activity] => 1746428095
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [name] => Administrator
+            [role] => admin
+            [status] => active
+            [last_login] => 
+            [created_at] => 2025-05-05 05:24:33
+            [updated_at] => 2025-05-05 05:24:33
+        )
+
+)
+

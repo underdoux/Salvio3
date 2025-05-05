@@ -1,151 +1,133 @@
 <?php
 /**
  * View Class
- * Handles view rendering and template management
+ * Handles template rendering and view logic
  */
 class View {
-    private $layout = 'main';
+    private $layout = 'layout/main';
     private $data = [];
     private $sections = [];
     private $currentSection = null;
 
     /**
-     * Set layout
-     * @param string|null $layout Layout name or null for no layout
+     * Set layout template
      */
     public function setLayout($layout) {
         $this->layout = $layout;
     }
 
     /**
-     * Get current layout
-     * @return string|null
+     * Disable layout
      */
-    public function getLayout() {
-        return $this->layout;
+    public function disableLayout() {
+        $this->layout = null;
     }
 
     /**
      * Set view data
-     * @param array $data Data to pass to view
      */
-    public function setData($data) {
-        $this->data = array_merge($this->data, $data);
+    public function set($key, $value) {
+        $this->data[$key] = $value;
     }
 
     /**
      * Get view data
-     * @return array
      */
-    public function getData() {
-        return $this->data;
+    public function get($key, $default = null) {
+        return isset($this->data[$key]) ? $this->data[$key] : $default;
     }
 
     /**
-     * Render view
-     * @param string $view View name
-     * @param array $data Data to pass to view
+     * Render view template
      */
     public function render($view, $data = []) {
         // Merge data
-        $this->setData($data);
+        $this->data = array_merge($this->data, $data);
+        
+        // Extract data to variables
+        extract($this->data);
         
         // Start output buffering
         ob_start();
         
-        // Extract data to make it available in view
-        extract($this->data);
-        
         // Include view file
-        $viewFile = VIEW_PATH . '/' . $view . '.php';
+        $viewFile = 'views/' . $view . '.php';
         if (!file_exists($viewFile)) {
-            throw new Exception("View {$view} not found");
+            throw new Exception("View file not found: {$viewFile}");
         }
-        
         include $viewFile;
         
         // Get view content
-        $this->data['content'] = ob_get_clean();
+        $content = ob_get_clean();
         
         // Render with layout if set
-        if ($this->layout !== null) {
-            $layoutFile = VIEW_PATH . '/layout/' . $this->layout . '.php';
-            if (!file_exists($layoutFile)) {
-                throw new Exception("Layout {$this->layout} not found");
-            }
+        if ($this->layout) {
+            // Store content in sections array
+            $this->sections['content'] = $content;
             
-            extract($this->data);
+            // Start new output buffer for layout
+            ob_start();
+            
+            // Include layout file
+            $layoutFile = 'views/' . $this->layout . '.php';
+            if (!file_exists($layoutFile)) {
+                throw new Exception("Layout file not found: {$layoutFile}");
+            }
             include $layoutFile;
-        } else {
-            echo $this->data['content'];
+            
+            // Get final content
+            $content = ob_get_clean();
         }
+        
+        echo $content;
     }
 
     /**
-     * Start a section
-     * @param string $name Section name
+     * Start a new section
      */
     public function section($name) {
         if ($this->currentSection) {
-            throw new Exception('Cannot nest sections');
+            throw new Exception("Cannot nest sections");
         }
-        
         $this->currentSection = $name;
         ob_start();
     }
 
     /**
-     * End current section
+     * End the current section
      */
     public function endSection() {
         if (!$this->currentSection) {
-            throw new Exception('No section started');
+            throw new Exception("No section started");
         }
-        
         $this->sections[$this->currentSection] = ob_get_clean();
         $this->currentSection = null;
     }
 
     /**
      * Get section content
-     * @param string $name Section name
-     * @param string $default Default content if section not found
-     * @return string
      */
     public function getSection($name, $default = '') {
-        return $this->sections[$name] ?? $default;
+        return isset($this->sections[$name]) ? $this->sections[$name] : $default;
     }
 
     /**
      * Include partial view
-     * @param string $partial Partial view name
-     * @param array $data Data to pass to partial
      */
-    public function partial($partial, $data = []) {
+    public function partial($view, $data = []) {
         extract(array_merge($this->data, $data));
-        
-        $partialFile = VIEW_PATH . '/partials/' . $partial . '.php';
-        if (!file_exists($partialFile)) {
-            throw new Exception("Partial {$partial} not found");
-        }
-        
-        include $partialFile;
+        include 'views/' . $view . '.php';
     }
 
     /**
-     * Generate CSRF token field
-     * @return string HTML input field
+     * Escape HTML
      */
-    public function csrf() {
-        $token = Session::generateCsrfToken();
-        return '<input type="hidden" name="csrf_token" value="' . $token . '">';
+    public function e($string) {
+        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
     }
 
     /**
      * Format date
-     * @param string $date Date string
-     * @param string $format Date format
-     * @return string Formatted date
      */
     public function formatDate($date, $format = 'Y-m-d H:i:s') {
         return date($format, strtotime($date));
@@ -153,108 +135,70 @@ class View {
 
     /**
      * Format currency
-     * @param float $amount Amount
-     * @param string $currency Currency code
-     * @return string Formatted currency
      */
-    public function formatCurrency($amount, $currency = null) {
-        $currency = $currency ?? APP_CURRENCY;
-        
-        switch ($currency) {
-            case 'IDR':
-                return 'Rp ' . number_format($amount, 0, ',', '.');
-            case 'USD':
-                return '$' . number_format($amount, 2);
-            default:
-                return number_format($amount, 2);
-        }
-    }
-
-    /**
-     * Get active menu class
-     * @param string $menu Menu name
-     * @param string $activeClass Active class name
-     * @return string Class name if active
-     */
-    public function getActiveMenu($menu, $activeClass = 'active') {
-        $url = $_GET['url'] ?? '';
-        $currentMenu = explode('/', $url)[0];
-        
-        return $currentMenu === $menu ? $activeClass : '';
-    }
-
-    /**
-     * Escape HTML
-     * @param string $string String to escape
-     * @return string Escaped string
-     */
-    public function escape($string) {
-        return htmlspecialchars($string, ENT_QUOTES, 'UTF-8');
+    public function formatCurrency($amount, $decimals = 2) {
+        return number_format($amount, $decimals, ',', '.');
     }
 
     /**
      * Generate pagination links
-     * @param array $pagination Pagination data
-     * @return string HTML pagination links
      */
-    public function pagination($pagination) {
-        if ($pagination['last_page'] <= 1) {
+    public function pagination($data, $baseUrl) {
+        if ($data['last_page'] <= 1) {
             return '';
         }
 
-        $html = '<nav aria-label="Page navigation"><ul class="pagination">';
-        
-        // Previous link
-        if ($pagination['current_page'] > 1) {
-            $html .= '<li class="page-item">
-                        <a class="page-link" href="?page=' . ($pagination['current_page'] - 1) . '">Previous</a>
-                     </li>';
+        $html = '<nav class="pagination">';
+        $html .= '<ul class="pagination-list">';
+
+        // Previous page link
+        if ($data['page'] > 1) {
+            $html .= '<li><a href="' . $baseUrl . '?page=' . ($data['page'] - 1) . '">&laquo; Previous</a></li>';
         }
-        
+
         // Page links
-        for ($i = 1; $i <= $pagination['last_page']; $i++) {
-            if ($i == $pagination['current_page']) {
-                $html .= '<li class="page-item active">
-                            <span class="page-link">' . $i . '</span>
-                         </li>';
+        for ($i = 1; $i <= $data['last_page']; $i++) {
+            if ($i == $data['page']) {
+                $html .= '<li class="active"><span>' . $i . '</span></li>';
             } else {
-                $html .= '<li class="page-item">
-                            <a class="page-link" href="?page=' . $i . '">' . $i . '</a>
-                         </li>';
+                $html .= '<li><a href="' . $baseUrl . '?page=' . $i . '">' . $i . '</a></li>';
             }
         }
-        
-        // Next link
-        if ($pagination['current_page'] < $pagination['last_page']) {
-            $html .= '<li class="page-item">
-                        <a class="page-link" href="?page=' . ($pagination['current_page'] + 1) . '">Next</a>
-                     </li>';
+
+        // Next page link
+        if ($data['page'] < $data['last_page']) {
+            $html .= '<li><a href="' . $baseUrl . '?page=' . ($data['page'] + 1) . '">Next &raquo;</a></li>';
         }
-        
-        $html .= '</ul></nav>';
-        
+
+        $html .= '</ul>';
+        $html .= '</nav>';
+
         return $html;
     }
 
     /**
-     * Get flash messages HTML
-     * @return string HTML flash messages
+     * Get CSRF token field
      */
-    public function getFlashMessages() {
-        $html = '';
-        $types = ['success', 'error', 'info', 'warning'];
-        
-        foreach ($types as $type) {
-            $message = Session::getFlash($type);
-            if ($message) {
-                $class = $type === 'error' ? 'danger' : $type;
-                $html .= '<div class="alert alert-' . $class . ' alert-dismissible fade show" role="alert">
-                            ' . $message . '
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                         </div>';
+    public function csrf() {
+        $token = bin2hex(random_bytes(32));
+        Session::getInstance()->set('csrf_token', $token);
+        return '<input type="hidden" name="csrf_token" value="' . $token . '">';
+    }
+
+    /**
+     * Get flash messages
+     */
+    public function getFlash() {
+        $session = Session::getInstance();
+        $flash = $session->getFlash();
+        if (!empty($flash)) {
+            $html = '<div class="flash-messages">';
+            foreach ($flash as $type => $message) {
+                $html .= '<div class="alert alert-' . $type . '">' . $message . '</div>';
             }
+            $html .= '</div>';
+            return $html;
         }
-        
-        return $html;
+        return '';
     }
 }

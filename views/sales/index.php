@@ -10,78 +10,10 @@
     </div>
 
     <!-- Statistics Cards -->
-    <div class="row g-4 mb-4">
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0 rounded-circle bg-primary bg-opacity-10 p-3">
-                            <i class="fas fa-shopping-cart fa-fw text-primary"></i>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h6 class="card-title mb-1">Today's Orders</h6>
-                            <h3 class="mb-0"><?= number_format($stats['today_orders']) ?></h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0 rounded-circle bg-success bg-opacity-10 p-3">
-                            <i class="fas fa-money-bill-wave fa-fw text-success"></i>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h6 class="card-title mb-1">Today's Sales</h6>
-                            <h3 class="mb-0"><?= formatCurrency($stats['today_sales']) ?></h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0 rounded-circle bg-info bg-opacity-10 p-3">
-                            <i class="fas fa-chart-line fa-fw text-info"></i>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h6 class="card-title mb-1">Monthly Revenue</h6>
-                            <h3 class="mb-0"><?= formatCurrency($stats['monthly_revenue']) ?></h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <?php
-                        $growth = $stats['last_month_revenue'] > 0 
-                            ? (($stats['monthly_revenue'] - $stats['last_month_revenue']) / $stats['last_month_revenue']) * 100
-                            : 0;
-                        $growthClass = $growth >= 0 ? 'success' : 'danger';
-                        $growthIcon = $growth >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
-                        ?>
-                        <div class="flex-shrink-0 rounded-circle bg-<?= $growthClass ?> bg-opacity-10 p-3">
-                            <i class="fas <?= $growthIcon ?> fa-fw text-<?= $growthClass ?>"></i>
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                            <h6 class="card-title mb-1">Monthly Growth</h6>
-                            <h3 class="mb-0"><?= number_format(abs($growth), 1) ?>%</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php require_once VIEW_PATH . '/sales/_stats.php'; ?>
 
     <!-- Filters -->
-    <div class="card mb-4">
+    <div class="card mb-4 shadow-sm">
         <div class="card-body">
             <form method="GET" action="<?= url('sales') ?>" class="row g-3">
                 <div class="col-md-3">
@@ -118,7 +50,7 @@
     </div>
 
     <!-- Sales List -->
-    <div class="card">
+    <div class="card shadow-sm">
         <div class="card-body">
             <?php if (empty($sales)): ?>
                 <div class="text-center py-5">
@@ -131,7 +63,7 @@
             <?php else: ?>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
-                        <thead>
+                        <thead class="table-light">
                             <tr>
                                 <th>Invoice</th>
                                 <th>Customer</th>
