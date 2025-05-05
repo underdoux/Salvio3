@@ -9,6 +9,23 @@ class View {
     private $sections = [];
     private $currentSection = null;
 
+    public function __construct() {
+        // Load common helpers
+        $this->loadHelpers(['url']);
+    }
+
+    /**
+     * Load helper files
+     */
+    private function loadHelpers($helpers) {
+        foreach ($helpers as $helper) {
+            $helperFile = "helpers/{$helper}_helper.php";
+            if (file_exists($helperFile)) {
+                require_once $helperFile;
+            }
+        }
+    }
+
     /**
      * Set layout template
      */

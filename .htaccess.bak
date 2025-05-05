@@ -1,0 +1,160 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# Set base directory
+RewriteBase /Salvio3/
+
+# Prevent direct access to system files and directories
+RewriteRule ^(core|config|logs|models|views|controllers|helpers|database)/ - [F,L]
+RewriteRule ^(\.git|\.env|composer\.(json|lock)|package(-lock)?\.json|webpack\.config\.js)$ - [F,L]
+
+# Block access to dot files
+RewriteRule (^\.|/\.) - [F]
+
+# Maintenance mode check
+RewriteCond %{DOCUMENT_ROOT}/Salvio3/config/maintenance.json -f
+RewriteCond %{SCRIPT_FILENAME} !maintenance.php
+RewriteCond %{REMOTE_ADDR} !^127\.0\.0\.1$
+RewriteCond %{REMOTE_ADDR} !^::1$
+RewriteCond %{REQUEST_URI} !^/assets/
+RewriteRule ^ maintenance.php [L]
+
+# Handle front controller
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
+# Set default character set
+AddDefaultCharset UTF-8
+
+# Enable CORS
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+</IfModule>
+
+# Set security headers
+<IfModule mod_headers.c>
+    # Protect against XSS attacks
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Prevent MIME-type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Prevent clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # Enable HSTS (force HTTPS)
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    
+    # Disable PHP version exposure
+    Header unset X-Powered-By
+    
+    # Content Security Policy
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://code.jquery.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self'"
+</IfModule>
+
+# Handle errors
+ErrorDocument 400 /Salvio3/error/400
+ErrorDocument 401 /Salvio3/error/401
+ErrorDocument 403 /Salvio3/error/403
+ErrorDocument 404 /Salvio3/error/404
+ErrorDocument 500 /Salvio3/error/500
+
+# PHP settings
+<IfModule mod_php.c>
+    # Maximum execution time
+    php_value max_execution_time 300
+    
+    # Maximum input time
+    php_value max_input_time 300
+    
+    # Memory limit
+    php_value memory_limit 256M
+    
+    # Maximum file upload size
+    php_value upload_max_filesize 64M
+    php_value post_max_size 64M
+    
+    # Maximum input variables
+    php_value max_input_vars 3000
+    
+    # Session settings
+    php_value session.gc_maxlifetime 7200
+    php_value session.cookie_lifetime 7200
+    
+    # Error reporting (production)
+    php_flag display_errors Off
+    php_flag display_startup_errors Off
+    php_value error_reporting E_ALL & ~E_DEPRECATED & ~E_STRICT
+    
+    # Output buffering
+    php_value output_buffering 4096
+</IfModule>
+
+# Enable compression
+<IfModule mod_deflate.c>
+    # Compress HTML, CSS, JavaScript, Text, XML and fonts
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE application/x-font-ttf
+    AddOutputFilterByType DEFLATE application/x-font-opentype
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE image/svg+xml
+    AddOutputFilterByType DEFLATE image/x-icon
+    AddOutputFilterByType DEFLATE font/ttf
+    AddOutputFilterByType DEFLATE font/otf
+    AddOutputFilterByType DEFLATE font/opentype
+
+    # Remove browser bugs
+    BrowserMatch ^Mozilla/4 gzip-only-text/html
+    BrowserMatch ^Mozilla/4\.0[678] no-gzip
+    BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+    Header append Vary User-Agent
+</IfModule>
+
+# Enable caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Default expiration
+    ExpiresDefault "access plus 1 month"
+    
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS and JavaScript
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    
+    # Fonts
+    ExpiresByType application/x-font-ttf "access plus 1 year"
+    ExpiresByType application/x-font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    
+    # Others
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType application/x-shockwave-flash "access plus 1 month"
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+
+# Prevent access to backup/config files
+<FilesMatch "^(\..*|.*\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)|~)$">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</FilesMatch>

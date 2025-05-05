@@ -39,7 +39,7 @@ class Category extends Model {
         $sql = "SELECT c.*, p.name as parent_name, 
             (SELECT COUNT(*) FROM products pr WHERE pr.category_id = c.id AND pr.status = 'active') as product_count 
             FROM {$this->table} c 
-            LEFT JOIN {$this->table} p ON c.parent_id = p.id
+            LEFT JOIN {$this->table} p ON c.parent_id = p.id AND p.status = 'active'
             WHERE c.status = 'active'";
 
         if (!empty($search)) {
@@ -175,8 +175,9 @@ class Category extends Model {
 
         // Get category products
         $products = $this->getDb()->query("
-            SELECT p.*
+            SELECT p.*, c.name as category_name
             FROM products p
+            INNER JOIN {$this->table} c ON p.category_id = c.id AND c.status = 'active'
             WHERE p.category_id = ?
             AND p.status = 'active'
             ORDER BY p.name ASC

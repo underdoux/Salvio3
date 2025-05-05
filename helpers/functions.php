@@ -3,6 +3,16 @@
  * Global Helper Functions
  */
 
+if (!function_exists('url')) {
+    /**
+     * Generate URL for route
+     */
+    function url($path = '') {
+        return base_url($path);
+    }
+}
+
+
 if (!function_exists('base_url')) {
     /**
      * Get base URL
