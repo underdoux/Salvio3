@@ -1,148 +1,138 @@
-# Salvio3 POS - Pharmacy Point of Sale System
 
-A comprehensive POS and inventory management system specifically designed for pharmacies, featuring BPOM integration, sales tracking, commission management, and profit sharing capabilities.
+# 💊 Pharmaceutical POS & Inventory Management System
 
-## Features
+A fullstack modular Point of Sale (POS) and pharmaceutical inventory management system built with **pure PHP (no framework)** and **MySQL**, using an **MVC-like folder structure**. This system is designed for businesses with multiple investors, supporting stocked and by-order medicines, commission rules, profit sharing, installment payments, and modern reporting. Fully responsive for desktop and mobile.
 
-- User Authentication & Role Management (Admin/Sales)
-- Product Management with BPOM Integration
-- Sales & Transaction Processing
-- Commission Calculation & Tracking
-- Inventory Management
-- Customer Management
-- Profit Sharing for Investors
-- Reporting & Analytics
-- Email & WhatsApp Notifications
+---
 
-## System Requirements
+## 🚀 Features
 
-- PHP 7.4 or higher
-- MySQL 5.7 or higher
-- Apache Web Server
-- mod_rewrite enabled
-- PDO PHP Extension
-- JSON PHP Extension
-- cURL PHP Extension
+- Modular MVC-like architecture
+- Responsive frontend (mobile & desktop)
+- Role-based access: **Admin** & **Sales**
+- Product categorization using **BPOM reference data**
+- Support for **stocked** and **by-order** medicines
+- Price adjustment with discount validation and reason logs
+- Commission system:
+  - Global rates
+  - Category-based rates
+  - Product-specific rates
+- Profit sharing based on investor capital percentage
+- Handles **cash** and **installment** payments (suppliers/customers)
+- Integrated **Email & WhatsApp notifications**
+- Detailed reports, audit logs & business insights
 
-## Installation
+---
 
-1. Clone the repository to your web server directory:
-   ```bash
-   git clone https://github.com/yourusername/Salvio3.git
-   ```
+## 🧱 Tech Stack
 
-2. Navigate to the project directory:
-   ```bash
-   cd Salvio3
-   ```
+| Layer       | Technology      |
+|-------------|-----------------|
+| Backend     | PHP (no framework) |
+| Database    | MySQL           |
+| Frontend    | HTML, CSS, JavaScript |
+| Architecture| Custom MVC-like |
 
-3. Set appropriate permissions:
-   ```bash
-   chmod 755 -R .
-   chmod 777 -R uploads/
-   ```
+---
 
-4. Access the installation script through your web browser:
-   ```
-   http://localhost/Salvio3/install.php
-   ```
-
-5. Follow the installation wizard to set up your database and initial configuration.
-
-6. After installation, you can log in with the default admin credentials:
-   - Username: admin
-   - Password: admin123
-
-   **Important**: Change these credentials immediately after first login!
-
-## Project Structure
+## 🗂️ Folder Structure
 
 ```
-/Salvio3
-├── config/             # Configuration files
-├── controllers/        # Controller classes
-├── core/              # Core framework classes
-├── models/            # Model classes
-├── views/             # View templates
-├── assets/            # Public assets (CSS, JS, images)
-├── uploads/           # File uploads
-├── database/          # Database migrations and seeds
-├── helpers/           # Helper functions
-└── logs/              # Application logs
+/app
+  /controllers
+  /models
+  /views
+/assets
+  /css
+  /js
+/config
+/database
+  /migrations
+  /seeders
+/public
+  index.php
 ```
 
-## Security Features
+---
 
-- CSRF Protection
-- SQL Injection Prevention
-- XSS Protection
-- Password Hashing
-- Session Security
-- Input Validation
-- Role-based Access Control
+## 📦 Installation
 
-## Development Phases
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/pharma-pos.git
+   cd pharma-pos
+   ```
 
-1. **Phase 1**: System Foundation & Core Architecture
-   - Base project structure
-   - Authentication system
-   - Role management
+2. **Set up your database**
+   - Create a MySQL database
+   - Import the SQL file from `/database/`
+   - Configure `/config/database.php` with your DB credentials
 
-2. **Phase 2**: Master Data Management
-   - Product management
-   - Customer management
-   - Category management
+3. **Run the app**
+   - Use a local webserver (e.g., XAMPP, Laragon)
+   - Place the project in `htdocs` or `www`
+   - Open `http://localhost/pharma-pos/public` in your browser
 
-3. **Phase 2B**: BPOM Integration
-   - BPOM data scraping
-   - Product auto-fill
-   - Data validation
+---
 
-4. **Phase 3**: Sales & Transactions
-   - Sales processing
-   - Payment handling
-   - Invoice generation
+## 🔐 User Roles
 
-5. **Phase 4**: Commission Management
-   - Commission rules
-   - Calculation system
-   - Payment tracking
+### 👑 Admin
+- Full system access
+- Manage users, roles, commissions, product pricing
+- Distribute investor profit
+- Access all reports
 
-6. **Phase 5**: Profit Sharing
-   - Investor management
-   - Profit calculation
-   - Distribution tracking
+### 🧾 Sales
+- Create orders
+- View assigned reports
+- Suggest new products (manual entry for by-order)
 
-7. **Phase 6**: Reporting
-   - Sales reports
-   - Inventory reports
-   - Commission reports
-   - Profit sharing reports
+---
 
-8. **Phase 7**: Notifications
-   - Email integration
-   - WhatsApp integration
-   - Alert system
+## 📊 Reporting & Analytics
 
-## Contributing
+- Revenue reports (daily/weekly/monthly/yearly)
+- Commission summaries by user/product
+- Investor profit reports
+- Price adjustment logs
+- Product & market insights
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+---
 
-## License
+## 📬 Notifications
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Integrated with **Email & WhatsApp API** for:
+- New order alerts
+- Delays or stock issues
+- Shipping & order completion updates
 
-## Support
+---
 
-For support, please email support@example.com or create an issue in the GitHub repository.
+## 📈 Insight Features
 
-## Acknowledgments
+- Best-selling products & categories
+- Least-performing products
+- Market response by customer type (e.g., clinic, pharmacy)
+- Graphs & trends for better decisions
 
-- Bootstrap for the UI framework
-- Font Awesome for icons
-- PHPMailer for email functionality
-- TCPDF for PDF generation
+---
+
+## 🤝 Contribution
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 📫 Contact
+
+For support or inquiries:
+
+- Email: your.email@example.com
+- GitHub: [your-username](https://github.com/your-username)

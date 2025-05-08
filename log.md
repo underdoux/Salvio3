@@ -1,133 +1,207 @@
 # Pharmacy POS System Development Log
 
-## Phase 1: System Foundation & Core Architecture
-🕒 **Timestamp**: 2025-05-04 03:30 WIB
+## Comprehensive Phase Development Plan Review and Execution Strategy
 
-### Theme Implementation
-✅ **Completed Tasks**:
-1. Created Centralized Theme System:
-   - Implemented theme.css for global styles
-   - Set up CSS variables for easy customization
-   - Added dark mode support
-   - Created consistent component styles
+🕒 Timestamp: 2025-05-04 10:00 WIB
 
-2. Authentication Pages:
-   - Login page redesigned with modern UI
-   - Forgot password page with matching style
-   - Reset password page with live validation
-   - Consistent branding across all auth pages
+### Overview of Phase Development Plan
 
-3. Dashboard Layout:
-   - Modern sidebar navigation
-   - Responsive header design
-   - Stats cards with animations
-   - Clean data tables
-   - Low stock alerts section
+#### PHASE 1: SYSTEM FOUNDATION & CORE ARCHITECTURE
+- Goals:
+    * Base project structure without /public folder.
+    * MVC-style architecture with clean URL routing.
+    * Secure login system with role-based redirection.
+- Status: Completed successfully with base app accessible via root domain, role-based login, and dashboard.
 
-4. Common Components:
-   - Brand logo standardization
-   - Form elements styling
-   - Button designs
-   - Alert messages
-   - Card layouts
-   - Table styles
-   - Icons integration
+#### PHASE 2: MASTER DATA MANAGEMENT
+- Goals:
+    * Manage users, customers, categories, and medicines.
+- Key Tasks:
+    * CRUD operations for Users (Admin), Customers (Sales/Admin).
+    * Category & Product Type management.
+    * Product master with stock tracking and BPOM category assignment.
+    * Input validation, soft-delete, search/filter support.
+- Deliverable: Full master data module.
 
-### Theme Features
-1. Color Scheme:
-   ```css
-   --primary-color: #0d6efd
-   --secondary-color: #6c757d
-   --background-color: #f8f9fa
-   --card-bg: #ffffff
-   --text-color: #212529
-   ```
+#### PHASE 2B: BPOM Data Scraping Integration
+- Goals:
+    * Admins/Sales can retrieve and auto-fill product info from BPOM Indonesia site.
+- Key Tasks:
+    * Develop PHP scraper using cURL and DOMDocument.
+    * Input handling for product name or registration number.
+    * Parse and store BPOM data in `bpom_reference_data` table.
+    * Provide JSON API and HTML preview.
+    * Integrate auto-fill in product creation form.
+- Deliverable: Working search & auto-fill tool.
 
-2. Typography:
-   - Primary font: 'Segoe UI', system-ui
-   - Consistent heading sizes
-   - Readable text styles
+#### PHASE 3: SALES & TRANSACTIONS
+- Goals:
+    * Track sales transactions linked to customers and products.
+- Key Tasks:
+    * Sales form with product selection, quantity, discounts.
+    * Customer selection or creation.
+    * Multiple payment types.
+    * Save sales, discounts, payments.
+    * Printable invoices.
+- Deliverable: Sales module.
 
-3. Components:
-   - Cards with hover effects
-   - Interactive buttons
-   - Clean form inputs
-   - Modern tables
-   - Status badges
-   - Icon integration
+#### PHASE 4: PRICE ADJUSTMENT & COMMISSIONS
+- Goals:
+    * Manage pricing and commission logic.
+- Key Tasks:
+    * Log price changes.
+    * Validate discounts per role.
+    * Commission setup and calculation.
+    * Sales reports.
+- Deliverable: Pricing and commission module.
 
-4. Responsive Design:
-   - Mobile-first approach
-   - Tablet optimization
-   - Desktop layouts
-   - Collapsible sidebar
-   - Adaptive spacing
+#### PHASE 5: PROFIT SHARING & INVESTOR MANAGEMENT
+- Goals:
+    * Automate profit distribution.
+- Key Tasks:
+    * CRUD investors.
+    * Track net profit.
+    * Distribute profit by capital share.
+    * Profit logs.
+- Deliverable: Investor management module.
 
-5. Dark Mode:
-   - System preference detection
-   - Color scheme adaptation
-   - Contrast optimization
-   - Component adjustments
+#### PHASE 6: SUPPLIER & INVENTORY PURCHASING
+- Goals:
+    * Manage purchases and supplier payments.
+- Key Tasks:
+    * CRUD suppliers.
+    * Purchase orders and payments.
+    * Stock auto-adjustment.
+    * Monitor dues.
+- Deliverable: Supplier and purchasing module.
 
-### Testing Confirmation
-✅ **Theme Consistency**:
-- [x] All pages follow unified design
-- [x] Dark mode works across pages
-- [x] Responsive on all devices
-- [x] Animations work smoothly
-- [x] Forms maintain consistency
-- [x] Tables adapt properly
-- [x] Icons display correctly
+#### PHASE 7: REPORTING & ANALYTICS
+- Goals:
+    * Provide detailed reports.
+- Key Tasks:
+    * Sales, commission, investor, product trend reports.
+    * Export to PDF/Excel.
+- Deliverable: Reporting module.
 
-✅ **Browser Testing**:
-- [x] Chrome
-- [x] Firefox
-- [x] Safari
-- [x] Edge
-- [x] Mobile browsers
+#### PHASE 8: EMAIL & WHATSAPP NOTIFICATIONS
+- Goals:
+    * Alert stakeholders on events.
+- Key Tasks:
+    * Setup PHPMailer and WhatsApp API.
+    * Notifications for low stock, dues, profit updates.
+- Deliverable: Notification module.
 
-✅ **Responsive Breakpoints**:
-- [x] Mobile (< 768px)
-- [x] Tablet (768px - 992px)
-- [x] Desktop (> 992px)
+---
 
-### Next Steps
-1. Phase 2 Preparation:
-   - Master data management UI
-   - Product catalog design
-   - Inventory management interface
-   - Sales dashboard enhancements
+### Execution Strategy to Continue Development
 
-2. Additional Features:
-   - Print stylesheet
-   - Custom theme options
-   - More interactive components
-   - Enhanced animations
+1. **Prioritize Phase 2 Development:**
+   - Begin with master data management modules (Users, Customers, Categories, Products).
+   - Implement CRUD with validation, soft-delete, and search features.
+   - Ensure UI consistency by reusing existing layout and components.
 
-### Installation Notes
-1. Access http://localhost/Salvio3/install.php
-2. Enter database credentials
-3. System creates database and admin user
-4. Login at http://localhost/Salvio3/auth
-   - Username: admin
-   - Password: admin123
+2. **Integrate BPOM Data Scraping (Phase 2B):**
+   - Develop scraper as a helper module.
+   - Create controller and views for search and results.
+   - Store scraped data in dedicated table.
+   - Integrate auto-fill in product forms with fallback to manual entry.
 
-### Security Checklist
-- [ ] Remove install.php after setup
-- [ ] Change default admin password
-- [ ] Set proper file permissions
-- [ ] Configure error logging
-- [ ] Enable CSRF protection
-- [ ] Implement XSS prevention
-- [ ] Set up SQL injection guards
+3. **Plan for Phases 3 to 8:**
+   - Design database schema and UI wireframes for sales, pricing, profit sharing, suppliers, reporting, and notifications.
+   - Implement modules incrementally, ensuring testing and security at each step.
+   - Use modular coding practices to maintain scalability.
 
-### Known Issues
-None currently reported
+4. **Development Workflow:**
+   - Use version control with feature branches.
+   - Write unit and integration tests.
+   - Set up CI/CD pipelines for automated testing and deployment.
+   - Maintain detailed documentation and update logs regularly.
 
-### Performance Metrics
-- Initial page load: < 1s
-- Theme switch: < 100ms
-- Animation frames: 60fps
-- Dark mode toggle: Instant
+5. **Security and Performance:**
+   - Enforce input validation and sanitization.
+   - Implement CSRF and XSS protections.
+   - Optimize database queries and caching.
+   - Monitor application logs and performance metrics.
 
-The system is now ready for Phase 2 with a professional, consistent theme across all pages.
+---
+
+### Updated Folder Structure (Planned)
+
+/your-project-root
+│
+├── index.php                      <-- Front controller
+├── .htaccess                      <-- URL rewriting
+├── config/
+│   ├── config.php                 <-- Global config
+│   ├── routes.php                 <-- Route definitions
+│   └── bpom_config.php            <-- BPOM scraper config
+│
+├── core/
+│   ├── Controller.php
+│   ├── Model.php
+│   ├── View.php
+│   ├── Database.php
+│   ├── Session.php
+│   └── Auth.php
+│
+├── controllers/
+│   ├── AuthController.php
+│   ├── DashboardController.php
+│   ├── ProductController.php
+│   ├── CustomerController.php
+│   ├── SalesController.php
+│   ├── CommissionController.php
+│   ├── InvestorController.php
+│   ├── SupplierController.php
+│   ├── ReportController.php
+│   └── BpomController.php
+│
+├── models/
+│   ├── User.php
+│   ├── Product.php
+│   ├── Customer.php
+│   ├── Sale.php
+│   ├── Category.php
+│   ├── Commission.php
+│   ├── Investor.php
+│   ├── Supplier.php
+│   ├── Payment.php
+│   └── BpomReference.php
+│
+├── views/
+│   ├── layout/
+│   ├── auth/
+│   ├── dashboard/
+│   ├── products/
+│   ├── customers/
+│   ├── sales/
+│   ├── commissions/
+│   ├── investors/
+│   ├── suppliers/
+│   ├── reports/
+│   └── bpom/
+│
+├── assets/
+│   ├── css/
+│   ├── js/
+│   └── img/
+│
+├── helpers/
+│   ├── utils.php
+│   └── bpom_scraper.php
+│
+├── logs/
+│   └── error.log
+│
+└── uploads/
+    └── invoice_pdfs/
+
+---
+
+### Summary
+
+The project has a solid foundation from Phase 1. The next focus is on Phase 2 master data management and BPOM integration, followed by sales, pricing, profit sharing, suppliers, reporting, and notifications. A modular, test-driven, and secure development approach is recommended to ensure maintainability and scalability.
+
+---
+
+This detailed plan and execution strategy have been added to the development log for reference and tracking.

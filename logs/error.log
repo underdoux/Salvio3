@@ -68,3 +68,23 @@ Stack trace:
 [04-May-2025 02:31:42 Asia/Jakarta] Login successful for username: admin
 [04-May-2025 02:32:08 Asia/Jakarta] Login attempt for username: admin
 [04-May-2025 02:32:08 Asia/Jakarta] Login successful for username: admin
+[09-May-2025 01:08:45 Asia/Jakarta] Database Connection Error: SQLSTATE[HY000] [1049] Unknown database 'salvio3_pos'
+[09-May-2025 01:08:45 Asia/Jakarta] PHP Fatal error:  Uncaught Exception: Database connection failed in C:\xampp\htdocs\Salvio3\core\Database.php:27
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\core\Database.php(36): Database->__construct()
+#1 C:\xampp\htdocs\Salvio3\core\Model.php(13): Database::getInstance()
+#2 C:\xampp\htdocs\Salvio3\core\Controller.php(23): Model->__construct()
+#3 C:\xampp\htdocs\Salvio3\controllers\DashboardController.php(16): Controller->model('Sale')
+#4 C:\xampp\htdocs\Salvio3\index.php(47): DashboardController->__construct()
+#5 {main}
+  thrown in C:\xampp\htdocs\Salvio3\core\Database.php on line 27
+[09-May-2025 01:08:47 Asia/Jakarta] Database Connection Error: SQLSTATE[HY000] [1049] Unknown database 'salvio3_pos'
+[09-May-2025 01:08:47 Asia/Jakarta] PHP Fatal error:  Uncaught Exception: Database connection failed in C:\xampp\htdocs\Salvio3\core\Database.php:27
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\core\Database.php(36): Database->__construct()
+#1 C:\xampp\htdocs\Salvio3\core\Model.php(13): Database::getInstance()
+#2 C:\xampp\htdocs\Salvio3\core\Controller.php(23): Model->__construct()
+#3 C:\xampp\htdocs\Salvio3\controllers\DashboardController.php(16): Controller->model('Sale')
+#4 C:\xampp\htdocs\Salvio3\index.php(47): DashboardController->__construct()
+#5 {main}
+  thrown in C:\xampp\htdocs\Salvio3\core\Database.php on line 27
