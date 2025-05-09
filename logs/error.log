@@ -88,3 +88,74 @@ Stack trace:
 #4 C:\xampp\htdocs\Salvio3\index.php(47): DashboardController->__construct()
 #5 {main}
   thrown in C:\xampp\htdocs\Salvio3\core\Database.php on line 27
+[09-May-2025 02:30:03 Asia/Jakarta] Login attempt for username: admin
+[09-May-2025 02:30:03 Asia/Jakarta] Login successful for username: admin
+[09-May-2025 02:30:25 Asia/Jakarta] Login attempt for username: admin
+[09-May-2025 02:30:25 Asia/Jakarta] Login successful for username: admin
+[09-May-2025 02:55:20 Asia/Jakarta] Login attempt for username: admin
+[09-May-2025 02:55:20 Asia/Jakarta] Login successful for username: admin
+[09-May-2025 02:59:33 Asia/Jakarta] Login attempt for username: admin
+[09-May-2025 02:59:33 Asia/Jakarta] Login successful for username: admin
+[09-May-2025 03:07:06 Asia/Jakarta] Login attempt for username: admin
+[09-May-2025 03:07:06 Asia/Jakarta] Login successful for username: admin
+[09-May-2025 03:07:12 Asia/Jakarta] Login attempt for username: admin
+[09-May-2025 03:07:12 Asia/Jakarta] Login successful for username: admin
+[09-May-2025 03:32:48 Asia/Jakarta] Login attempt for username: admin
+[09-May-2025 03:32:48 Asia/Jakarta] Login successful for username: admin
+[09-May-2025 03:35:41 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method ProductController::getGet() in C:\xampp\htdocs\Salvio3\controllers\ProductController.php:21
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\index.php(50): ProductController->index()
+#1 {main}
+  thrown in C:\xampp\htdocs\Salvio3\controllers\ProductController.php on line 21
+[09-May-2025 03:36:18 Asia/Jakarta] Query Preparation Error: SQLSTATE[23000]: Integrity constraint violation: 1052 Column 'name' in where clause is ambiguous
+[09-May-2025 03:36:18 Asia/Jakarta] PHP Fatal error:  Uncaught Exception: Query preparation failed in C:\xampp\htdocs\Salvio3\core\Database.php:50
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\models\Product.php(124): Database->query('\n            SE...')
+#1 C:\xampp\htdocs\Salvio3\controllers\ProductController.php(26): Product->search(Array, '', 'id', 'DESC', 10, 0)
+#2 C:\xampp\htdocs\Salvio3\index.php(50): ProductController->index()
+#3 {main}
+  thrown in C:\xampp\htdocs\Salvio3\core\Database.php on line 50
+[09-May-2025 03:37:39 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method View::view() in C:\xampp\htdocs\Salvio3\views\products\index.php:1
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\core\View.php(65): include()
+#1 C:\xampp\htdocs\Salvio3\core\Controller.php(34): View->render('products/index', Array)
+#2 C:\xampp\htdocs\Salvio3\controllers\ProductController.php(31): Controller->view('products/index', Array)
+#3 C:\xampp\htdocs\Salvio3\index.php(50): ProductController->index()
+#4 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\products\index.php on line 1
+[09-May-2025 03:37:40 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined method View::view() in C:\xampp\htdocs\Salvio3\views\products\index.php:1
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\core\View.php(65): include()
+#1 C:\xampp\htdocs\Salvio3\core\Controller.php(34): View->render('products/index', Array)
+#2 C:\xampp\htdocs\Salvio3\controllers\ProductController.php(31): Controller->view('products/index', Array)
+#3 C:\xampp\htdocs\Salvio3\index.php(50): ProductController->index()
+#4 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\products\index.php on line 1
+[09-May-2025 03:38:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function url() in C:\xampp\htdocs\Salvio3\views\products\index.php:5
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\core\View.php(65): include()
+#1 C:\xampp\htdocs\Salvio3\core\Controller.php(34): View->render('products/index', Array)
+#2 C:\xampp\htdocs\Salvio3\controllers\ProductController.php(31): Controller->view('products/index', Array)
+#3 C:\xampp\htdocs\Salvio3\index.php(50): ProductController->index()
+#4 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\products\index.php on line 5
+[09-May-2025 03:40:17 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function url() in C:\xampp\htdocs\Salvio3\views\products\index.php:5
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\core\View.php(65): include()
+#1 C:\xampp\htdocs\Salvio3\core\Controller.php(34): View->render('products/index', Array)
+#2 C:\xampp\htdocs\Salvio3\controllers\ProductController.php(31): Controller->view('products/index', Array)
+#3 C:\xampp\htdocs\Salvio3\index.php(50): ProductController->index()
+#4 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\products\index.php on line 5
+[09-May-2025 03:40:18 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function url() in C:\xampp\htdocs\Salvio3\views\products\index.php:5
+Stack trace:
+#0 C:\xampp\htdocs\Salvio3\core\View.php(65): include()
+#1 C:\xampp\htdocs\Salvio3\core\Controller.php(34): View->render('products/index', Array)
+#2 C:\xampp\htdocs\Salvio3\controllers\ProductController.php(31): Controller->view('products/index', Array)
+#3 C:\xampp\htdocs\Salvio3\index.php(50): ProductController->index()
+#4 {main}
+  thrown in C:\xampp\htdocs\Salvio3\views\products\index.php on line 5
+[09-May-2025 04:48:30 Asia/Jakarta] Login attempt for username: admin
+[09-May-2025 04:48:30 Asia/Jakarta] Login successful for username: admin
+[09-May-2025 05:18:56 Asia/Jakarta] Login attempt for username: admin
+[09-May-2025 05:18:56 Asia/Jakarta] Login successful for username: admin

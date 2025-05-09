@@ -10,6 +10,8 @@ class DashboardController extends Controller {
 
     public function __construct() {
         parent::__construct();
+
+        // Require normal authentication (remove temporary login bypass)
         $this->requireAuth();
         
         // Load required models

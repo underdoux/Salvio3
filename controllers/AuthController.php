@@ -11,6 +11,7 @@ class AuthController extends Controller {
         $this->userModel = $this->model('User');
     }
 
+
     /**
      * Login page
      */

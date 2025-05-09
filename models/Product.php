@@ -100,7 +100,27 @@ class Product extends Model {
      * @param string $order Order direction (ASC/DESC)
      * @return array
      */
-    public function search($fields, $keyword, $orderBy = null, $order = 'ASC') {
+    public function search($fields, $keyword, $orderBy = null, $order = 'ASC', $limit = null, $offset = null) {
+        if (empty($fields) || $keyword === '') {
+            // Return all active products if no search keyword or fields
+            $sql = "
+                SELECT p.*, c.name as category_name
+                FROM {$this->table} p
+                LEFT JOIN categories c ON p.category_id = c.id
+                WHERE p.status = 'active'
+            ";
+            if ($orderBy) {
+                $sql .= " ORDER BY {$orderBy} {$order}";
+            }
+            if ($limit !== null) {
+                $sql .= " LIMIT " . (int)$limit;
+            }
+            if ($offset !== null) {
+                $sql .= " OFFSET " . (int)$offset;
+            }
+            return $this->db->query($sql)->resultSet();
+        }
+
         $conditions = [];
         $params = [];
         
@@ -119,6 +139,12 @@ class Product extends Model {
         
         if ($orderBy) {
             $sql .= " ORDER BY {$orderBy} {$order}";
+        }
+        if ($limit !== null) {
+            $sql .= " LIMIT " . (int)$limit;
+        }
+        if ($offset !== null) {
+            $sql .= " OFFSET " . (int)$offset;
         }
         
         $query = $this->db->query($sql);
